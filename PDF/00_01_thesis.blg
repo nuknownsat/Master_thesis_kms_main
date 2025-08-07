@@ -1,0 +1,72 @@
+This is BibTeX, Version 0.99d (TeX Live 2025)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: 00_01_thesis.aux
+A level-1 auxiliary file: 00_x1_MacroFile1.aux
+A level-1 auxiliary file: 0_frontmatter/acknowledgement.aux
+A level-1 auxiliary file: 00_03_abstract.aux
+A level-1 auxiliary file: 00_04_abbreviation.aux
+A level-1 auxiliary file: 01_introduction.aux
+A level-1 auxiliary file: 02_Related_works.aux
+A level-1 auxiliary file: 03_Proposed_framework.aux
+A level-1 auxiliary file: 04_RESULT.aux
+A level-1 auxiliary file: 05_conclusion.aux
+The style file: classfile/IEEEtran.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: 1_backmatter/references.bib
+-- IEEEtran.bst version 1.13 (2008/09/30) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+Warning--empty author in rel_38821
+Warning--empty author in rel_38300
+Warning--empty author in rel_38331
+Warning--empty author in rel_38811
+Warning--empty author in rel_36839
+Warning--empty author in rel_38133
+
+Done.
+You've used 11 entries,
+            4039 wiz_defined-function locations,
+            868 strings with 9181 characters,
+and the built_in function-call counts, 6117 in all, are:
+= -- 461
+> -- 113
+< -- 37
++ -- 71
+- -- 24
+* -- 302
+:= -- 942
+add.period$ -- 22
+call.type$ -- 11
+change.case$ -- 11
+chr.to.int$ -- 90
+cite$ -- 17
+duplicate$ -- 486
+empty$ -- 560
+format.name$ -- 23
+if$ -- 1387
+int.to.chr$ -- 0
+int.to.str$ -- 11
+missing$ -- 75
+newline$ -- 56
+num.names$ -- 5
+pop$ -- 203
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 2
+skip$ -- 473
+stack$ -- 0
+substring$ -- 236
+swap$ -- 325
+text.length$ -- 7
+text.prefix$ -- 0
+top$ -- 5
+type$ -- 11
+warning$ -- 6
+while$ -- 20
+width$ -- 13
+write$ -- 111
+(There were 6 warnings)

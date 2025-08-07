@@ -34,6 +34,10 @@
 \usepackage{xcolor}
 %\usepackage[utf8]{inputenc} % use UTF8 encoding
 %\usepackage{kotex} % use KoTeX package for Korean 
+
+% Enable color links and figures in PDF
+\PassOptionsToPackage{colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=red,filecolor=magenta}{hyperref}
+
 \usepackage{algorithmicx}
 \usepackage{algorithm}
 %\usepackage{algorithmic}
@@ -173,10 +177,13 @@
 % LSH : 사인된 속표지, 인준서
 % LSH : 속표지, 인준서 사인은 스캔후 해당 부분만 JPG로 저장한 후 
 % Adobe reader에서 집어넣었다.
-\includepdf[pages={1}]{Jongtae_Thesis_cover-1.pdf}
+\includepdf[pages={1}]{KMS_Theses_cover.pdf}
+\includepdf[pages={2}]{KMS_Theses_cover.pdf}
+\includepdf[pages={3}]{KMS_Theses_cover.pdf}
+
 % \includepdf[pages={1}]{Jongtae_Thesis_cover_demo-null.pdf}
-\includepdf[pages={1}]{Jongtae_Thesis_cover-2.pdf}
-\includepdf[pages={1}]{Jongtae_Thesis_cover_cignature-3.pdf}
+% \includepdf[pages={1}]{Jongtae_Thesis_cover-2.pdf}
+% \includepdf[pages={1}]{Jongtae_Thesis_cover_cignature-3.pdf}
 
 %\includepdf[pages={1}]{00_0a_cover_repeated_scan.pdf}
 %\includepdf[pages={3}]{00_0c_cover_imagemerged.pdf}

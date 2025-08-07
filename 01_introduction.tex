@@ -1,14 +1,31 @@
 \chapter{Introduction}
 
 \section{Background and motivation}
-\quad The development of sixth-generation (6G) networks is increasingly focusing on non-terrestrial networks (NTN) using low Earth orbit (LEO) satellites. Unlike terrestrial networks (TN), LEO satellite constellations provide global coverage, addressing the limitations of existing TNs. LEO satellites enable stable communication services even in high-traffic areas or regions lacking terrestrial infrastructure, such as remote mountainous areas, seas, or in-flight environments.
+\quad Low Earth Orbit (LEO) satellite communication has recently emerged as a promising next-generation technology for providing global coverage. The architecture of an LEO network consists of a multitude of satellites concurrently serving numerous terrestrial cells. However, this dense multi-satellite and multi-cell environment can lead to significant inter-cell interference. Furthermore, satellites require stable and high-capacity backhaul connections with gateways (GWs) to prevent data traffic bottlenecks and ensure seamless service for the cells they cover.
 
-Since Release 15, the 3rd Generation Partnership Project (3GPP) has been progressively standardizing NTN protocols. One of the main challenges is the high mobility of LEO satellites, which can lead to frequent handovers (HO) due to the continuously changing positions of satellite cells. This issue is particularly significant in Earth-moving cells (EMC) environments, where satellites are constantly moving. To address this issue, 3GPP introduced conditional HO (CHO) and distance-based CHO mechanisms in Releases 16 and 17 \cite{rel_38821}, \cite{rel_38811}.
-Unlike conventional methods, CHO does not determine a single target cell with a HO command. Instead, the UE configures multiple candidate cells, and can perform HO to the best cell among the configured candidate cells even if the environment changes during the HO control message exchange. Therefore, the occurrence rate of radio link failure (RLF) and unnecessary HO (UHO) are reduced, especially in satellite environments with high mobility. Furthermore, distance-based HO mechanisms that are triggered based on location information rather than signal strength improve the accuracy of HO decisions as clear distance differences occur relative to signal strength. However, even these mechanisms can face the same problem in some areas of highly dynamic EMC environments, highlighting the need for more advanced strategies.
+One of the most critical challenges in LEO satellite communications stems from the high mobility of the satellites. As satellites orbit the Earth at extremely high speeds, a ground terminal must frequently change its serving satellite. This high mobility necessitates frequent handovers and switchovers, which become a primary cause of degraded service continuity and can lead to temporary network disconnections.
+
+In particular, conventional handover schemes based on received signal strength exhibit several limitations in this dynamic LEO environment. Such schemes, which simply switch the connection to the satellite with the strongest signal, can trigger unnecessarily frequent handovers. Moreover, they often lead to the ping-pong effect, where handovers are rapidly repeated back and forth between two satellites at the cell edge. Consequently, the terminal's Time-of-Stay (ToS) with a single satellite becomes very short, which significantly degrades overall network efficiency and stability.
+
+Therefore, to guarantee stable Quality of Service (QoS) and service continuity in LEO satellite networks, it is essential to develop intelligent handover and switchover schemes that can effectively manage the challenges posed by satellite mobility. This paper proposes a novel approach to address these pressing issues.
+
 
 \section{Contributions}
-\quad This thesis proposes a CHO strategy based on orbital information and distance (OID). This method performs HO using the position of the user equipment (UE) and the orbital data of LEO satellites. The OID-based CHO strategy minimizes UHO and improves the HO success rate by intelligently managing the target cell selection. The simulation results show that this approach reduces signaling overhead and improves overall network performance, including UHO compared to conventional distance-based HO.
+\quad To address the challenges of high mobility and dynamic network topology in LEO satellite networks, this paper proposes a novel handover and resource management scheme based on multi-agent reinforcement learning. The key contributions of this work are summarized as follows:
+
+\begin{itemize}
+    \item \textbf{A Multi-Agent Reinforcement Learning (MARL) Framework for Joint Optimization:} We design a MARL framework where each satellite acts as an autonomous agent. These agents learn collaboratively to find the optimal policy for selecting both user cells and gateways simultaneously, adapting to the highly dynamic network environment without the need for a centralized controller.
+
+    \item \textbf{User Link Stability by Minimizing Handovers while Maximizing SINR:} Our proposed scheme enables the satellite agents to select user cells with a sophisticated dual objective. It aims to \textbf{maximize the Signal-to-Interference-plus-Noise Ratio (SINR)} for all served cells while concurrently \textbf{minimizing the total number of handovers}. This approach directly mitigates the ping-pong effect and enhances service stability for ground users.
+
+    \item \textbf{Feeder Link Reliability by Preventing Bottlenecks and Reducing Switchovers:} The agents intelligently select gateways to \textbf{prevent traffic bottlenecks} in the backhaul network, ensuring efficient data routing. Crucially, this selection is performed while also \textbf{minimizing the frequency of feeder link switchovers}, which enhances the stability and reliability of the satellite-to-ground connection.
+\end{itemize}
+
+The effectiveness of our proposed scheme is validated through extensive simulations, which demonstrate significant improvements in network stability and user Quality of Service (QoS) compared to conventional, signal-strength-based methods.
 
 \section{Overview}
 \quad The remainder of this thesis is structured as follows: 
-Sec. \uppercase\expandafter{\romannumeral2} reviews the existing HO mechanisms and related work. Sec. \uppercase\expandafter{\romannumeral3} presents the proposed OID-based CHO strategy in detail. Sec. \uppercase\expandafter{\romannumeral4} discusses the simulation results and compares the proposed strategy with conventional approaches. Finally, Sec. \uppercase\expandafter{\romannumeral5} concludes the thesis.
+Sec. \uppercase\expandafter{\romannumeral2} discusses handover, feeder link switching, and related research in beam hopping and resource allocation.
+Sec. \uppercase\expandafter{\romannumeral3} presents the proposed multi-agent reinforcement learning framework in detail. 
+Sec. \uppercase\expandafter{\romannumeral4} discusses the simulation results and compares the proposed strategy with conventional approaches. Finally, 
+Sec. \uppercase\expandafter{\romannumeral5} concludes the thesis.

@@ -1,5 +1,5 @@
-\chapter[Proposed OID-based conditional handover]{Proposed OID-based conditional handover}
-\section{Scenario}
+\chapter[Proposed multi reinforcement learning-based link scheduling algorithm]{Proposed multi reinforcement learning-based link scheduling algorithm}
+\section{System model}
 \quad This thesis propose a beam-to-beam HO scenario in an environment with multiple satellites' spot beams in the same constellation, as shown in Fig. \ref{figure_system_model}. The LEO satellite, equipped with several spot beams, operates at a low earth orbit and moves at 7.56 km/s. The HO is considered to occur only between satellites that move in parallel orbits within the same constellation. In the EMC environment, all cells use the same frequency, causing interference. The UE updates orbital information using system information block (SIB) 19 from the satellite and determines its position via global positioning system (GPS).
 
 \begin{figure}[p]
@@ -9,7 +9,7 @@
 \label{figure_system_model}
 \end{figure}
 
-\section{Definition of orbital distance}
+\section{Problem formulation}
 \quad To select an appropriate cell in an EMC environment and address the aforementioned issues, it is essential to define the positional relationship between the UE and the cell. In this thesis, utilize the vertical distance from the cell trajectory to the UE, based on the position information at two instances along the cell trajectory, as illustrated in Fig. \ref{figure_xp_dif}.
 
 \begin{figure}[t]
@@ -34,7 +34,7 @@ X_p = \frac{|(y_{t1} - y_{t0})x^{ue}_{t1} - (x_{t1} - x_{t0})y^{ue}_{t1} + (x_{t
 \end{equation}
 Through this approach, the $X_p$ values for candidate cells can be calculated, thereby establishing the positional relationship between the UE and the cell trajectory in an EMC environment.
 
-\section{Proposed handover method and procedure}
+\section{Proposed algorithm}
 \quad The primary objective of the OID-based CHO is to reduce UHOs that occur in distance-based CHO methods. The proposed method encourages the UE to maintain its connection with the cell in the closest orbit by utilizing the previously defined vertical distance $X_p$. This strategy aims to select a cell that maximizes the Time of Stay (ToS) within the cell, thus providing an ideal scenario to minimize UHOs in the EMC environment.
 \begin{figure} [t]
 \centering
@@ -44,7 +44,7 @@ Through this approach, the $X_p$ values for candidate cells can be calculated, t
 \end{figure}
 As shown in Fig. \ref{3_i_wanna_longToS} (a), selecting the nearest cell in an EMC environment may lead the UE to HO from serving cell A to target cell B, and then back to cell C, which is in the same orbit as cell A. If the ToS in cell B is less than one second, this HO could be considered a UHO \cite{juan_ho_all}. In contrast, as illustrated in Fig. \ref{3_i_wanna_longToS} (b), selecting a cell with the same $X_p$ value as the serving cell follows an ideal scenario where UHOs are prevented as the ToS increases. Additionally, if there is a cell in a closer orbit with a smaller $X_p$ value than the serving cell, it may be more efficient to HO to that cell for better signal strength. Thus, this strategy involves deciding whether to maintain the current orbit or move to a closer orbit, providing flexibility in response to changes in the UE's location based on $X_p$ values.
 
-\subsection{Handover triggering event}
+\subsection{MDP modeling}
 \quad The HO triggering condition of the proposed scheme follows the same distance-based entry condition specified in Section \ref{dist_cho_trig}. This mechanism consists of two thresholds, which the UE can obtain from the \textit{distanceThresh} information in SIB 19 \cite{rel_38331} of the satellite. However, the current design, in which the serving satellite manages and transmits individual thresholds for each UE, may result in increased processing overhead. Additionally, conveying these thresholds to the UE solely through SIB 19 is practically limited. An alternative approach is to use Radio Resource Control (RRC) messages, but this also increases signaling overhead and may degrade HO performance.
 
 \begin{figure} [t]
@@ -63,7 +63,7 @@ Thresh_1 = d_{rad}^{I} = ISD - d_{rad}^{T}.
 
 The sizes of the inner and outer circles, which determine the threshold, can be set via parameters such as SIB 19, while the second threshold can be configured differently depending on system requirements. For instance, $Thresh_2$ can be set to trigger HO when the UE enters the valid signal strength range of the target cell, ensuring that the minimum signal strength of the target cell is met.
 
-\subsection{Preparation phase}
+\subsection{Proposed dueling DQN algorithm}
 \quad When the UE meets the preparation event conditions, it sends a MR to the serving cell to initiate the HO procedure. The MR includes the UE's location information and the distance to each neighboring cell $c_i$, denoted as $Ml_{c_i}$. Upon receiving the MR from the UE, the serving cell determines a list of candidate cells. Traditionally, candidate cells are selected based on the MR information provided by the UE. However, in the proposed approach, the serving cell has access to the ephemeris information of the 1-tier cells, and thus can include all the surrounding cells of the UE as candidate cells. Additionally, neighboring cells that do not exceed the maximum candidate cell threshold $d_{max}^c$, based on the UE's location and $Ml_{c_i}$ obtained from the MR, can also be included as candidate cells. Where, $d_{max}^c$ represents the maximum distance considered for the surrounding cells, which can be determined as, for example, the maximum ISD that can be included as a 1-tier cell.
 % Additionally, neighboring cells that do not exceed the maximum candidate cell threshold $d_{max}^c$, based on the UE's location and $Ml_{c_i}$ obtained from the MR, can also be included as candidate cells.
 
@@ -79,7 +79,7 @@ The candidate cell set is defined as $C_{candi} = {c_1, c_2, \dots, c_n}$. The p
 \label{3_oid_procedure}
 \end{sidewaysfigure}
 
-\subsection{Execution phase}
+
 \quad After receiving the HO command, the UE waits to verify the execution event. Upon satisfying the execution event, the UE executes an algorithm to select the target cell, $C_t$. This algorithm, based on the $X_p$ values of the serving and candidate cells, is designed to prevent UHOs and ensure that the UE meets the HO conditions with the $C_t$.
 
 First, for each cell $c_n$ in $C_{candi}$, an $X_p^{c_n}$ value is calculated based on the UE’s location. Similarly, the $X_p$ value of the current serving cell, denoted as $C_s$, is represented as $X_p^{C_s}$, where $C_s$ refers to the cell to which the UE is currently connected. To filter valid candidate cells for selection, the $X_p$ values of candidate cells are compared with $X_p^{C_s}$:
