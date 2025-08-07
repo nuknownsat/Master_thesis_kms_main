@@ -1,0 +1,334 @@
+
+
+% ----------------------------------------------------------------------
+%                   LATEX TEMPLATE FOR PhD THESIS
+% ----------------------------------------------------------------------
+
+% based on Harish Bhanderi's PhD/MPhil template, then Uni Cambridge
+% http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/ThesisStyle/
+% corrected and extended in 2007 by Jakob Suckale, then MPI-CBG PhD programme
+% and made available through OpenWetWare.org - the free biology wiki
+
+
+%: Style file for Latex
+% Most style definitions are in the external file PhDthesisPSnPDF.
+% In this template package, it can be found in ./Latex/Classes/
+\documentclass[oneside,12pt]{classfile/PhDthesisPSnPDF}
+
+\usepackage{array}
+\usepackage{stfloats}
+\usepackage{amsthm} 
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{nccmath}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{booktabs}
+%\usepackage{subcaption}
+\usepackage{mwe}
+\usepackage{amsmath,amssymb,amsfonts}
+%\usepackage{subfigure}
+\usepackage{caption}
+%\usepackage{subcaption}
+\usepackage{textcomp}
+\usepackage{xcolor}
+%\usepackage[utf8]{inputenc} % use UTF8 encoding
+%\usepackage{kotex} % use KoTeX package for Korean 
+\usepackage{algorithmicx}
+\usepackage{algorithm}
+%\usepackage{algorithmic}
+\usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
+%\usepackage{algcompatible}
+\usepackage{cases}
+\usepackage{rotating}
+\usepackage{longtable}
+\usepackage{bm}
+%\usepackage{textcomp}
+%\usepackage{amsmath}
+%usepackage{algcompatible}
+%\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage[normalem]{ulem}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{adjustbox}
+\usepackage{rotating}  % for rotating tables
+%\usepackage{amssymb}
+\usepackage{pdfpages}
+\usepackage{datatool}	% for abbrevation
+%\usepackage[T1]{fontenc}
+%\usepackage{CJKutf8}
+%\usepackage[english]{babel}
+%\usepackage[cjk]{kotex}
+\usepackage{afterpage} % for blank page
+%\usepackage{caption}
+\usepackage[utf8]{inputenc} % use UTF8 encoding
+\usepackage{kotex} % use KoTeX package for Korean 
+\newcommand{\BfPara}[1]{{\noindent\bf#1.}\xspace}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+
+
+\makeatletter
+\@addtoreset{algorithm}{chapter}% algorithm counter resets every chapter%
+\makeatother
+\algnewcommand{\LineComment}[1]{\Statex \hskip\ALG  #1}
+\renewcommand{\thealgorithm}{\thechapter.\arabic{algorithm}}%
+
+%: Macro file for Latex
+% Macros help you summarise frequently repeated Latex commands.
+% Here, they are placed in an external file /Latex/Macros/MacroFile1.tex
+% An macro that you may use frequently is the figuremacro (see introduction.tex)
+
+% LSH : 매크로 파일
+% 본 논문에는 figuremacroNormal (그냥 넣을때), figuremacroSizeway (돌려서 넣을때)가 사용됨.
+%\include{00_x1_MacroFile1}
+
+%: ----------------------------------------------------------------------
+%:                  TITLE PAGE: name, degree,..
+% ----------------------------------------------------------------------
+% below is to generate the title page with crest and author name
+
+%if output to PDF then put the following in PDF header
+\ifpdf
+    \pdfcatalog { /PageMode (/UseOutlines)
+                  /OpenAction (fitbh)  }
+\fi
+
+% LSH : PDF metadatas. I changed to \hypersetup since previous one didn't work.
+\hypersetup{
+  pdfinfo={
+   Title={Orbital Information and Distance based Conditional Handover in LEO-based Non-terrestrial Network},
+   Author={Jongtae Lee},
+   Subject={Master's thesis of Jongtae Lee, about the Orbital Information and Distance based Conditional Handover in LEO-based Non-terrestrial Network},
+   %Keywords={mobile data offloading, social context, small cell backhaul, LIPA/SIPTO, LTE/LTE-A},
+  }
+}
+
+% LSH : title
+\title{Orbital Information and Distance based Conditional Handover in LEO-based Non-terrestrial Network}
+
+% ----------------------------------------------------------------------
+% The section below defines www links/email for author and institutions
+% They will appear on the title page of the PDF and can be clicked
+\ifpdf
+  \author{\href{mailto:jtlee830@ajou.ac.kr}{Jongtae Lee}}
+%  \cityofbirth{born in XYZ} % uncomment this if your university requires this
+%  % If city of birth is required, also uncomment 2 sections in PhDthesisPSnPDF
+%  % Just search for the "city" and you'll find them.
+  \collegeordept{\href{http://ece.ajou.ac.kr/ece/}{Department of Electrical and Computer Engineering}}
+  \university{\href{http://www.ajou.ac.kr}{Ajou University}}
+
+  % The crest is a graphics file of the logo of your research institution.
+  % Place it in ./0_frontmatter/figures and specify the width
+  \crest{\includegraphics[width=4cm]{logo.pdf}}
+
+% If you are not creating a PDF then use the following. The default is PDF.
+\else
+  \author{Jongtae Lee}
+%  \cityofbirth{born in XYZ}
+  \collegeordept{Department of AI Convergence Network}
+  \university{Ajou University}
+  \crest{\includegraphics[width=3.0cm]{logo.pdf}}
+\fi
+
+
+\renewcommand{\submittedtext}{change the default text here if needed}
+\degree{Master} \degreedate{February, 2023}
+
+
+% ----------------------------------------------------------------------
+
+% turn of those nasty overfull and underfull hboxes
+\hbadness=10000
+\hfuzz=50pt
+
+
+%: --------------------------------------------------------------
+%:                  FRONT MATTER: dedications, abstract,..
+% --------------------------------------------------------------
+\begin{document}
+\renewcommand{\figurename}{Fig.}
+\include{00_x1_MacroFile1}
+%\language{english}
+
+% sets line spacing
+\renewcommand\baselinestretch{1.5}
+\baselineskip=18pt plus1pt
+
+%: ----------------------- generate cover page ------------------------
+% LSH : 청구논문판 용 커버. 교수님들께 드릴때 사용하였다.
+% 아래의 includepdf 부분 주석처리하고 \maketitle을 활성화한다.
+% \maketitle  % command to print the title page with above variables
+
+% LSH : 사인 받기 위한 커버 및 인준서 양식.
+% 00_02_cover.tex를 별도로 먼저 만들어야 한다.
+% cover페이지 양식은 KAIST 기반 (이충희 논문 참고) 포맷인데 본문과 클래스파일이 달라서
+% 별도로 만들어서 넣는 방식을 이용. 두가지 document class를 합치기가 쉽지 않아서 해당 접근 방법 사용.
+%\includepdf[pages={-}]{00_02_cover.pdf}
+
+% LSH : 최종판 용 커버
+% LSH : 사인된 속표지, 인준서
+% LSH : 속표지, 인준서 사인은 스캔후 해당 부분만 JPG로 저장한 후 
+% Adobe reader에서 집어넣었다.
+\includepdf[pages={1}]{Jongtae_Thesis_cover-1.pdf}
+% \includepdf[pages={1}]{Jongtae_Thesis_cover_demo-null.pdf}
+\includepdf[pages={1}]{Jongtae_Thesis_cover-2.pdf}
+\includepdf[pages={1}]{Jongtae_Thesis_cover_cignature-3.pdf}
+
+%\includepdf[pages={1}]{00_0a_cover_repeated_scan.pdf}
+%\includepdf[pages={3}]{00_0c_cover_imagemerged.pdf}
+
+% LSH : 이후 문서의 글자크기 지정
+\normalsize 
+
+%: ---------- blank page ----------------
+%: 페이지 번호 없는 빈페이지
+%: 심사용 논문 양면출력 제본을 위한 빈 페이지
+
+% 페이지 번호 있는 빈페이지
+%\newpage
+%\thispagestyle{plain} % empty
+%\mbox{}
+
+%: ----------------------- abstract ------------------------
+% Your institution may have specific regulations if you need an abstract and where it is to be placed in the document. The default here is just after title.
+
+%\include{0_frontmatter/dedication}
+% 논문 완성 후 감사의 글 작성
+\include{0_frontmatter/acknowledgement}
+
+\frontmatter
+
+% 아주대2017년8월 : abstract부터 i 페이지로 설정
+\setcounter{page}{1}
+\include{00_03_abstract}
+
+% The original template provides and abstract separate environment, if your institution requires them to be separate. I think it's easier to print the abstract from the complete thesis by restricting printing to the relevant page.
+% \begin{abstractseparate}
+%   \input{Abstract/abstract}
+% \end{abstractseparate}
+%: ----------------------- tie in front matter ------------------------
+
+%: ----------------------- contents ------------------------
+\setcounter{secnumdepth}{3} % organisational level that receives a numbers
+\setcounter{tocdepth}{2}    % print table of contents for level 3
+\tableofcontents            % print the table of contents
+% levels are: 0 - chapter, 1 - section, 2 - subsection, 3 - subsection
+
+
+%: ----------------------- list of figures/tables ------------------------
+\listoffigures  % print list of figures
+
+\listoftables  % print list of tables
+
+
+%: ----------------------- glossary ------------------------
+\include{00_04_abbreviation}
+
+%\begin{multicols}{2} % \begin{multicols}{#columns}[header text][space]
+\begin{small} % scriptsize(7) < footnotesize(8) < small (9) < normal (10)
+
+\printnomenclature[1.5cm] % [] = distance between entry and description
+
+\end{small}
+%\end{multicols}
+
+
+
+%: --------------------------------------------------------------
+%:                  MAIN DOCUMENT SECTION
+% --------------------------------------------------------------
+
+% the main text starts here with the introduction, 1st chapter,...
+\mainmatter
+
+\renewcommand{\chaptername}{} % uncomment to print only "1" not "Chapter 1"
+
+
+%: ----------------------- subdocuments ------------------------
+
+% Parts of the thesis are included below. Rename the files as required.
+% But take care that the paths match. You can also change the order of appearance by moving the include commands.
+
+% LSH : 본문
+\include{01_introduction}   % background information
+
+\include{02_Related_works}
+
+\include{03_Proposed_framework}
+
+\include{04_RESULT}
+
+\include{05_conclusion}      % discussion of results
+
+
+
+% --------------------------------------------------------------
+%:                  BACK MATTER: appendices, refs,..
+% --------------------------------------------------------------
+
+% the back matter: appendix and references close the thesis
+
+
+%: ----------------------- bibliography ------------------------
+
+% The section below defines how references are listed and formatted
+% The default below is 2 columns, small font, complete author names.
+% Entries are also linked back to the page number in the text and to external URL if provided in the BibTex file.
+
+% PhDbiblio-url2 = names small caps, title bold & hyperlinked, link to page
+%\begin{multicols}{1} % \begin{multicols}{ # columns}[ header text][ space]
+\begin{small} % tiny(5) < scriptsize(7) < footnotesize(8) < small (9)
+
+% LSH : 참고문헌부분
+% 참고문헌 뒤에 인용된 페이지 목록이 나온다.
+% 아래 \renewcommand 두개는 여기에 "Cited on pages" 문구를 추가한다.
+% [1-5] 형태로 인용된 경우에는 2, 3, 4번 논문은 링크가 만들어지지 않으니 참고바람.
+\renewcommand*{\backref}[1]{}
+\renewcommand*{\backrefalt}[4]{{%
+    \ifcase #1%
+          \or [Cited on page~#2.]%
+          \else [Cited on pages #2.]%
+    \fi%
+    }}
+    
+\bibliographystyle{classfile/IEEEtran} % Title is link if provided
+\renewcommand{\bibname}{References} % changes the header; default: Bibliography
+
+\bibliography{1_backmatter/references} % adjust this to fit your BibTex file
+
+\end{small}
+%\end{multicols}
+
+% --------------------------------------------------------------
+% Various bibliography styles exit. Replace above style as desired.
+
+% in-text refs: (1) (1; 2)
+% ref list: alphabetical; author(s) in small caps; initials last name; page(s)
+%\bibliographystyle{Latex/Classes/PhDbiblio-case} % title forced lower case
+%\bibliographystyle{Latex/Classes/PhDbiblio-bold} % title as in bibtex but bold
+%\bibliographystyle{Latex/Classes/PhDbiblio-url} % bold + www link if provided
+
+%\bibliographystyle{Latex/Classes/jmb} % calls style file jmb.bst
+% in-text refs: author (year) without brackets
+% ref list: alphabetical; author(s) in normal font; last name, initials; page(s)
+
+%\bibliographystyle{plainnat} % calls style file plainnat.bst
+% in-text refs: author (year) without brackets
+% (this works with package natbib)
+
+
+% --------------------------------------------------------------
+
+% according to Dresden med fac summary has to be at the end
+%\include{0_frontmatter/abstract}
+
+%: Declaration of originality
+%\include{9_backmatter/declaration}
+
+
+
+\end{document}

@@ -1,0 +1,14 @@
+\chapter{Introduction}
+
+\section{Background and motivation}
+\quad The development of sixth-generation (6G) networks is increasingly focusing on non-terrestrial networks (NTN) using low Earth orbit (LEO) satellites. Unlike terrestrial networks (TN), LEO satellite constellations provide global coverage, addressing the limitations of existing TNs. LEO satellites enable stable communication services even in high-traffic areas or regions lacking terrestrial infrastructure, such as remote mountainous areas, seas, or in-flight environments.
+
+Since Release 15, the 3rd Generation Partnership Project (3GPP) has been progressively standardizing NTN protocols. One of the main challenges is the high mobility of LEO satellites, which can lead to frequent handovers (HO) due to the continuously changing positions of satellite cells. This issue is particularly significant in Earth-moving cells (EMC) environments, where satellites are constantly moving. To address this issue, 3GPP introduced conditional HO (CHO) and distance-based CHO mechanisms in Releases 16 and 17 \cite{rel_38821}, \cite{rel_38811}.
+Unlike conventional methods, CHO does not determine a single target cell with a HO command. Instead, the UE configures multiple candidate cells, and can perform HO to the best cell among the configured candidate cells even if the environment changes during the HO control message exchange. Therefore, the occurrence rate of radio link failure (RLF) and unnecessary HO (UHO) are reduced, especially in satellite environments with high mobility. Furthermore, distance-based HO mechanisms that are triggered based on location information rather than signal strength improve the accuracy of HO decisions as clear distance differences occur relative to signal strength. However, even these mechanisms can face the same problem in some areas of highly dynamic EMC environments, highlighting the need for more advanced strategies.
+
+\section{Contributions}
+\quad This thesis proposes a CHO strategy based on orbital information and distance (OID). This method performs HO using the position of the user equipment (UE) and the orbital data of LEO satellites. The OID-based CHO strategy minimizes UHO and improves the HO success rate by intelligently managing the target cell selection. The simulation results show that this approach reduces signaling overhead and improves overall network performance, including UHO compared to conventional distance-based HO.
+
+\section{Overview}
+\quad The remainder of this thesis is structured as follows: 
+Sec. \uppercase\expandafter{\romannumeral2} reviews the existing HO mechanisms and related work. Sec. \uppercase\expandafter{\romannumeral3} presents the proposed OID-based CHO strategy in detail. Sec. \uppercase\expandafter{\romannumeral4} discusses the simulation results and compares the proposed strategy with conventional approaches. Finally, Sec. \uppercase\expandafter{\romannumeral5} concludes the thesis.

@@ -1,0 +1,230 @@
+\chapter[Performance evaluation]{Performance evaluation}
+\section{System model}
+\quad In this thesis, the case 9 scenario of the system-level simulation described in \cite{rel_38821} is analyzed, with scenario D2 selected to account for the regenerative payload and EMC environment. The satellite antenna pattern is based on \cite{rel_38811}. Each satellite has 19 slot-beams, and the ISD is arranged uniformly. Additionally, FR1 is considered, resulting in interference between spot-beams. In this simulation, In this simulation, 2,000 UEs are randomly distributed within the blue area of the satellite service region, as shown in Fig. \ref{figure_system_model}. Since the satellite's speed is fast enough to ignore the UE's movement, a fixed UE is deployed. In addition, it is assumed that the UE can update its location information via the GPS. The detailed values are shown in Table. \ref{table:sls_case_9}.
+
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\caption{System-level simulation: parameters for study case 9}
+\label{table:sls_case_9}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{c|c|c|c}
+\hline\hline
+\multicolumn{2}{c|}{\textbf{LEO Satellite}} & \multicolumn{2}{c}{\textbf{UE (Handheld)}} \\
+\hline
+\textbf{Parameter} & \textbf{Value} & \textbf{Parameter} & \textbf{Value} \\
+\hline\hline
+\textbf{Altitude} & 600 km & \textbf{Type} & Handheld \\
+\textbf{Antenna aperture} & 2 m & \textbf{Distribution} & 100\% outdoor \\
+\textbf{EIRP density} & 34 dBW/MHz & \textbf{Frequency band} & S-band (2 GHz) \\
+\textbf{3dB beamwidth} & 4.4127 deg & \textbf{FR factor} & Option: 1 \\
+\textbf{Tx max gain} & 30 dBi & \textbf{Rx antenna gain} & 0 dBi \\
+\hline\hline
+\end{tabular}
+}
+\end{table}
+
+The path loss model for satellite communications is based on the large-scale satellite channel model provided in \cite{rel_38821}. The total path loss between the UE and the LEO satellite is given by:
+
+\begin{equation} PL_{total}[dB]=PL_{b}+PL_{att}+PL_{gas}+PL_{entry}, \end{equation}
+where $PL_{b}$ represents the basic path loss, $PL_{att}$ accounts for atmospheric or ionospheric attenuation, $PL_{gas}$ represents gas attenuation, and $PL_{entry}$ refers to building loss. The basic path loss is defined as:
+
+\begin{equation} PL_{b}[dB]=FSPL(f_{c},d)+SL(\alpha,f_c)+CL(\alpha,f_c), \end{equation}
+
+where $FSPL(f_{c},d)$ represents FSPL, $d$ is distance between the satellite and UE, and $c$ is speed of light. $CL(\alpha,f_c)$ represents clutter loss, and $SL(\alpha,f_c)$ refers to shadow fading modeled as $SL \sim N(0, \sigma^2_{SL})$. The LOS probability, along with the values for $SL(\alpha,f_c)$ and $CL(\alpha,f_c)$, as shown in Table. \ref{table:los_nlos}, are provided in \cite{rel_38811}. Total path loss is calculated as follows:
+
+\begin{equation} PL_{b} = P_{LOS}(FSPL(f_{c},d) + SF) + P_{NLOS}(FSPL(f_{c},d) + SF + CL. \end{equation}
+Since frequencies below 6 GHz are considered, atmospheric and gas attenuation ($PL_{att}$ and $PL_{gas}$) can be neglected \cite{rel_38811}, as can building loss $PL_{entry}$ for outdoor users. This thesis focuses on dense urban regions in the 2 GHz band, so these attenuations are excluded.
+
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\caption{LOS Probability, $SR$ and $CL$ (S-band, dense urban)}
+\label{table:los_nlos}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{c|c|c|c|c}
+\hline\hline
+\textbf{Elev. angle ($\alpha$)} & \textbf{LOS prob.} & \textbf{$\sigma_{SF}$(LOS)} & \textbf{$\sigma_{SF}$(NLOS)} & \textbf{CL} \\
+\hline\hline
+10° & 28.2\% & 1.79 dB & 8.93 dB & 19.52 dB \\
+20° & 33.1\% & 1.14 dB & 9.08 dB & 18.17 dB \\
+30° & 39.8\% & 1.14 dB & 8.78 dB & 18.42 dB \\
+40° & 46.8\% & 0.92 dB & 10.25 dB & 18.28 dB \\
+50° & 53.7\% & 1.42 dB & 10.56 dB & 18.63 dB \\
+60° & 61.2\% & 1.56 dB & 10.74 dB & 17.68 dB \\
+70° & 73.8\% & 0.85 dB & 10.17 dB & 16.50 dB \\
+80° & 82.0\% & 0.72 dB & 11.52 dB & 16.30 dB \\
+90° & 98.1\% & 0.72 dB & 11.52 dB & 16.30 dB \\
+\hline\hline
+\end{tabular}
+}
+\end{table}
+
+The simulation set used in this study consists of eight different configurations designed to evaluate various HO strategies. These strategies are divided into signal strength-based CHO strategies using the A3 event and distance-based CHO strategies. Sets 1 to 4 focus on signal strength-based CHO strategies, considering CHO in satellite environments, and each simulation set is differentiated by the assigned offset and TTT values \cite{rel_36839}, \cite{juan_5g}.
+The distance-based CHO strategies consist of three standardized sets defined by 3GPP. Sets 5, 6, and 7 implement the 3GPP-standardized distance-based CHO strategies \cite{rel_38331}. Each set modifies $Thresh_1$, the threshold for exiting the serving cell, to compare performance variations based on changes in HO triggering points. In Set 5, HO is triggered when the UE exits the inner radius of the serving cell, initiating an early HO within the serving cell.
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\caption{Simulation sets}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{c|c|c|c|c|c}
+\noalign{\smallskip}\noalign{\smallskip}\hline\hline
+\# & \textbf{Strategy} & \textbf{Offset} & \textbf{$Thresh_1$} & \textbf{$Thresh_2$} & \textbf{TTT} \\
+\hline\hline
+1  & CHO (A3)      & 0 dB  & -   & -   & 0 ms \\
+2  & CHO (A3)      & 2 dB  & -   & -   & 0 ms \\
+3  & CHO (A3)      & 0 dB  & -   & -   & 256 ms \\
+4  & CHO (A3)      & 2 dB  & -   & -   & 256 ms \\
+5  & DCHO \cite{rel_38331} & -   & 16.93 km ($d_{rad}^{I}$) & 23.12 km ($d_{rad}^{T}$) & -    \\
+6  & DCHO \cite{rel_38331} & - & 20.02 km ($\frac{ISD}{2}$) & 23.12 km ($d_{rad}^{T}$) & -    \\
+7 & DCHO \cite{rel_38331} & - & 23.12 km ($d_{rad}^{S}$) & 23.12 km ($d_{rad}^{T}$) & -    \\
+8 & OID-based CHO & - & 16.93 km ($d_{rad}^{I}$) & 23.12 km ($d_{rad}^{T}$) & -    \\
+\hline\hline
+\end{tabular}%
+}
+\label{sim set}
+\end{table}
+Set 6 uses half of the ISD as the threshold, which corresponds to the moment when the target cell becomes closer to the UE than the serving cell. Set 7 allows HO to be triggered when the UE reaches the outer radius of the serving cell, i.e. the maximum boundary of the cell, while $Thresh_2$ is satisfied. Each set is designed to observe performance variations based on the UE's HO triggering location.
+The final set, Set 8, evaluates the newly proposed distance-based CHO mechanism, the OID-based CHO. Additionally, the K filter, which represents the number of averaged measurements, is considered as 1 for all simulation sets.
+
+\section{Key Performance Indicators}
+\quad The first is the average downlink (DL) signal-to-interference-plus-noise ratio (SINR), which represents the quality of the signal received by the UE from the serving cell. It measures the signal strength from the serving cell relative to the interference and noise from adjacent cells. Higher SINR implies better signal quality and more stable communication, significantly enhancing network performance, data transmission rates, and communication reliability. In this thesis, the average SINR values of each UE were analyzed during the simulation to assess how effectively the network is operating.
+
+RLF occurs when the UE's SINR falls below the threshold \(Q_{\text{out}}\) (typically -8 dB) and does not recover within a certain time (T310 timer, typically 1 second). If the SINR recovers above the \(Q_{\text{in}}\) threshold (typically -6 dB), the timer stops, and no RLF occurs. RLF indicates a breakdown in communication, representing a critical issue when the network is unable to maintain stable connections. In this thesis, the number of RLF occurrences was measured for each UE and calculated as the rate of RLF per second per UE to evaluate HO performance. The higher the number of RLF occurrences, the lower the network stability and the higher the likelihood of HO failures. More detail can be found in \cite{rel_38300}, \cite{rel_38331} and \cite{rel_36839}.
+
+ToS measures the duration the UE remains connected to a specific cell, indicating how long the connection is maintained in that cell \cite{rel_36839}. In this thesis, ToS is defined as the time from when the UE sends the HO complete message to cell A until it sends a HO complete message to cell B. A shortToS implies frequent HOs, which can lead to unnecessary resource wastage and degrade communication quality.
+
+\begin{figure} [t]
+\centering
+\includegraphics[width=1.0\columnwidth]{figure/figure_UHO_PP_ToS.png}
+\caption{Definition of UHO and HOPP according to ToS}
+\label{4_kpi_uhopptos.pdf}
+\end{figure}
+UHO is defined as when the UE performs a HO from the serving cell to a target cell, only to HO back to the original serving cell or another cell within 1 second \cite{juan_ho_all}. As shown in Fig. \ref{4_kpi_uhopptos.pdf}(a), UHO is a key metric for evaluating the efficiency of the HO algorithm. A high UHO occurrence rate indicates an increase in unnecessary signaling overhead and inefficient HO decisions. In this thesis, the UHO occurrence rate was measured based on the number of UHO events during the simulation. A low UHO rate indicates more accurate HO decisions and efficient use of system resources. HO Ping-pong (HOPP), shown in Fig. \ref{4_kpi_uhopptos.pdf}(b), is a specific type of UHO where the UE returns to the original serving cell within 1 second \cite{wile_com} and \cite{rel_38133}. This represents an even more inefficient case of UHO, leading to excessive signaling overhead and instability in the connection. This thesis evaluates the performance of each strategy by calculating the occurrence ratio of HOPP and UHO among the total number of HOs.
+
+The average number of resource blocks (RBs) used during the HO process is an important metric for evaluating signaling overhead and resource efficiency. RB usage is computed using the RBs consumed for each step of the HO process, which allows us to estimate the signaling overhead of the system. The RBs generated during the HO process are referenced in \cite{wcnc_rbs} and listed in Table \ref{chart_4_2}.
+ 
+\begin{table}[t]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\caption{Number of RBs in the HO control message used}
+\begin{tabular}{>{\centering\arraybackslash}m{1cm}|>{\centering\arraybackslash}m{8.5cm}|>{\centering\arraybackslash}m{1cm}}
+\noalign{\smallskip}\noalign{\smallskip}\hline\hline
+\textbf{Type} & \textbf{Description} & \textbf{RBs} \\
+\hline\hline
+$N_{MR}$ & Resource blocks used for the MR & 1 \\
+$N_{cmd}$ & Resource blocks used for the HO command & 2 \\
+$N_{RA}$ & Resource blocks used for RA & 6 \\
+$N_{cnf}$ & Resource blocks used for HO confirmation & 1 \\
+\hline\hline
+\end{tabular}
+\label{chart_4_2}
+\end{table}
+
+\section{Results and Discussion}
+\begin{figure}[t]
+\centering
+\includegraphics[width=1.0\columnwidth]{figure_results/final_new_8set/results_rlf.png}
+\caption{RLF performance results}
+\label{results_rlf.png}
+\end{figure}
+\quad Fig. \ref{results_rlf.png} clearly illustrates the RLF rate per UE per second across various HO strategies. The blue bar graph represents the results of signal-based CHO, which evaluates the signal strength of the serving and candidate cells. However, due to environmental factors, weakening, and fading, the signal strength does not increase or decrease steadily, leading to a higher likelihood of additional HOs occurring within the cell or near its boundaries. The RLF rate in Sets 3 and 4 is higher than in Sets 1 and 2. This indicates that adjusting HO parameters such as signal strength offset and TTT to delay HO decisions can allow for more careful HOs and help resolve such issues. However, increasing parameter values also makes the HO conditions more difficult to satisfy, causing delays in HO execution. In such cases, weakening of the signal strength in the serving cell leads to a reduction in DL SINR, increasing the risk of RLF.
+On the other hand, distance-based CHO strategies are unaffected by signal strength variability and can perform HOs at optimal cell and UE locations. Consequently, Sets 5 to 7 exhibit significantly lower RLF rates compared to Sets 1 to 4. However, the RLF gradually increases in Sets 6 and 7 compared to Set 5. This is because, in certain sets, the event satisfaction point is farther from the serving cell, resulting in RLFs primarily caused by weakening of the signal strength in the serving cell. This delay in HO timing can lead to frequent HOs near the serving cell boundary.
+In contrast, the proposed method evaluates target cell selection to delay HO timing when necessary. Unlike Sets 6 and 7, it introduces an exception condition that triggers HO to the nearest cell when the signal strength of the serving cell drops below a specific threshold, even if HO timing is delayed due to target cell selection. As a result, the proposed method effectively prevents RLF caused by weakening of the signal strength, showing its effectiveness in reducing RLF occurrences.
+ 
+\begin{figure} [t]
+\centering
+\includegraphics[width=1.0\columnwidth]{figure_results/final_new_8set/results_uho.png}
+\caption{UHO performance results}
+\label{results_uho.png}
+\end{figure}
+
+\begin{figure} [t]
+\centering
+\includegraphics[width=1.0\columnwidth]{figure_results/final_new_8set/results_hopp.png}
+\caption{HOPP performance results}
+\label{results_hopp.png}
+\end{figure}
+
+Fig. \ref{results_uho.png} and Fig. \ref{results_hopp.png} show the ratio of UHO and HOPP among the HOs that occurred in the UE during the simulation, respectively. In signal strength-based CHO using the A3 event, Sets 1 to 4 exhibit a significant decrease in the UHO occurrence rate as the offset and TTT values are increased. In Set 1, frequent HO attempts occur due to the small difference between the center and boundary of the cell and the effects of signal strength fading, resulting in a relatively high UHO rate and frequent HOPP occurrences due to incorrect triggers. In most cases, this is attributed to UHOs that return to the previous serving cell due to incorrect triggers. However, increasing the offset and TTT reduces the number of incorrect HO triggers caused by signal strength fading, leading to a decrease in both UHO and HOPP occurrences. This indicates that delaying HO through offset and TTT settings reduces the frequency of HO attempts compared to immediate HO execution. Furthermore, as signal strength attenuation in the serving cell becomes more pronounced, the total number of HOs, UHOs, and HOPPs also decreases.
+On the other hand, in Sets 5 to 7, which use distance-based CHO conditions, the UHO occurrence rate is significantly lower than in Set 1. This is because distance-based CHO is unaffected by signal strength fading and provides a more reliable HO trigger based on linear changes in distance information within the EMC environment. In particular, in Set 7, where the HO timing is delayed closer to the boundary of the serving cell, stricter HO conditions further reduce the UHO rate. However, as shown in Fig. \ref{figure_uho_in_emc}, UHOs can still occur in distance-based CHO when the UE deviates from its trajectory and meets the HO condition for an adjacent orbital cell. Therefore, while HOPP occurrences can be significantly decreased, it is not possible to completely eliminate UHO occurrences.
+Additionally, delaying HO timing by increasing the offset can impact the average DL SINR due to signal strength attenuation. However, in the case of the proposed OID-based CHO strategy in Set 7, it was confirmed that UHO occurrences can be effectively decreased by connecting the UE to the most suitable cell based on its position using orbital information.
+
+\begin{figure} [t]
+\centering
+\includegraphics[width=1.0\columnwidth]{figure_results/final_new_8set/results_DLSINR_box.png}
+\caption{Box plot of DL SINR performance results}
+\label{results_DLSINR_box.png}
+\end{figure}
+
+Fig. \ref{results_DLSINR_box.png} illustrates the average DL SINR experienced by the UE during the simulation as a box plot. As shown in the plot, Set 1, which uses signal strength-based CHO without any HO parameter settings, is more likely to select an incorrect target cell compared to distance-based CHO strategies due to the effect of signal strength fading, resulting in an overall lower signal strength distribution. Additionally, Sets 2, 3, and 4, which apply HO parameters, exhibit progressively lower average DL SINR distributions compared to Set 1, which immediately performs HO to the cell with higher signal strength. The signal strength-based CHO method cannot completely avoid the effects of signal strength fading and faces challenges in selecting ideal cells, often requiring acceptance of signal attenuation. Furthermore, signal strength-based strategies tend to have a relatively high risk of RLF occurrence, further lowering the average signal strength.
+In contrast, distance-based CHO shows higher average signal strength compared to the signal strength-based CHO. This is because it avoids the effects of signal strength fading and improves DL SINR performance by utilizing clear distance information to perform HO at an optimal location. Specifically, strategies such as those in Sets 4 and 5, which execute HO immediately upon entering the valid region of the target cell from the serving cell's area, achieve the highest average signal strength. However, in Set 6, where HO timing is significantly delayed, the average DL SINR may decrease. This suggests that additional processes are needed to adjust appropriate thresholds based on the situation when relying on HO parameters.
+The proposed OID-based CHO provides flexible timing for target cell selection, allowing HO to be delayed when a more suitable candidate cell is expected, even if a closer cell is available. As a result, it exhibits a wider range of average DL SINR distributions compared to conventional distance-based CHO strategies. The proposed method demonstrates its ability to select the most suitable cell for the UE state in an EMC environment and shows that it can enhance overall DL SINR performance without relying on specific HO offset adjustments.
+
+\begin{figure} [t]
+\centering
+\includegraphics[width=1.0\columnwidth]{figure_results/final_new_8set/results_DLSINR_cdf.png}
+\caption{CDF of DL SINR performance results}
+\label{results_DLSINR_cdf.png}
+\end{figure}
+
+These results can be confirmed in Fig. \ref{results_DLSINR_cdf.png}, which illustrates the CDF (cumulative distribution function) of all DL SINR values observed during the simulation period. Among all strategies, Set 1 shows the highest performance among signal strength-based strategies but is lower than Sets 5 and 6, which exhibit the best DL SINR trends. In contrast, Sets 2, 3, and 4, which applied HO offsets, show the lowest performance in the DL SINR distribution. This indicates that signal strength-based strategies face challenges in selecting and maintaining the ideal cell in the NTN EMC environment.
+On the other hand, Sets 5 and 6 demonstrate the highest signal strength distribution by immediately selecting the most ideal cell. However, Set 7 exhibits a lower signal strength distribution than Set 1 due to signal attenuation in the serving cell caused by delayed HO timing through threshold adjustments. This highlights that even in distance-based CHO strategies, threshold adjustments significantly impact performance.
+Finally, the proposed strategy in Set 8 shows slightly lower DL SINR tendencies compared to Sets 5 and 6 but outperforms signal strength-based strategies. Notably, it demonstrates a higher DL SINR performance distribution compared to Set 7, where UHO was reduced by adjusting the distance threshold. Therefore, when analyzed in relation to the previous UHO results, it is confirmed that the proposed strategy can achieve the most optimal performance by appropriately balancing the trade-off between DL SINR and UHO through threshold adjustments in distance-based CHO.
+
+\begin{figure} [t]
+\centering
+\includegraphics[width=1.0\columnwidth]{figure_results/final_new_8set/results_avgToS.png}
+\caption{ToS performance results}
+\label{results_avgToS.png}
+\end{figure}
+
+\begin{figure} [t]
+\centering
+\includegraphics[width=1.0\columnwidth]{figure_results/final_new_8set/results_shortToS_ratio.png}
+\caption{ShortToS performance results}
+\label{results_shortToS_ratio.png}
+\end{figure}
+
+Fig. \ref{results_avgToS.png} illustrates the average ToS experienced by the UE during the simulation, while Fig. \ref{results_shortToS_ratio.png} shows the ratio of shortToS to total ToS. Here, shortToS refers to ToS durations of less than 1 second. Set 1 recorded the highest UHO and HOPP occurrence rates among all strategies, resulting in the lowest ToS and the highest shortToS ratio. This is because HO conditions are frequently satisfied in this strategy, leading to continuous UHO, especially HOPP, which significantly degrades service quality due to frequent service interruptions during the HO process.
+In contrast, Sets 2, 3, and 4 showed an improving trend in ToS performance as HO parameters increased in the signal strength-based method, with noticeable improvements in the shortToS ratio. Additionally, as HOPP occurrences decreased, overall ToS increased. Sets 5, 6, and 7 applied distance-based methods to perform HOs at ideal locations, resulting in higher ToS compared to Set 1, with no HOPP occurrences. However, due to UHO, the average performance of ToS was lower than in Sets 2, 3, and 4, and the shortToS ratio was relatively higher. In particular, sets 5 and 6 showed some improvements in set 6, where threshold adjustments were made to modify the HO timing near the cell boundary. However, the impact of small positional changes in boundary areas was relatively limited compared to the overall cell size, resulting in minimal improvement in ToS performance.
+On the other hand, the proposed method, Set 8, recorded the highest ToS among all comparison groups by selecting the appropriate target cell based on the cell trajectory and UE location.
+
+\begin{figure} [t]
+\centering
+\includegraphics[width=1.0\columnwidth]{figure_results/final_new_8set/results_avgRBs.png}
+\caption{Average RB usage results}
+\label{results_rbs.png}
+\end{figure}
+
+
+Finally, Fig. \ref{results_rbs.png} measures the average RB usage for HO control messages to evaluate how much signaling overhead within the network has been reduced. Set 1 recorded the highest UHO and HOPP occurrence rates among all strategies, leading to the highest number of HO attempts and, consequently, the highest average RB usage.
+In contrast, Sets 2, 3, and 4, which applied HO parameters, made it more challenging to satisfy HO conditions compared to Set 1, resulting in fewer HO occurrences and a corresponding reduction in average RB usage within the network. In the case of Set 5, the average RB usage was lower than Set 1 but higher than Sets 2, 3, and 4, following a trend similar to UHO performance.
+Meanwhile, Sets 6 and 7 showed significantly reduced RB usage compared to Sets 1 through 5, as stricter HO conditions reduced the number of HO attempts. But, the method proposed in this thesis, Set 8, was evaluated with stricter criteria for target cell selection and HO execution than other strategies. By allowing target cell selection and HO delays to be controlled based on conditions, the method can guide the UE to the most ideal cell, minimizing average RB usage.
+Therefore, it was confirmed that the proposed approach effectively addresses the issue of signaling overhead within the network, demonstrating its potential for improvement in network efficiency.
+
+Table \ref{table_summary} summarizes the detailed results of all simulations. In conclusion, the proposed OID-based CHO strategy effectively prevents UHO and HOPP occurrences while demonstrating performance improvements over existing HO strategies in key metrics, such as extended average ToS and minimized RB usage. These improvements have the potential to significantly enhance overall network performance in EMC-based LEO satellite communication systems.
+Moreover, the proposed method is not influenced by HO parameter settings. The key parameter, $X_p$, is utilized through distance-based CHO by leveraging the default position information, eliminating the need for additional data exchange. As a result, the method imposes minimal processing burden on the terminal, making it a practical and feasible approach for real-world deployments.
+
+\begin{landscape}
+\begin{table}[t]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{c|c|c|c|c|c|c|c|c}
+\noalign{\smallskip}\noalign{\smallskip}\hline\hline
+& \textbf{Set 1} & \textbf{Set 2} & \textbf{Set 3} & \textbf{Set 4} & \textbf{Set 5} & \textbf{Set 6} & \textbf{Set 7} & \textbf{Set 8} \\ \hline
+\textbf{RLF [\#/UE/sec]}       & 0.004 & 0.004 & 0.015 & 0.032 & 0 & 0 & 0.001 & 0 \\
+\textbf{Avg UHO ratio [\%]}    & 24.387 & 8.95 & 6.182  & 2.495 & 10.438 & 10.438  & 1.736 & 0 \\
+\textbf{Avg HOPP ratio [\%]}   & 15.259 & 1.377 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\textbf{Avg DL SINR (25\%) [dB]} & -2.457 & -2.652 & -2.844 & -3.161 & -2.266 & -2.284 & -2.647 & -2.315 \\
+\textbf{Avg DL SINR (50\%) [dB]} & -1.657 & -1.791 & -1.968 & -2.205 & -1.533 & -1.507 & -1.754 & -1.612 \\
+\textbf{Avg DL SINR (75\%) [dB]} & -0.806 & -0.922 & -1.067  & -1.257  & -0.722 & -0.710 & -0.902 & -0.673 \\
+\textbf{Avg ToS [sec]}         & 2.786 & 3.609 & 3.846 & 4.067 & 3.534 & 3.534 & 3.626 & 5.276 \\
+\textbf{ShortToS ratio [\%]}  & 28.233 & 10.811 & 7.556 & 3.088 & 12.551 & 12.551 & 2.101 & 0 \\
+\textbf{Avg RBs usage [\#/UE]} & 98 & 92.57 & 77.57 & 81 & 92.08 & 65.58 & 57.66 & 45.6 \\ \hline
+\hline
+\end{tabular}
+\caption{Summary of Simulation Results by Set}
+\label{table_summary}
+\end{table}
+\end{landscape}

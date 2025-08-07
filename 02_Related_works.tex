@@ -1,0 +1,124 @@
+\chapter[Related works]{Related works}
+\label{chapter:related_works}
+
+\section[Earth-moving cells environment]{Earth-moving cells environment}
+\quad In NTN-based LEO satellite communication system, two primary beam steering approaches can be identified, as illustrated in Fig. \ref{figure_beam_type} \cite{rel_38821}. In this figure, (a) represents the quasi-fixed cell approach. This method involves the satellite performing beam steering to maintain a fixed service area over a particular region as the satellite moves. In this scenario, as long as the satellite remains above the minimum elevation angle, no additional HO is required within the area. However, maintaining a fixed service area as the satellite moves requires complex and costly beam steering mechanisms, which significantly increase the complexity and cost of satellite design. On the other hand, as shown in Fig. (b), the EMC approach does not involve beam adjustments, reducing the design complexity and cost. However, as the satellite and its service cells move, users on the ground experience frequent cell transitions, leading to a higher number of HOs and increased signaling overhead. This thesis focuses the EMC approach to address the challenges caused by frequent cell transitions and aiming to improve overall system performance and stability.
+
+\begin{figure}
+\centering
+\includegraphics[width=1.0\columnwidth]{figure/figure_beam_type.png}
+\caption{Beam steering type: (a) quasi-fixed cell, (b) EMC}
+\label{figure_beam_type}
+\end{figure}
+
+\section[Handover procedure]{Handover procedure}
+\subsection{Basic handover}
+\quad Basic HO (BHO) is the traditional HO method where the serving cell initiates and controls the HO process \cite{enric_5g_new_radio}. First, when the HO conditions are satisfied for a certain period, known as the time-to-trigger (TTT), the UE sends a measurement report (MR) to the serving cell. Upon receiving the MR, the serving cell evaluates the measurement results and selects the most suitable target cell for the UE, making the HO decision. The serving cell then sends a HO request message to the target cell over the Xn interface to check if HO is possible. After receiving the HO Request acknowledgment (ACK) message from the target cell, the serving cell sends the HO command to the UE. Upon receiving the HO command, the UE immediately disconnects from the serving cell and attempts random access (RA) with the selected target cell. The entire procedure is detailed in Fig. \ref{figure_bho_procedure}.
+
+\begin{figure}
+\centering
+\includegraphics[width=1.0\columnwidth]{figure/figure_bho_procedure.png}
+\caption{Basic HO procedure}
+\label{figure_bho_procedure}
+\end{figure}
+
+In TN, the cell radius is small due to the very small altitude compared to NTNs, so the propagation delay between the UE and the base station is minimized. However, in NTN, the significant distance between the UE and LEO satellites due to their high altitude causes much larger propagation delays compared to TN, introducing considerable latency in exchanging HO control messages between the UE and the base station \cite{enric_5g_new_radio}. This can lead to the selection of suboptimal target cells, as the MR used to make HO decisions are based on the signal conditions from previous moments. This issue is made worse by the dynamic environment of LEO satellite cells, where the rapid movement of satellites makes precise timing for HOs important to prevent UHOs or RLF.
+This issue occurs because the target cell is selected based on MR results that are outdated and may no longer match the UE's optimal cell at the current location. Furthermore, due to the effects of signaling fading, there is a risk of selecting an incorrect target cell, leading to UHO or RLF. Therefore, employing the traditional HO method in NTN environments may degrade network performance.
+
+\subsection{Conditional handover}
+\quad To address the issues mentioned earlier, NTN adopts the CHO mechanism, initially proposed in NR \cite{rel_38300}. CHO divides the HO process into two different phases: the preparation and the execution phase. Similar to the conventional method, when the HO condition is met, the UE sends an MR to the serving cell. However, in CHO, instead of selecting a single target cell, the serving cell prepares multiple candidate target cells based on the MR and initiates the HO request message procedure. After receiving the HO Request ACK message from these candidate cells, the serving cell sends the HO command to the UE. At this point, rather than immediately executing the HO, the UE evaluates the prepared candidate cells through an execution event and selects the optimal target cell for the HO. This approach enhances flexibility in target cell selection, especially in LEO satellite environments, helping to reduce UHO and RLF. The complete procedure of CHO is illustrated in Fig. \ref{figure_cho_procedure}.
+
+\begin{figure}
+\centering
+\includegraphics[width=1.0\columnwidth]{figure/figure_cho_procedure.png}
+\caption{Conditional HO procedure}
+\label{figure_cho_procedure}
+\end{figure}
+
+\section{Handover triggering event}
+\subsection{Signal strength-based condition}
+
+\begin{table}[ht]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\caption{Entering conditions in signal strength-based HO}
+\begin{tabular}{c|c}
+\noalign{\smallskip}\noalign{\smallskip}\hline\hline
+\textbf{Event} & \textbf{Entering condition} \\
+\hline
+Event A1 & $P_s - Hys > Thresh$ \\
+\hline
+Event A2 & $P_s + Hys < Thresh$ \\
+\hline
+Event A3 & $P_s + Offset < P_n$ \\
+\hline
+Event A4 & $P_n - Hys > Thresh$ \\
+\hline
+Event A5 & $(P_s + Hys < Thresh_1) \land (P_n - Hys > Thresh_2)$ \\
+\hline\hline
+\end{tabular}
+\label{chart_2_1}
+\end{table}
+
+\quad The UE continuously measures the signal strength of both the serving cell and neighboring cells at a regular measurement interval (e.g., 200 ms \cite{rel_36133}). This periodic measurement is essential, as HO is required when the signal strength of a neighboring target cell becomes stronger than that of the serving cell, or when the UE moves outside the serving cell's coverage area. Therefore, at each measurement interval, the UE checks whether the conditions triggering a HO event are satisfied and proceeds with the HO if specific criteria are met.
+
+There are various HO conditions as shown in Table \ref{chart_2_1}, where the handover condition expression is constructed by comparing the signal strength of the serving cell or target cell with a predefined threshold or by directly comparing the two signal strengths. Additionally, if the TTT parameter is configured, the HO is initiated only when the condition is continuously met during the TTT period.
+Here, $P_s$ and $P_n$ represent the signal strength of the serving cell and the neighboring cells, respectively. In addition, $Offset$, which is specifically used in the A3 event, is a parameter that determines the required difference in signal strength between the serving cell and the target cell to satisfy the condition. $Thresh$ denotes a specific signal threshold. Among them, since the A5 event checks both the serving cell and the target cell, two thresholds are required, which are represented as $Thresh_1$ and $Thresh_2$, respectively.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.65\columnwidth]{figure/figure_ntn_high_altitude.png}
+\caption{Difference in signal strength within a cell}
+\label{figure_ntn_high_altitude}
+\end{figure}
+
+\begin{sidewaysfigure}[p]
+\centering
+\includegraphics[width=1.0\columnwidth]{figure/figure_cell_center_edge.png}
+\caption{Differences in signal variation: (a) TN, (b) NTN}
+\label{figure_rsrp_val}
+\end{sidewaysfigure}
+
+In NTN environments, as shown in Fig. \ref{figure_ntn_high_altitude}, LEO satellites operate at altitudes much higher than the cell radius. For instance, in study case 9 from \cite{rel_38821}, with a satellite altitude of 600 km and a cell radius of approximately 23.1 km, the distance difference between the cell center ($d_{center}$) and the boundary ($d_{sideline}$) is around 520 meters. Due to the satellite’s high altitude, this distance difference is relatively insignificant, applying the free space path loss (FSPL) equation \ref{eq_fspl} shows that the signal strength difference between the cell center and boundary is only 0.006 dB.
+\begin{equation} FSPL(f_{c},d)[dB]=20\log_{10}(d) + 20\log_{10}(f_{c}) + 20\log_{10}\left(\frac{4\pi}{c}\right), \label{eq_fspl}\end{equation}
+where $f_{c}$ is the carrier frequency, $d$ is the distance, and $c$ represents the speed of light. Consequently, as demonstrated in Fig. \ref{figure_rsrp_val}, the signal strength difference between the cell center and the cell boundary is almost negligible in NTN scenarios. This poses a challenge for HO decisions based solely on signal strength, as the difference is too insufficient to serve as a reliable criterion.
+
+\subsection[Distance-based condition]{Distance-based condition}
+\label{dist_cho_trig}
+\quad In the 3GPP standardization, a conditional expression based on the UE's location and the \textit{referenceLocation}, which refers to the beam's boresight \cite{rel_21917}, is proposed for distance-based CHO \cite{rel_38331}. The entering condition is defined in equation \ref{eq_dcho_ent}, while the leaving condition is formulated as equation \ref{eq_dcho_lev}. These conditions are apply to both the preparation and execution events of CHO.
+
+\begin{equation}
+(Ml1-Hys>Thresh_1)\land (Ml2+Hys<Thresh_2),
+\label{eq_dcho_ent}
+\end{equation}
+
+\begin{equation}
+(Ml1-Hys<Thresh_1)\lor (Ml2+Hys>Thresh_2),
+\label{eq_dcho_lev}
+\end{equation}
+Here, $Ml1$ and $Ml2$ denote the distances between the UE and the serving cell's \textit{referenceLocation} as well as the target cell's \textit{referenceLocation}, respectively. $Thresh_1$ and $Thresh_2$ represent the distance thresholds for the serving and target cells, while $Hys$ denotes hysteresis, with all parameters measured in meters. 
+The conditions are satisfied when the UE moves beyond $Thresh_1$ from the serving cell and enters within $Thresh_2$ of the target cell, as illustrated in Fig. \ref{figure_dcho_enter}.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=1.0\columnwidth]{figure/figure_dcho_enter.png}
+\caption{Entering condition in 3GPP distance-based HO}
+\label{figure_dcho_enter}
+\end{figure}
+
+This allows the network to adjust the two distance thresholds to enable HOs at specific locations, thereby reducing UHOs caused by the fading effects of signal strength and addressing the signal strength differentiation issue arising from the high altitude of satellites in an EMC environment. However, in regions where cell boundaries overlap, such illustrated in Fig. \ref{figure_uho_in_emc}, distance-based HO may lead to frequent HOs, as shown in the figure. In such overlapping areas, the HO condition may continuously be satisfied, causing the UE to switch between cells unnecessarily. To address this, advanced HO strategies that take both the UE’s position and the satellite’s orbit into account are essential for reducing UHO and improving overall network efficiency.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=1.0\columnwidth]{figure/figure_uho_in_emc.png}
+\caption{DCHO issues in EMC environment: UHO}
+\label{figure_uho_in_emc}
+\end{figure}
+
+\section{Recent research}
+\quad Numerous studies have proposed various solutions to solve the HO task in mobility problems. In \cite{ict_fuzzy}, a fuzzy logic-based self-optimizing HO scheme was proposed to reduce ping-pong HOs and RLFs in dense HetNets by dynamically adjusting parameters based on SINR, cell load, and UE speed. Similarly, \cite{access_fuzzy} introduced an integrated fuzzy logic system to optimize HO decisions in HetNets, reducing HO latency, ping-pong HOs, and resource inefficiencies. Furthermore, \cite{ml_holistic} proposed a holistic framework for optimizing both inter-frequency and intra-frequency HO parameters in dense, multi-band 5G/6G networks. Utilizing machine learning models such as XGBoost and Random Forest, the study optimized key performance indicators (KPIs), including HO success rate and load balancing, achieving efficient optimization via simulated annealing. Additionally, In \cite{WCNC_Qlearning}, a Q-learning algorithm was introduced to optimize HO trigger timing in high-speed rail scenarios, minimizing frequent HO failures and improving mobility robustness. Moreover, \cite{VTC_DQN} proposed a deep Q-network-assisted HO management method for high-speed 5G environments, improving HO success rates and reducing latency through pre-connection optimization.
+In \cite{yusuf_perf_ho}, the authors developed HO condition expressions based on various measurable parameters such as signal strength, distance, elevation angle, and timer, and analyzed HO performance when the offset changes. Moreover, in \cite{juan_dist}, the authors introduced a signal strength-based HO condition that incorporates distance information by applying a penalty offset according to distance to prevent UHOs. In \cite{jtlee_ictc}, the authors addressed the problem of determining an appropriate HO point by dynamically assigning a distance offset parameter used for condition expressions such as \cite{yusuf_perf_ho} based on the location of the UE. Furthermore, in \cite{etri_dist}, the authors proposed using the UE location to penalize certain terminals in the elliptical beam shape, which is not a theoretical circular beam shape, to solve the problem that the HO method in the standard does not satisfy the measurement reporting condition. 
+However, performance analysis and potential problem identification under current standardized distance-based conditions are still limited.
+These studies have contributed to improving HO performance in many ways, but they mainly focus on static parameters or metrics such as signal strength and distance. In addition, they are limited to specific environments, making them difficult to use generally.
+
+This thesis proposes an OID-based CHO approach to enhance existing distance-based CHO mechanisms by incorporating satellite orbital information collected by the UE. Unlike previous methods that rely solely on distance or signal strength, the OID-based CHO considers the satellite's trajectory and predicted future positions, enabling more intelligent and efficient HO decisions. This approach addresses the limitations of existing methods and improves HO performance.
