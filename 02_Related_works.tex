@@ -1,15 +1,9 @@
 \chapter[Related works]{Related works}
 \label{chapter:related_works}
-
+% 다른 사람들의 관련 연구 소개
 \section[LEO satellite HO and FLSO schemes]{LEO satellite HO and FLSO schemes}
-% \quad In NTN-based LEO satellite communication system, two primary beam steering approaches can be identified, as illustrated in Fig. \ref{figure_beam_type} \cite{rel_38821}. In this figure, (a) represents the quasi-fixed cell approach. This method involves the satellite performing beam steering to maintain a fixed service area over a particular region as the satellite moves. In this scenario, as long as the satellite remains above the minimum elevation angle, no additional HO is required within the area. However, maintaining a fixed service area as the satellite moves requires complex and costly beam steering mechanisms, which significantly increase the complexity and cost of satellite design. On the other hand, as shown in Fig. (b), the EMC approach does not involve beam adjustments, reducing the design complexity and cost. However, as the satellite and its service cells move, users on the ground experience frequent cell transitions, leading to a higher number of HOs and increased signaling overhead. This thesis focuses the EMC approach to address the challenges caused by frequent cell transitions and aiming to improve overall system performance and stability.
+\quad In a NTN environment, the continuity of the service link between the UE and the satellite is ensured through HO. HO is the procedure by which a UE changes the serving cell; in terrestrial networks, this is typically triggered based on measurements of neighboring cell signals. However, in NTNs, the difference in received signal strength between satellites is often small, and thus distance- or time-based HO criteria are also employed. In addition to the service link, the continuity of the feeder link connecting the satellite to the ground GW is equally important. In particular, the presence or absence of a gNB onboard the satellite determines whether feeder link switchover entails a change in the service link. For a transparent satellite without an onboard gNB, a feeder link switchover changes the serving GW on the ground, which in turn changes the serving gNB, resulting in an HO. In contrast, for a regenerative satellite equipped with an onboard gNB, a feeder link switchover does not change the serving gNB, and therefore no HO occurs.
 
-%시작을 어떻게 해야할까? 위성의 핸드오버와 피더링크 스위칭 설명
-%위성의 핸드오버부터 설명, 
-%위성의 높은 속도로 인한 서비스 및 피더 링크의 잦은 변동이 불가피하다. 
-%핸드오버의 절차 설명
-%핸드오버로 인한 전력소모 참조
-%transparent와 regenerative 위성의 피더링크 스위칭 차이 설명
 
 \begin{figure}
 \centering
@@ -18,12 +12,12 @@
 \label{figure_bho_procedure}
 \end{figure}
 
-\begin{figure}
-\centering
-\includegraphics[width=1.0\columnwidth]{figure/figure_beam_type.png}
-\caption{Beam steering type: (a) quasi-fixed cell, (b) EMC}
-\label{figure_beam_type}
-\end{figure}
+% \begin{figure}
+% \centering
+% \includegraphics[width=1.0\columnwidth]{figure/figure_beam_type.png}
+% \caption{Beam steering type: (a) quasi-fixed cell, (b) EMC}
+% \label{figure_beam_type}
+% \end{figure}
 
 \section[Reinforcement learning based Beam hopping and scheduling]{Reinforcement learning based Beam hopping and scheduling}
 % \quad Basic HO (BHO) is the traditional HO method where the serving cell initiates and controls the HO process \cite{enric_5g_new_radio}. First, when the HO conditions are satisfied for a certain period, known as the time-to-trigger (TTT), the UE sends a measurement report (MR) to the serving cell. Upon receiving the MR, the serving cell evaluates the measurement results and selects the most suitable target cell for the UE, making the HO decision. The serving cell then sends a HO request message to the target cell over the Xn interface to check if HO is possible. After receiving the HO Request acknowledgment (ACK) message from the target cell, the serving cell sends the HO command to the UE. Upon receiving the HO command, the UE immediately disconnects from the serving cell and attempts random access (RA) with the selected target cell. The entire procedure is detailed in Fig. \ref{figure_bho_procedure}.
@@ -42,5 +36,23 @@
 
 % This thesis proposes an OID-based CHO approach to enhance existing distance-based CHO mechanisms by incorporating satellite orbital information collected by the UE. Unlike previous methods that rely solely on distance or signal strength, the OID-based CHO considers the satellite's trajectory and predicted future positions, enabling more intelligent and efficient HO decisions. This approach addresses the limitations of existing methods and improves HO performance.
 
-%위성의 빔호핑에서 cell은 중앙의 기지국을 지원한다.
-%
+%시작을 어떻게 해야할까? 위성의 핸드오버와 피더링크 스위칭 설명
+%위성의 핸드오버부터 설명, 
+
+% 위성의 높은 속도로 인한 서비스 및 피더 링크의 잦은 변동이 불가피하다. 
+% 핸드오버의 절차 설명, rsrp, 거리기반, time 기반도 설명
+% 핸드오버로 인한 전력소모 참조
+% transparent와 regenerative 위성의 피더링크 스위칭 차이 설명
+% 표준에서 나와 있는 빔호핑 정리
+% 빔 호핑의 장단점
+% 장점:자원 효율성 극대화, 유연한 용량 할당, 간섭 감소
+% 단점: 복잡한 스케줄링, 높은 지연, 핸드오버 발생 가능성, 정확한 시간 동기화
+% 위성의 빔호핑에서 cell은 중앙의 기지국을 지원한다.
+% 결론적으로 우리 연구의 목표는 cell의 sinr을 최대로 하는 beam hopping 기법을 적용하면서 cell의 traffic 병목현상이 발생하지 않도록 GW선택과 피더링크 스위치오버를 수행하는 것이다.
+
+%NTN 환경에서 UE와 위성 간의 서비스 링크 연속성은 핸드오버를 통해 보장됩니다. 핸드오버는 UE가 서비스 받는 셀을 변경하는 절차이며, 지상에서는 주변 셀의 신호를 측정하는 방식이 사용되었습니다. 하지만 NTN 환경에서는 위성간의 신호차이가 크지 않아 거리 혹은 time 기반의 핸드오버를 수행하기도 한다. 서비스 링크와 더불어, 위성과 지상 게이트웨이를 연결하는 피더 링크의 연속성도 중요하다. 특히, 위성에 gNB의 탑재 여부에 따라 피더링크 스위치오버에 따른 서비스 링크의 핸드오버가 달라진다. gNB가 탑재 되지 않은 transparent 위성의 경우 피더링크 스위치오버에 따라 지상의 GW가 달라지면서 gNB 또한 달라지게 되므로 핸드오버가 동반된다. 반면, gNB가 탑재된 regenerative 위성의 경우 피더링크 스위치오버를 수행하더라도 gNB가 달라지지 않아 핸드오버가 발생하지 않는다.
+%보완점: 절차에 대한 설명 추가
+
+%한상민 논문 12,14랑 LG cto 발표자료 확인해보기
+%38.821 6.2.4에서는 추후 빔간 주파수 자원할당에 논의해야한다고 함
+%링크 관리 문제는 현재 3GPP 표준에도 정의 되어 있듯이 빔 호핑을 사용하여 위성이 고정된 빔 대신 트래픽 수요가 있는 특정 지상 셀 영역에만 빔을 순차적으로 할당하는 기술도 논의되고 있다.

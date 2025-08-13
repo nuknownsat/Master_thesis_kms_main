@@ -476,11 +476,6 @@ INPUT ./figure/fig_sat_ho.png
 INPUT ./figure/fig_sat_ho.png
 INPUT ./figure/fig_sat_ho.png
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
-INPUT ./figure/figure_beam_type.png
-INPUT ./figure/figure_beam_type.png
-INPUT ./figure/figure_beam_type.png
-INPUT ./figure/figure_beam_type.png
-INPUT ./figure/figure_beam_type.png
 INPUT ./03_Proposed_framework.tex
 INPUT ./03_Proposed_framework.tex
 OUTPUT 03_Proposed_framework.aux
