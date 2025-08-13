@@ -11,6 +11,7 @@ A level-1 auxiliary file: 03_Proposed_framework.aux
 A level-1 auxiliary file: 04_RESULT.aux
 A level-1 auxiliary file: 05_conclusion.aux
 The style file: classfile/IEEEtran.bst
+I found no \citation commands---while reading file 00_01_thesis.aux
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
@@ -20,53 +21,47 @@ Database file #1: 1_backmatter/references.bib
 -- IEEEtran.bst version 1.13 (2008/09/30) by Michael Shell.
 -- http://www.michaelshell.org/tex/ieeetran/bibtex/
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
-Warning--empty author in rel_38821
-Warning--empty author in rel_38300
-Warning--empty author in rel_38331
-Warning--empty author in rel_38811
-Warning--empty author in rel_36839
-Warning--empty author in rel_38133
 
 Done.
-You've used 11 entries,
+You've used 0 entries,
             4039 wiz_defined-function locations,
-            868 strings with 9181 characters,
-and the built_in function-call counts, 6117 in all, are:
-= -- 461
-> -- 113
-< -- 37
-+ -- 71
-- -- 24
-* -- 302
-:= -- 942
-add.period$ -- 22
-call.type$ -- 11
-change.case$ -- 11
-chr.to.int$ -- 90
-cite$ -- 17
-duplicate$ -- 486
-empty$ -- 560
-format.name$ -- 23
-if$ -- 1387
+            819 strings with 7443 characters,
+and the built_in function-call counts, 103 in all, are:
+= -- 0
+> -- 0
+< -- 0
++ -- 0
+- -- 0
+* -- 19
+:= -- 26
+add.period$ -- 0
+call.type$ -- 0
+change.case$ -- 0
+chr.to.int$ -- 0
+cite$ -- 0
+duplicate$ -- 0
+empty$ -- 1
+format.name$ -- 0
+if$ -- 3
 int.to.chr$ -- 0
-int.to.str$ -- 11
-missing$ -- 75
-newline$ -- 56
-num.names$ -- 5
-pop$ -- 203
+int.to.str$ -- 0
+missing$ -- 0
+newline$ -- 23
+num.names$ -- 0
+pop$ -- 0
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 473
+skip$ -- 1
 stack$ -- 0
-substring$ -- 236
-swap$ -- 325
-text.length$ -- 7
+substring$ -- 0
+swap$ -- 0
+text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 11
-warning$ -- 6
-while$ -- 20
-width$ -- 13
-write$ -- 111
-(There were 6 warnings)
+type$ -- 0
+warning$ -- 0
+while$ -- 0
+width$ -- 0
+write$ -- 22
+(There was 1 error message)

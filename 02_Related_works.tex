@@ -2,7 +2,21 @@
 \label{chapter:related_works}
 
 \section[LEO satellite HO and FLSO schemes]{LEO satellite HO and FLSO schemes}
-\quad In NTN-based LEO satellite communication system, two primary beam steering approaches can be identified, as illustrated in Fig. \ref{figure_beam_type} \cite{rel_38821}. In this figure, (a) represents the quasi-fixed cell approach. This method involves the satellite performing beam steering to maintain a fixed service area over a particular region as the satellite moves. In this scenario, as long as the satellite remains above the minimum elevation angle, no additional HO is required within the area. However, maintaining a fixed service area as the satellite moves requires complex and costly beam steering mechanisms, which significantly increase the complexity and cost of satellite design. On the other hand, as shown in Fig. (b), the EMC approach does not involve beam adjustments, reducing the design complexity and cost. However, as the satellite and its service cells move, users on the ground experience frequent cell transitions, leading to a higher number of HOs and increased signaling overhead. This thesis focuses the EMC approach to address the challenges caused by frequent cell transitions and aiming to improve overall system performance and stability.
+% \quad In NTN-based LEO satellite communication system, two primary beam steering approaches can be identified, as illustrated in Fig. \ref{figure_beam_type} \cite{rel_38821}. In this figure, (a) represents the quasi-fixed cell approach. This method involves the satellite performing beam steering to maintain a fixed service area over a particular region as the satellite moves. In this scenario, as long as the satellite remains above the minimum elevation angle, no additional HO is required within the area. However, maintaining a fixed service area as the satellite moves requires complex and costly beam steering mechanisms, which significantly increase the complexity and cost of satellite design. On the other hand, as shown in Fig. (b), the EMC approach does not involve beam adjustments, reducing the design complexity and cost. However, as the satellite and its service cells move, users on the ground experience frequent cell transitions, leading to a higher number of HOs and increased signaling overhead. This thesis focuses the EMC approach to address the challenges caused by frequent cell transitions and aiming to improve overall system performance and stability.
+
+%시작을 어떻게 해야할까? 위성의 핸드오버와 피더링크 스위칭 설명
+%위성의 핸드오버부터 설명, 
+%위성의 높은 속도로 인한 서비스 및 피더 링크의 잦은 변동이 불가피하다. 
+%핸드오버의 절차 설명
+%핸드오버로 인한 전력소모 참조
+%transparent와 regenerative 위성의 피더링크 스위칭 차이 설명
+
+\begin{figure}
+\centering
+\includegraphics[width=1.0\columnwidth]{figure/fig_sat_ho.png}
+\caption{Basic HO procedure}
+\label{figure_bho_procedure}
+\end{figure}
 
 \begin{figure}
 \centering
@@ -12,25 +26,21 @@
 \end{figure}
 
 \section[Reinforcement learning based Beam hopping and scheduling]{Reinforcement learning based Beam hopping and scheduling}
-\quad Basic HO (BHO) is the traditional HO method where the serving cell initiates and controls the HO process \cite{enric_5g_new_radio}. First, when the HO conditions are satisfied for a certain period, known as the time-to-trigger (TTT), the UE sends a measurement report (MR) to the serving cell. Upon receiving the MR, the serving cell evaluates the measurement results and selects the most suitable target cell for the UE, making the HO decision. The serving cell then sends a HO request message to the target cell over the Xn interface to check if HO is possible. After receiving the HO Request acknowledgment (ACK) message from the target cell, the serving cell sends the HO command to the UE. Upon receiving the HO command, the UE immediately disconnects from the serving cell and attempts random access (RA) with the selected target cell. The entire procedure is detailed in Fig. \ref{figure_bho_procedure}.
+% \quad Basic HO (BHO) is the traditional HO method where the serving cell initiates and controls the HO process \cite{enric_5g_new_radio}. First, when the HO conditions are satisfied for a certain period, known as the time-to-trigger (TTT), the UE sends a measurement report (MR) to the serving cell. Upon receiving the MR, the serving cell evaluates the measurement results and selects the most suitable target cell for the UE, making the HO decision. The serving cell then sends a HO request message to the target cell over the Xn interface to check if HO is possible. After receiving the HO Request acknowledgment (ACK) message from the target cell, the serving cell sends the HO command to the UE. Upon receiving the HO command, the UE immediately disconnects from the serving cell and attempts random access (RA) with the selected target cell. The entire procedure is detailed in Fig. \ref{figure_bho_procedure}.
 
-\begin{figure}
-\centering
-\includegraphics[width=1.0\columnwidth]{figure/fig_sat_ho.png}
-\caption{Basic HO procedure}
-\label{figure_bho_procedure}
-\end{figure}
+% In TN, the cell radius is small due to the very small altitude compared to NTNs, so the propagation delay between the UE and the base station is minimized. However, in NTN, the significant distance between the UE and LEO satellites due to their high altitude causes much larger propagation delays compared to TN, introducing considerable latency in exchanging HO control messages between the UE and the base station \cite{enric_5g_new_radio}. This can lead to the selection of suboptimal target cells, as the MR used to make HO decisions are based on the signal conditions from previous moments. This issue is made worse by the dynamic environment of LEO satellite cells, where the rapid movement of satellites makes precise timing for HOs important to prevent UHOs or RLF.
+% This issue occurs because the target cell is selected based on MR results that are outdated and may no longer match the UE's optimal cell at the current location. Furthermore, due to the effects of signaling fading, there is a risk of selecting an incorrect target cell, leading to UHO or RLF. Therefore, employing the traditional HO method in NTN environments may degrade network performance.
 
-In TN, the cell radius is small due to the very small altitude compared to NTNs, so the propagation delay between the UE and the base station is minimized. However, in NTN, the significant distance between the UE and LEO satellites due to their high altitude causes much larger propagation delays compared to TN, introducing considerable latency in exchanging HO control messages between the UE and the base station \cite{enric_5g_new_radio}. This can lead to the selection of suboptimal target cells, as the MR used to make HO decisions are based on the signal conditions from previous moments. This issue is made worse by the dynamic environment of LEO satellite cells, where the rapid movement of satellites makes precise timing for HOs important to prevent UHOs or RLF.
-This issue occurs because the target cell is selected based on MR results that are outdated and may no longer match the UE's optimal cell at the current location. Furthermore, due to the effects of signaling fading, there is a risk of selecting an incorrect target cell, leading to UHO or RLF. Therefore, employing the traditional HO method in NTN environments may degrade network performance.
+% \quad To address the issues mentioned earlier, NTN adopts the CHO mechanism, initially proposed in NR \cite{rel_38300}. CHO divides the HO process into two different phases: the preparation and the execution phase. Similar to the conventional method, when the HO condition is met, the UE sends an MR to the serving cell. However, in CHO, instead of selecting a single target cell, the serving cell prepares multiple candidate target cells based on the MR and initiates the HO request message procedure. After receiving the HO Request ACK message from these candidate cells, the serving cell sends the HO command to the UE. At this point, rather than immediately executing the HO, the UE evaluates the prepared candidate cells through an execution event and selects the optimal target cell for the HO. This approach enhances flexibility in target cell selection, especially in LEO satellite environments, helping to reduce UHO and RLF. The complete procedure of CHO is illustrated in Fig. \ref{figure_cho_procedure}.
 
-\quad To address the issues mentioned earlier, NTN adopts the CHO mechanism, initially proposed in NR \cite{rel_38300}. CHO divides the HO process into two different phases: the preparation and the execution phase. Similar to the conventional method, when the HO condition is met, the UE sends an MR to the serving cell. However, in CHO, instead of selecting a single target cell, the serving cell prepares multiple candidate target cells based on the MR and initiates the HO request message procedure. After receiving the HO Request ACK message from these candidate cells, the serving cell sends the HO command to the UE. At this point, rather than immediately executing the HO, the UE evaluates the prepared candidate cells through an execution event and selects the optimal target cell for the HO. This approach enhances flexibility in target cell selection, especially in LEO satellite environments, helping to reduce UHO and RLF. The complete procedure of CHO is illustrated in Fig. \ref{figure_cho_procedure}.
+% \begin{figure}
+% \centering
+% \includegraphics[width=1.0\columnwidth]{figure/figure_cho_procedure.png}
+% \caption{Conditional HO procedure}
+% \label{figure_cho_procedure}
+% \end{figure}
 
-\begin{figure}
-\centering
-\includegraphics[width=1.0\columnwidth]{figure/figure_cho_procedure.png}
-\caption{Conditional HO procedure}
-\label{figure_cho_procedure}
-\end{figure}
+% This thesis proposes an OID-based CHO approach to enhance existing distance-based CHO mechanisms by incorporating satellite orbital information collected by the UE. Unlike previous methods that rely solely on distance or signal strength, the OID-based CHO considers the satellite's trajectory and predicted future positions, enabling more intelligent and efficient HO decisions. This approach addresses the limitations of existing methods and improves HO performance.
 
-This thesis proposes an OID-based CHO approach to enhance existing distance-based CHO mechanisms by incorporating satellite orbital information collected by the UE. Unlike previous methods that rely solely on distance or signal strength, the OID-based CHO considers the satellite's trajectory and predicted future positions, enabling more intelligent and efficient HO decisions. This approach addresses the limitations of existing methods and improves HO performance.
+%위성의 빔호핑에서 cell은 중앙의 기지국을 지원한다.
+%
