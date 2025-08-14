@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  14 AUG 2025 14:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  14 AUG 2025 15:38
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1156,12 +1156,7 @@ No file 00_01_thesis.nls.
 
  (./02_Related_works.tex
  2.
-<figure/fig_sat_ho.png, id=200, 216.81pt x 148.1535pt>
-File: figure/fig_sat_ho.png Graphic file (type png)
-<use figure/fig_sat_ho.png>
-Package pdftex.def Info: figure/fig_sat_ho.png  used on input line 10.
-(pdftex.def)             Requested size: 369.88582pt x 252.78673pt.
-)
+
 
 [5
 
@@ -1169,10 +1164,16 @@ Package pdftex.def Info: figure/fig_sat_ho.png  used on input line 10.
 
 
 ]
+<figure/fig_sat_ho.png, id=204, 224.7597pt x 150.3216pt>
+File: figure/fig_sat_ho.png Graphic file (type png)
+<use figure/fig_sat_ho.png>
+Package pdftex.def Info: figure/fig_sat_ho.png  used on input line 13.
+(pdftex.def)             Requested size: 369.88582pt x 247.39142pt.
+)
 
-[6 <./figure/fig_sat_ho.png>]
+[6]
 
-[7]
+[7 <./figure/fig_sat_ho.png>]
 \openout2 = `03_Proposed_framework.aux'.
 
  (./03_Proposed_framework.tex
@@ -1228,7 +1229,7 @@ LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-07-20>
  ***********
 Package rerunfilecheck Info: File `00_01_thesis.out' has not changed.
-(rerunfilecheck)             Checksum: B65FB5CEB0D1BBB7230E80CA8AE5614F;3875.
+(rerunfilecheck)             Checksum: 701BB617ADB9A0A962FAA21E74981F0D;3791.
 Package rerunfilecheck Info: File `00_01_thesis.brf' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
@@ -1241,7 +1242,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  125i,17n,121p,1702b,706s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbac.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbae.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbb1.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbb9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbbb.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc0.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc2.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on 00_01_thesis.pdf (22 pages, 535804 bytes).
+Output written on 00_01_thesis.pdf (22 pages, 537981 bytes).
 PDF statistics:
  309 PDF objects out of 1000 (max. 8388607)
  243 compressed objects within 3 object streams

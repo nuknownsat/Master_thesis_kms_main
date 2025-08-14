@@ -1,27 +1,27 @@
 \chapter{Introduction}
 
 \section{Background and motivation}
-\quad Low Earth Orbit (LEO) satellite communication has recently emerged as a promising next-generation technology for providing global coverage. The architecture of an LEO network consists of a multitude of satellites concurrently serving numerous terrestrial cells. However, this dense multi-satellite and multi-cell environment can lead to significant inter-cell interference. Furthermore, satellites require stable and high-capacity backhaul connections with gateways (GWs) to prevent data traffic bottlenecks and ensure seamless service for the cells they cover.
+\quad LEO satellite communication has recently emerged as a promising next-generation technology for providing global coverage. The architecture of an LEO network consists of a multitude of satellites concurrently serving numerous terrestrial cells. However, this dense multi-satellite and multi-cell environment can lead to significant inter-cell interference. Furthermore, satellites require stable and high-capacity backhaul connections with GWs to prevent data traffic bottlenecks and ensure seamless service for the cells they cover.
 
 One of the most critical challenges in LEO satellite communications stems from the high mobility of the satellites. As satellites orbit the Earth at extremely high speeds, a ground terminal must frequently change its serving satellite. This high mobility necessitates frequent handovers and switchovers, which become a primary cause of degraded service continuity and can lead to temporary network disconnections.
 
-In particular, conventional handover schemes based on received signal strength exhibit several limitations in this dynamic LEO environment. Such schemes, which simply switch the connection to the satellite with the strongest signal, can trigger unnecessarily frequent handovers. Moreover, they often lead to the ping-pong effect, where handovers are rapidly repeated back and forth between two satellites at the cell edge. Consequently, the terminal's Time-of-Stay (ToS) with a single satellite becomes very short, which significantly degrades overall network efficiency and stability.
+In particular, conventional handover schemes based on received signal strength exhibit several limitations in this dynamic LEO environment. Such schemes, which simply switch the connection to the satellite with the strongest signal, can trigger unnecessarily frequent handovers. Moreover, they often lead to the ping-pong effect, where handovers are rapidly repeated back and forth between two satellites at the cell edge. Consequently, the terminal's ToS with a single satellite becomes very short, which significantly degrades overall network efficiency and stability.
 
-Therefore, to guarantee stable Quality of Service (QoS) and service continuity in LEO satellite networks, it is essential to develop intelligent handover and switchover schemes that can effectively manage the challenges posed by satellite mobility. This paper proposes a novel approach to address these pressing issues.
+Therefore, to guarantee stable QoS and service continuity in LEO satellite networks, it is essential to develop intelligent handover and switchover schemes that can effectively manage the challenges posed by satellite mobility. This paper proposes a novel approach to address these pressing issues.
 %인트로에서는 LEO위성의 장단점(GEO대비 저지연, 지상망 대비 광대역 커버리지 제공)을 설명하고
 
 \section{Contributions}
 \quad To address the challenges of high mobility and dynamic network topology in LEO satellite networks, this paper proposes a novel handover and resource management scheme based on multi-agent reinforcement learning. The key contributions of this work are summarized as follows:
 
 \begin{itemize}
-    \item \textbf{A Multi-Agent Reinforcement Learning (MARL) Framework for Joint Optimization:} We design a MARL framework where each satellite acts as an autonomous agent. These agents learn collaboratively to find the optimal policy for selecting both user cells and gateways simultaneously, adapting to the highly dynamic network environment without the need for a centralized controller.
+    \item \textbf{A MARL Framework for Joint Optimization:} We design a MARL framework where each satellite acts as an autonomous agent. These agents learn collaboratively to find the optimal policy for selecting both user cells and gateways simultaneously, adapting to the highly dynamic network environment without the need for a centralized controller.
 
-    \item \textbf{User Link Stability by Minimizing Handovers while Maximizing SINR:} Our proposed scheme enables the satellite agents to select user cells with a sophisticated dual objective. It aims to \textbf{maximize the Signal-to-Interference-plus-Noise Ratio (SINR)} for all served cells while concurrently \textbf{minimizing the total number of handovers}. This approach directly mitigates the ping-pong effect and enhances service stability for ground users.
+    \item \textbf{User Link Stability by Minimizing Handovers while Maximizing SINR:} Our proposed scheme enables the satellite agents to select user cells with a sophisticated dual objective. It aims to \textbf{maximize the SINR} for all served cells while concurrently \textbf{minimizing the total number of handovers}. This approach directly mitigates the ping-pong effect and enhances service stability for ground users.
 
     \item \textbf{Feeder Link Reliability by Preventing Bottlenecks and Reducing Switchovers:} The agents intelligently select gateways to \textbf{prevent traffic bottlenecks} in the backhaul network, ensuring efficient data routing. Crucially, this selection is performed while also \textbf{minimizing the frequency of feeder link switchovers}, which enhances the stability and reliability of the satellite-to-ground connection.
 \end{itemize}
 
-The effectiveness of our proposed scheme is validated through extensive simulations, which demonstrate significant improvements in network stability and user Quality of Service (QoS) compared to conventional, signal-strength-based methods.
+The effectiveness of our proposed scheme is validated through extensive simulations, which demonstrate significant improvements in network stability and user QoS compared to conventional, signal-strength-based methods.
 
 \section{Overview}
 \quad The remainder of this thesis is structured as follows: 
