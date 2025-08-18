@@ -476,6 +476,7 @@ INPUT ./figure/fig_sat_ho.png
 INPUT ./figure/fig_sat_ho.png
 INPUT ./figure/fig_sat_ho.png
 INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
 INPUT ./03_Proposed_framework.tex
 INPUT ./03_Proposed_framework.tex
 OUTPUT 03_Proposed_framework.aux
@@ -503,6 +504,14 @@ INPUT 00_01_thesis.brf
 INPUT ./00_01_thesis.brf
 INPUT ./00_01_thesis.brf
 OUTPUT 00_01_thesis.brf
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmex10.tfm
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmmib10.tfm
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmbsy10.tfm
 INPUT 00_01_thesis.aux
 INPUT ./00_x1_MacroFile1.aux
 INPUT ./00_x1_MacroFile1.aux
@@ -539,6 +548,8 @@ INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
+INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb
+INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbac.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbae.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbb1.pfb
