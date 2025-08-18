@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  18 AUG 2025 16:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  18 AUG 2025 19:41
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1086,7 +1086,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 pdfTeX warning (ext4): destination with the same identifier (name{page.ii}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.17 ... {4}Performance evaluation}{11}{chapter.4}
+l.17 ... {4}Performance evaluation}{22}{chapter.4}
                                                   % [2
 
 
@@ -1164,7 +1164,7 @@ No file 00_01_thesis.nls.
 
 
 ]
-<figure/fig_sat_ho.png, id=205, 224.7597pt x 150.3216pt>
+<figure/fig_sat_ho.png, id=209, 224.7597pt x 150.3216pt>
 File: figure/fig_sat_ho.png Graphic file (type png)
 <use figure/fig_sat_ho.png>
 Package pdftex.def Info: figure/fig_sat_ho.png  used on input line 9.
@@ -1182,6 +1182,9 @@ Package pdftex.def Info: figure/fig_sat_ho.png  used on input line 9.
 
  (./03_Proposed_framework.tex
  3.
+LaTeX Font Info:    Trying to load font information for U+eus on input line 4.
+(c:/texlive/2025/texmf-dist/tex/latex/amsfonts/ueus.fd
+File: ueus.fd 2013/01/14 v3.01 Euler Script
 )
 
 [10
@@ -1190,13 +1193,49 @@ Package pdftex.def Info: figure/fig_sat_ho.png  used on input line 9.
 
 
 ]
+<figure/fig_system_model.png, id=249, 505.45638pt x 282.21436pt>
+File: figure/fig_system_model.png Graphic file (type png)
+<use figure/fig_system_model.png>
+Package pdftex.def Info: figure/fig_system_model.png  used on input line 8.
+(pdftex.def)             Requested size: 369.88582pt x 206.52719pt.
+
+
+[11 <./figure/fig_system_model.png>]
+
+[12]
+
+[13]
+
+[14]
+
+[15]
+
+[16]
+<figure/dueling_dqn_archi.png, id=302, 606.20076pt x 379.85112pt>
+File: figure/dueling_dqn_archi.png Graphic file (type png)
+<use figure/dueling_dqn_archi.png>
+Package pdftex.def Info: figure/dueling_dqn_archi.png  used on input line 112.
+(pdftex.def)             Requested size: 289.07999pt x 181.13828pt.
+
+
+[17 <./figure/dueling_dqn_archi.png>]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 125.
+
+
+[18]
+
+[19])
+
+[20]
+
+[21]
 \openout2 = `04_RESULT.aux'.
 
  (./04_RESULT.tex
  4.
 )
 
-[11
+[22
 
 
 
@@ -1208,7 +1247,7 @@ Package pdftex.def Info: figure/fig_sat_ho.png  used on input line 9.
  5.
 )
 
-[12
+[23
 
 
 
@@ -1217,35 +1256,37 @@ Package pdftex.def Info: figure/fig_sat_ho.png  used on input line 9.
 \tf@brf=\write8
 \openout8 = `00_01_thesis.brf'.
 
-)
-
-[13
 
 
+[24
 
-] (./00_01_thesis.aux (./00_x1_MacroFile1.aux) (./0_frontmatter/acknowledgement.aux) (./00_03_abstract.aux) (./00_04_abbreviation.aux) (./01_introduction.aux) (./02_Related_works.aux) (./03_Proposed_framework.aux) (./04_RESULT.aux) (./05_conclusion.aux))
+
+
+])
+
+[25] (./00_01_thesis.aux (./00_x1_MacroFile1.aux) (./0_frontmatter/acknowledgement.aux) (./00_03_abstract.aux) (./00_04_abbreviation.aux) (./01_introduction.aux) (./02_Related_works.aux) (./03_Proposed_framework.aux) (./04_RESULT.aux) (./05_conclusion.aux))
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-07-20>
  ***********
 Package rerunfilecheck Info: File `00_01_thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 701BB617ADB9A0A962FAA21E74981F0D;3791.
+(rerunfilecheck)             Checksum: 8BF6D248DE81802ADAB00C645F5F080C;3791.
 Package rerunfilecheck Info: File `00_01_thesis.brf' has not changed.
-(rerunfilecheck)             Checksum: 04EC26A65328586E618D59E9DBFEB132;279.
+(rerunfilecheck)             Checksum: 5510A7985A7CF0F0F99C5FDE6C4D17B7;650.
  ) 
 Here is how much of TeX's memory you used:
- 25634 strings out of 467801
- 477252 string characters out of 5436090
- 1147278 words of memory out of 5000000
- 53718 multiletter control sequences out of 15000+600000
- 642058 words of font info for 94 fonts, out of 8000000 for 9000
+ 25826 strings out of 467801
+ 480680 string characters out of 5436090
+ 1150122 words of memory out of 5000000
+ 53865 multiletter control sequences out of 15000+600000
+ 642858 words of font info for 98 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 125i,17n,121p,2294b,706s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbac.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbae.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbb1.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbb9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbbb.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc0.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc2.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on 00_01_thesis.pdf (24 pages, 572790 bytes).
+ 125i,17n,121p,2294b,718s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/euler/eusm10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbac.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbae.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbb1.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbb9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbbb.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc0.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc2.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
+Output written on 00_01_thesis.pdf (36 pages, 11734993 bytes).
 PDF statistics:
- 341 PDF objects out of 1000 (max. 8388607)
- 269 compressed objects within 3 object streams
- 48 named destinations out of 1000 (max. 500000)
- 209 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 494 PDF objects out of 1000 (max. 8388607)
+ 387 compressed objects within 4 object streams
+ 88 named destinations out of 1000 (max. 500000)
+ 219 words of extra memory for PDF output out of 10000 (max. 10000000)
 

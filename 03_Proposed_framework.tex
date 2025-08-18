@@ -1,136 +1,165 @@
 \chapter[Proposed multi-agent reinforcement learning-based link scheduling algorithm]{Proposed multi-agent reinforcement learning-based link scheduling algorithm}
 
 \section{System model}
-% \quad This thesis propose a beam-to-beam HO scenario in an environment with multiple satellites' spot beams in the same constellation, as shown in Fig. \ref{figure_system_model}. The LEO satellite, equipped with several spot beams, operates at a low earth orbit and moves at 7.56 km/s. The HO is considered to occur only between satellites that move in parallel orbits within the same constellation. In the EMC environment, all cells use the same frequency, causing interference. The UE updates orbital information using system information block (SIB) 19 from the satellite and determines its position via global positioning system (GPS).
+\quad This thesis considers the transparent LEO satellite constellation consist of $N$ LEO satellites, represented by the set $\mathcal{S} = \left\{n \mid n = 1, 2, \dots, N\right\}$. The LEO satellite connects to ground GW via feeder link, where the set of GW denoted as $\mathcal{G} = \left\{m \mid m = 1, 2, \dots, M\right\}$. The GWs consists of both an antenna and a gNB. Since the GWs are widely separated, each is equipped with its own dedicated gNB. The coordinates of each LEO satellite in the Earth-centered, Earth-fixed (ECEF) coordinate system at a given time slot $t$, where $t \in \{0, 1, \dots, T\}$, are given by $l_n(t) = (x_n(t), y_n(t), z_n(t))$. As the LEO satellite services the region, it covers UEs, denoted by the set \( U = \{ u_t \mid u_t = N_t(\mu,\sigma^2) \} \), distributed according to a 2-D Gaussian footprint. With a hard FLSO applied, each UE within the LEO satellite’s coverage area simultaneously initiates a HO to the subsequent gNB upon every FLSO. Fig.~\ref{figure_system_model} shows the network scenario where a transparent Starlink LEO satellite passes over $M$ ground GWs in the United States, serving UEs.
 
-% \begin{figure}[p]
-% \centering
-% \includegraphics[width=1.0\columnwidth]{figure/fig_system_model.png}
-% \caption{HO and FLSO scenario: multiple satellites' beam to cell and GW}
-% \label{figure_system_model}
-% \end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\columnwidth]{figure/fig_system_model.png}
+\caption{HO and FLSO scenario: multiple satellites' beam to cell and GW}
+\label{figure_system_model}
+\end{figure}
+
+The LEO satellite \( n \) evaluates the RSRP from signals transmitted by the GW \( m \) at periodic interval \( T_m \). The RSRP \( R_{m,n} \) is calculated as follows:
+\begin{equation}
+R_{m,n} = EIRP_{m} + G_{n} - PL_{m,n} - 10 \log_{10}(q_{RB}),
+\label{eq:rsrp}
+\end{equation}
+where \( EIRP_{m} \) is the effective isotropic radiated power (EIRP) of the GW \( m \), defined as \( EIRP_{m} = P_{m} + G_{m} \), with \( P_{m} \) being the transmit power and \( G_{m} \) the transmit antenna gain of the GW $m$ towards the LEO satellite \( n \). \( G_{n} \) represents the receive antenna gain of the LEO satellite \( n \). The term \( 10 \log_{10}(q_{RB}) \) is used to normalize the RSRP measurement, accounting for a single resource block out of the total \( q_{RB} \) resource blocks allocated to the link. $PL_{m,n}$ is the channel model between the GW \( m \) and the LEO satellite \( n \) is provided in the 3rd generation partnership project (3GPP) documentation \cite{3gppchanel} and is calculated as follows:
+\begin{align}
+&PL_{m,n} = P_{{LOS,{m,n}}} ( FSPL_{m,n}(d_{m,n}, f_m) + SF_{m,n} )\notag\\
+&+ P_{{NLOS,{m,n}}} ( FSPL_{m,n}(d_{m,n}, f_m) + SF_{m,n} + CL_{m,n} ),
+\end{align}
+$P_{{LOS,{m,n}}}$ and $P_{{NLOS,{m,n}}}$ denote the probabilities that the LEO satellite \( n \) to GW \( m \) is in a line-of-sight (LOS) and non-LOS (NLOS) condition, respectively. $FSPL_{m,n}(d_{m,n}, f_m)$ denotes the free space path loss (FSPL) as a function of the distance $d_{m,n}$ between the LEO satellite \( n \) and the GW \( m \) and the frequency $f_m$ of the GW \( m \) uplink feeder link frequency. $SF_{m,n}$ represents the shadow fading, which accounts for the signal attenuation caused by obstacles such as buildings, trees, or terrain variations in the propagation path. $CL_{m,n}$ denotes the clutter loss, reflecting additional signal degradation due to environmental clutter. Specifically, the $FSPL_{m,n}$ is calculated as follows:
+\begin{equation}
+FSPL_{m,n} = 32.45 + 20log_{10}(f_m) + 20log_{10}(d_{m,n}).
+\end{equation}
+
+At each measurement instant $t$, the LEO satellite \( n \) samples the RSRP from GW \( m \) and all neighboring GWs within instantaneous visibility region, yielding the raw RSRP $R_{m,n}(t)$. To mitigate the effects of shadow fading and measurement noise, these raw RSRP $R_{m,n}(t)$ samples are processed at the radio resource control (RRC) layer using a layer-3 (L3) infinite impulse response (IIR) filter \cite{3gppl3}. Denoting the filtered RSRP by $\widetilde{R}_{m,n}(t)$, the update equation is calculated as follows:
+\begin{equation}
+  \widetilde{R}_{m,n}(t) = a{R}_{m,n}(t) + (1 - a)\widetilde{R}_{m,n}(t),
+  \label{eq:L3filter_new}
+\end{equation}
+where $a \in (0,1)$ is the L3 forgetting factor, defined as $a = \left(\frac{1}{2}\right)^{K/4}$, and $K$ is the filter coefficient. The initial condition is set as $\widetilde{R}_{m,n}(0) = R_{m,n}(0)$. Finally, the LEO satellite compiles a measurement report containing the L3-filtered RSRP $\widetilde{R}_{m,n}(t)$ of the serving and neighboring GWs and transmits this report back to the serving GW \( m \) over the feeder link.
+
+To quantify the link quality during the simulation, we calculate the channel capacity $C$ using the Shannon capacity formula, which is calculated as follows:
+\begin{equation}
+C = B_m \log_2(1+{\zeta}),
+\label{eq:capacity}
+\end{equation}
+where the $B_m$ is the uplink bandwidth of GW \( m \) and $\zeta$ is the signal-to-noise ratio (SNR) calculated as follows:
+\begin{equation}
+{\zeta} = {EIRP_{m}}+\frac{G_{n}}{T}-k-{PL_{m,n}}-B_m,
+\label{eq:snr}
+\end{equation}
+where, $k$ is the Boltzmann constant, $G_n/T$ is the antenna gain-to-noise temperature ratio, is calculated as follows:
+\begin{equation}
+\frac{G_n}{T} = G_{n} - N_{f} - 10\log_{10}\left(T_0 + (T_a - T_0) 10^{-0.1 N_{f}} \right),
+\end{equation}
+where $N_{f}$ is LEO satellite noise figure, $T_0$ and $T_a$ is ambient and antenna temperature.
+
+
 
 \section{Problem formulation}
-% \quad To select an appropriate cell in an EMC environment and address the aforementioned issues, it is essential to define the positional relationship between the UE and the cell. In this thesis, utilize the vertical distance from the cell trajectory to the UE, based on the position information at two instances along the cell trajectory, as illustrated in Fig. \ref{figure_xp_dif}.
+In this section, we address the optimization problem of performing optimal FLSO to minimize the number of HO for UE served by a LEO satellite. We formulate this problem as an non-deterministic polynomial time (NP)-hard problem \cite{singlemachine} and propose a solution by modeling it as a Markov decision process (MDP), which is then solved using reinforcement learning techniques.
 
-% \begin{figure}[t]
-% \centering
-% \includegraphics[width=1.0\columnwidth]{figure/figure_xp_dif.png}
-% \caption{Definition of UE's orbital distance ($X_p$)}
-% \label{figure_xp_dif}
-% \end{figure}
-% The $X_p$ is the vertical distance between the cell trajectory and UE, calculated using the coordinates of both the satellite and UE. With the previous coordinates $(x_{t0}, y_{t0})$ and $(x_{t1}, y_{t1})$ provided to the UE through measurements or SIB 19, the trajectory is expressed as a linear equation:
+% The satellite is assumed to connect to a GW only when the elevation angle to that GW exceeds $\theta_{\min}$ and the RSRP surpasses $\sigma_{\min}$, while the GW antenna continuously tracks the LEO satellite. 문제 정의로 ㄱㄱ
 
-% \begin{equation}
-% (y_{t1} - y_{t0})x - (x_{t1} - x_{t0})y + (x_{t1}y_{t0} - y_{t1}x_{t0}) = 0.
-% \end{equation}
-% Using the formula for the foot of a vertical line, we can calculate the vertical distance from the UE coordinates to the cell trajectory line.
+In LEO networks, frequent FLSO and HO events cause elevated latency and power consumption. FLSO \(FS_{m,n}\) and HO \(H_{m,n}\) are measured when the serving \( m \) transitions from \(t-1\) to \(t\) calculated as follows:
 
-% \begin{equation}
-% d = \frac{|Ax_{0} + By_{0} + C|}{\sqrt{A^2 + B^2}}.
-% \end{equation}
-% Thus, the vertical distance $X_p$ between the UE's position $(x^{ue}_{t1}, y^{ue}_{t1})$ and the cell trajectory line equation is defined as follows:
-% \begin{equation}
-% X_p = \frac{|(y_{t1} - y_{t0})x^{ue}_{t1} - (x_{t1} - x_{t0})y^{ue}_{t1} + (x_{t1}y_{t0} - y_{t1}x_{t0})|}{\sqrt{(y_{t1} - y_{t0})^2 + (x_{t1} - x_{t0})^2}}.
-% \end{equation}
-% Through this approach, the $X_p$ values for candidate cells can be calculated, thereby establishing the positional relationship between the UE and the cell trajectory in an EMC environment.
+\begin{equation}
+FS_{m,n} = \sum_{t=0}^{T} \left(1 \text{ if } m_t \neq m_{t-1} \text{ else } 0 \right),
+\label{eq:flso_cost}
+\end{equation}
+\begin{equation}
+H_{m,n} = \sum_{t=0}^{T} \left(u_{t-1} \text{ if } m_t \neq m_{t-1} \text{ else } 0 \right).
+\label{eq:ho_cost}
+\end{equation}
+To address these issues, we formulate an optimization problem that enables the LEO satellite to perform optimal FLSO while minimizing UE HO and UFLSO, and maximizing ToS and RSRP, meeting the conditions calculated as follows:
+\begin{align}
+& \textbf{P1:}\quad \operatorname*{min}_{m} \sum_{n=1}^{N}\sum_{m=1}^{M}\sum_{t=0}^{T} \big( FS_{m,n} + H_{m,n} + UFS_{m,n} \notag \\
+& \hspace{8em} - ToS_{m,n} - \widetilde R_{m,n} \big),\\
+& \quad \text{s.t.} \nonumber \\
+& \quad \textbf{C1 :}\quad \theta_{m,n}\geq \theta_{\text {min}}, \quad \forall{n}, \forall{m}, \forall{t},\\
+& \quad \textbf{C2 :}\quad \widetilde R_{m,n} \geq R_{\text {min}}, \quad \forall{n}, \forall{m}, \forall{t},\\
+& \quad \textbf{C3 :}\quad I_{m,n}(t) = 1, \quad  \forall{n}, \forall{m}, \forall{t}.
+\end{align}
+
+In \textbf{P1}, \( {UFS_{m,n}} \) represents the cost of an UFLSO, which occurs when the LEO satellite \( n \) switches to another GW within the minimum ToS (MTS) and \( {ToS_{m,n}}\) represents ToS the duration of the LEO satellite \( n \) remains connected to the GW \( m \). The objective function minimizes the total cost, which includes the FLSO, HO of UEs and UFLSO events and maximizes ToS and RSRP across \(N\) LEO satellites, \(M\) GWs, and \(T\) time slots. Constraint \textbf{C1} ensures the elevation angle \(\theta_{m,n}\) between LEO satellite \( n \) and GW \( m \) exceeds the minimum threshold \(\theta_{\min}\), guaranteeing reliable communication by maintaining a sufficient line-of-sight. Constraint \textbf{C2} ensures the filtered RSRP \(\widetilde{R}_{m,n}\) exceeds the minimum required rate \(R_{\min}\), ensuring adequate link quality for effective data transmission. Constraint \textbf{C3} enforces that each LEO satellite connects to exactly one GW at all time \(t\), using the indicator variable \(I_{m,n}(t)\), which is 1 if LEO satellite \( n \) is connected to GW \( m \) at time \(t\). 
 
 \section{Proposed algorithm}
-% \quad The primary objective of the OID-based CHO is to reduce UHOs that occur in distance-based CHO methods. The proposed method encourages the UE to maintain its connection with the cell in the closest orbit by utilizing the previously defined vertical distance $X_p$. This strategy aims to select a cell that maximizes the Time of Stay (ToS) within the cell, thus providing an ideal scenario to minimize UHOs in the EMC environment.
-% \begin{figure} [t]
-% \centering
-% \includegraphics[width=0.95\columnwidth]{figure_jtlee/3_i_wanna_longToS.png}
-% \caption{Ideal scenario for UHO occurrence}
-% \label{3_i_wanna_longToS}
-% \end{figure}
-% As shown in Fig. \ref{3_i_wanna_longToS} (a), selecting the nearest cell in an EMC environment may lead the UE to HO from serving cell A to target cell B, and then back to cell C, which is in the same orbit as cell A. If the ToS in cell B is less than one second, this HO could be considered a UHO \cite{juan_ho_all}. In contrast, as illustrated in Fig. \ref{3_i_wanna_longToS} (b), selecting a cell with the same $X_p$ value as the serving cell follows an ideal scenario where UHOs are prevented as the ToS increases. Additionally, if there is a cell in a closer orbit with a smaller $X_p$ value than the serving cell, it may be more efficient to HO to that cell for better signal strength. Thus, this strategy involves deciding whether to maintain the current orbit or move to a closer orbit, providing flexibility in response to changes in the UE's location based on $X_p$ values.
+\quad To address the problem, we transform it into a dynamic programming framework to derive an optimal FLSO policy. We model the FLSO optimization problem as an MDP due to its ability to handle sequential decision-making in dynamic environments.
+
 
 \subsection{MDP modeling}
-% \quad The HO triggering condition of the proposed scheme follows the same distance-based entry condition specified in Section \ref{dist_cho_trig}. This mechanism consists of two thresholds, which the UE can obtain from the \textit{distanceThresh} information in SIB 19 \cite{rel_38331} of the satellite. However, the current design, in which the serving satellite manages and transmits individual thresholds for each UE, may result in increased processing overhead. Additionally, conveying these thresholds to the UE solely through SIB 19 is practically limited. An alternative approach is to use Radio Resource Control (RRC) messages, but this also increases signaling overhead and may degrade HO performance.
+\quad The LEO satellite's state \(s_t\) evolves over time and actions \(a_t\) impact future reward \(r_t\) with discount factor \(\gamma\) \cite{intro_RL}. This framework enables the LEO satellite to learn an optimal FLSO policy through reinforcement learning, effectively balancing service continuity and HO minimization. The state space \(s_t\) of the MDP is calculated as follows:
+\begin{align}
+s_t &= \left\{ l_n(t), m_t, \widetilde R_{m,n}(t), u_{t} \right\}.
+\end{align}
+The state is defined as a tuple comprising the LEO satellite's ECEF coordinates \(l_n(t)\), the currently connected GW \( m_t \), the RSRP of the current GW \( \widetilde R_{m,n}(t) \), and the number of UEs currently being served \( u_{t} \) at time $t$, configured to be accessible and interpretable by the LEO satellite.
 
-% \begin{figure} [t]
-% \centering
-% \includegraphics[width=1.0\columnwidth]{figure_jtlee/3_definition_of_innercircle.png}
-% \caption{Definition of inner-circle}
-% \label{3_defi_inn}
-% \end{figure}
+The action space \( {a_t} \) involves the LEO satellite selecting the optimal GW at each step. Accordingly, our action space is calculated as follows:
+\begin{align}
+{a_t} &= \{ m_{t} | m_{t} \in \mathcal G_{t} \}.
+\end{align}
+The action comprises the set of GW \( \mathcal G_{{t}} \) denotes the set of all available GW at $t$. 
 
-% In this thesis, a common threshold scheme is employed to address challenges associated with individual threshold configurations. This scheme is uniformly applied to all UEs in the serving cell to configure a threshold for triggering HO when approaching the cell edge. The proposed configuration is similar to conventional distance-based CHO mechanisms, but it utilizes cell edge information from both the serving and target cells to determine the thresholds. 
-% The first threshold, $Thresh_1$, determines whether the UE has exited the serving cell and incorporates the concept of an inner circle. As shown in Fig. \ref{3_defi_inn}, the inner circle utilizes inter-site distance (ISD) to defines the boundary of the serving cell that does not overlap with any candidate cell, and its radius, $d_{rad}^{I}$, is equal to $Thresh_1$. In cases where multiple $d_{rad}^{I}$ values exist, the largest value is defined as the radius of the inner circle. This configuration ensures effective HO when the UE approaches the cell edge. The second threshold, $Thresh_2$, prevents HO from being triggered if the UE reaches the boundary of the serving cell but has not yet entered an appropriate range of the target cell. To achieve this, $Thresh_2$ is set within the outer circle of the target cell. This prevents unnecessary HOs and helps maintain a stable connection.
+The immediate reward \(r_{t}\) is formulated to jointly promote service continuity and signal quality while penalizing both necessary and UFLSO. It is calculated as follows:
+\begin{align}
+r_t &= (1+ \rho u_{t}){FS}(t) + {UFS}(t) - \Bigl({ToS}(t) + \nu{\widetilde R_{m,n}}(t)\Bigr).
+\end{align}
+The parameters \(\rho\) and \(\nu\) are normalization factors used to align the values with other metrics.
 
-% \begin{equation}
-% Thresh_1 = d_{rad}^{I} = ISD - d_{rad}^{T}.
-% \end{equation}
+Discount factor $\gamma$ is a value between 0 and 1, which represents the rate at which future rewards are discounted when considering them at the current step.
 
-% The sizes of the inner and outer circles, which determine the threshold, can be set via parameters such as SIB 19, while the second threshold can be configured differently depending on system requirements. For instance, $Thresh_2$ can be set to trigger HO when the UE enters the valid signal strength range of the target cell, ensuring that the minimum signal strength of the target cell is met.
+\begin{figure}[t]
+      \centering
+      % If the image is missing, show a placeholder box instead of failing the build
+      \IfFileExists{figure/dueling_dqn_archi.png}{%
+          \includegraphics[width=4in]{figure/dueling_dqn_archi.png}%
+      }{%
+          \fbox{dueling\_dqn\_archi.png not found}%
+      }
+      \caption{The architecture of the proposed dueling DQN for FLSO optimization in LEO satellite networks.}
+      \label{Fig:system_model2}
+ \end{figure}
 
 \subsection{Proposed dueling DQN algorithm}
 %복잡도 측면에서 얼마나 걸리는지 설명, GeForce RTX 3080 Ti GPU에서 수 밀리초 내에 행동을 출력할 수 있다.
-% \quad When the UE meets the preparation event conditions, it sends a MR to the serving cell to initiate the HO procedure. The MR includes the UE's location information and the distance to each neighboring cell $c_i$, denoted as $Ml_{c_i}$. Upon receiving the MR from the UE, the serving cell determines a list of candidate cells. Traditionally, candidate cells are selected based on the MR information provided by the UE. However, in the proposed approach, the serving cell has access to the ephemeris information of the 1-tier cells, and thus can include all the surrounding cells of the UE as candidate cells. Additionally, neighboring cells that do not exceed the maximum candidate cell threshold $d_{max}^c$, based on the UE's location and $Ml_{c_i}$ obtained from the MR, can also be included as candidate cells. Where, $d_{max}^c$ represents the maximum distance considered for the surrounding cells, which can be determined as, for example, the maximum ISD that can be included as a 1-tier cell.
-% % Additionally, neighboring cells that do not exceed the maximum candidate cell threshold $d_{max}^c$, based on the UE's location and $Ml_{c_i}$ obtained from the MR, can also be included as candidate cells.
+\label{Proposed Dueling DQN Algorithm}
+\quad In this paper, we employ a reinforcement learning algorithm to enable LEO satellites to operate in an dynamic environment. As depicted in Fig. 2, the architecture of the proposed dueling DQN algorithm, incorporating a \(\epsilon\)-greedy policy, is designed to optimize FLSO in LEO satellite networks. The LEO satellite receives feedback to execute actions that sustain both a prolonged ToS and an elevated RSRP, while minimizing the frequency of FLSO, UFLSO, and UE HO events. We enhance the traditional DQN framework by incorporating double DQN (DDQN), prioritized experience replay (PER), and dueling DQN to improve stability, learning efficiency, and robustness against noise in LEO satellite communication systems.
 
-% \begin{equation}
-% C_{candi} = \{ c_i \in C \mid Ml_{c_i} \leq d_{max}^c \}.
-% \end{equation}
-% The candidate cell set is defined as $C_{candi} = {c_1, c_2, \dots, c_n}$. The proposed full OID-based CHO procedure is illustrated in Fig. \ref{3_oid_procedure}, where the candidate cell selection described earlier corresponds to step 3, cell filtering. The subsequent procedures are identical to the CHO preparation phase in Section 2.2.2.
+The DQN algorithm \cite{mnih2013playing} approximates the Q-function \( Q(s_t, a_t; \theta) \), which maps a state \( s_t \) and action \( a_t \) to an expected cumulative reward, using a deep neural network (DNN) parameterized by \( \theta \). Two DNNs are utilized: an online network for action selection and a target network for value estimation. The Q-function is trained to minimize the following loss function and loss function is calculated as follows:
+\begin{algorithm}
+\begin{algorithmic}[1]
+\caption{Dueling DDQN-based Algorithm for UE HO}\label{alg:2}
+    \State \textbf{Initialization:} Random weights $\theta$, replay memory $\mathcal R$ with capacity $\mathcal D$, minibatch size $\mathcal Z$, total episodes $\mathcal E$, prioritization parameter $\alpha$, importance sampling parameter $\beta$, exploration rate $\epsilon$, Polyak averaging parameter $\tau$
+    \State \textbf{Input:} State, action, discount factor
+    \State \textbf{Output:} Optimal FLSO decision
+    \For{$Episode = 1$ to $\mathcal E$}
+        \State Initialize the integrated environment
+    \For{$t=0$ to $T$}
+            \State $a_t = \begin{cases}
+            \arg\max_{a'} Q(s_t, a'; \theta) & \text{with } 1 - \epsilon \\
+	    	ext{random action} & \text{with } \epsilon
+            \end{cases}$
+            \State Execute action, observe reward and next state
+            \State Store sample $(s_t, a_t, r_t, s_{t+1})$ into $\mathcal R$
+            \If{$\mathcal R > {\mathcal D}$}
+                \For{$i=1$ to $\mathcal Z$}
+                    \State Sample $(s_i, a_i, r_i, s_{i+1})$ from $\mathcal R$ with probability $p_i^\alpha$
+                    \State Calculate target network
+                \EndFor
+                \State $\theta^- \leftarrow \tau \cdot \theta + (1 - \tau) \cdot \theta^-$
+            \EndIf
+        \EndFor
+    \EndFor
+\end{algorithmic}
+\end{algorithm}
 
-% \begin{sidewaysfigure}[p]
-% \centering
-% \includegraphics[width=1.0\columnwidth]{figure_jtlee/3_oid_cho_procedure.pdf}
-% \caption{Proposed OID-based CHO procedure}
-% \label{3_oid_procedure}
-% \end{sidewaysfigure}
+To improve robustness against random noise, such as channel shadow fading and variations in UE distribution, we utilize a dueling DQN \cite{wang2016dueling}. The dueling DQN architecture enhances the traditional DQN by splitting the Q-function into two separate streams: the state-value function \( V(s; \theta) \) and the advantage function \( A(s, a; \theta) \). The Q-function is then calculated as follows:
+\begin{align}
+& Q(s, a; \theta) = V(s; \theta) \quad \notag \\
+& + \left( A(s, a; \theta) - \frac{1}{|A|} \sum_{a'} A(s, a'; \theta) \right),
+\label{eq:dueling_q}
+\end{align}
+where \( V(s; \theta) \) represents the value of the state \( s \), \( A(s, a; \theta) \) represents the advantage of taking action \( a \) in state \( s \), and \( |A| \) is the number of possible actions. This decomposition allows the network to better distinguish the value of a state from the advantage of each action, improving robustness against noise and enhancing learning efficiency in complex LEO satellite environments.
 
+To further enhance the learning efficiency, we incorporate PER as proposed in \cite{schaul2015prioritized}. PER prioritizes experiences with higher temporal-difference (TD) errors, where the TD error \(\delta_i\) for transition \(i\) is defined as the difference between the target and current Q-values. The priority is calculated as follows:
+\begin{equation}
+p_i = |\delta_i| + \epsilon_p,
+\label{eq:priority}
+\end{equation}
+where \( \delta_i = r_i + \gamma Q(s_{i+1}, a_{i+1}; \theta^-) - Q(s_i, a_i; \theta) \) is the TD error, and \( \epsilon_p \) ensures non-zero priorities. PER uses \( \alpha \in [0, 1] \) to control sampling probability \(p_i^\alpha \) and \( \beta \in [0, 1] \) to adjust importance sampling weights \((\mathcal D \cdot P(i))^{-\beta} \), where \( \mathcal D \) is replay buffer limit and \(P(i)\) is the probability of sampling transition \(i\). This approach accelerates learning by focusing on significant transitions, which is beneficial in LEO satellite networks with dynamic and noisy conditions.
 
-% \quad After receiving the HO command, the UE waits to verify the execution event. Upon satisfying the execution event, the UE executes an algorithm to select the target cell, $C_t$. This algorithm, based on the $X_p$ values of the serving and candidate cells, is designed to prevent UHOs and ensure that the UE meets the HO conditions with the $C_t$.
-
-% First, for each cell $c_n$ in $C_{candi}$, an $X_p^{c_n}$ value is calculated based on the UE’s location. Similarly, the $X_p$ value of the current serving cell, denoted as $C_s$, is represented as $X_p^{C_s}$, where $C_s$ refers to the cell to which the UE is currently connected. To filter valid candidate cells for selection, the $X_p$ values of candidate cells are compared with $X_p^{C_s}$:
-
-% \begin{equation}
-% C_{valid} = \{ c_n \in C_{candi} \mid X_p^{c_n} \leq X_p^{C_s} \}.
-% \end{equation}
-
-% If $C_{valid}$ is formed, the UE selects the cell with the smallest $X_p$ value in the $C_{valid}$ set as the target cell $C_t$. However, if $C_{valid}$ is empty, the UE waits until the next execution event is satisfied and then re-executes this process. To avoid indefinite waiting, a fallback mechanism is implemented. When the value of $Ml_s$ exceeds a certain maximum threshold ($d_{max}^{c_s}$), a fallback mechanism is triggered. For example, it can mean the distance at which the signal quality degrades below a predefined threshold. In such a case, the closest cell in the set $C_{candi}$ is selected as $C_{t}$. This fallback mechanism is consistent with the conventional distance-based CHO scheme. Therefore, the overall $C_t$ selection algorithm in the execution phase is structured as follows:
-
-% \begin{equation}
-% C_t =
-% \begin{cases} 
-% \arg\min_{c_v \in C_{valid}} X_p^{c_v}, & \text{if } C_{valid} \neq \emptyset, \\[10pt]
-% \arg\min_{c_n \in C_{candi}} Ml_n, & \text{if } C_{valid} = \emptyset \text{ and } Ml_s \geq d_{max}^{c_s}, \\[10pt]
-% \text{Re-evaluate $C_{valid}$}, & \text{if } C_{valid} = \emptyset \text{ and } Ml_s < d_{max}^{c_s}.
-% \end{cases}
-% \end{equation}
-
-% This proposed algorithm effectively selects the optimal target cell for the UE in EMC environments by leveraging satellite orbital information and the UE’s location. These inputs, already collected during distance-based CHO procedures, enable precise target cell selection with minimal processing overhead or additional signaling requirements. The pseudocode of this algorithm is detailed in Algorithm \ref{oid_select_algorithm}.
-
-% The proposed method is highly effective for selecting the optimal cell for the UE in an EMC environment. By utilizing satellite orbit information and the UE’s location, which are already collected during distance-based CHO, the relative position to the orbit can be considered without additional information from the UE, enabling this process with minimal processing load or computational overhead.
-
-% \begin{algorithm}
-% \caption{OID-based CHO: Target Cell Selection}
-% \begin{algorithmic}[1]
-% \State \textbf{Input:} $C_{\text{candi}} = \{c_1, c_2, \dots, c_n\}$ (Candidate cells), $C_s$ (Serving cell), $X_p^{C_s}$ (orbital distance of $C_s$)
-% \State \textbf{Output:} $C_t$ (Target cell for HO) or \texttt{None}
-
-% \If{$C_{\text{candi}} = \emptyset$}
-%     \State \textbf{return} \texttt{None} \Comment{No candidate cells available}
-% \EndIf
-
-% \If{$Ml_s \geq d_{max}^{c_s}$}
-%     \State $C_t \gets \arg \min_{c_n \in C_{\text{candi}}} Ml_n$
-%     \State \textbf{return} $C_t$
-% \EndIf
-
-% \If{Execution event is satisfied}
-%     \State Construct $C_{\text{valid}} \gets \{c_n \in C_{\text{candi}} \mid X_p^{c_n} \leq X_p^{C_s}\}$
-%     \If{$C_{\text{valid}} = \emptyset$}
-%         \State \textbf{return} \texttt{None} \Comment{No valid cells, exit and retry execution event}
-%     \Else
-%         \State $C_t \gets \arg \min_{c_v \in C_{\text{valid}}} X_p^{c_v}$
-%         \State \textbf{return} $C_t$
-%     \EndIf
-% \EndIf
-
-% \State \textbf{return} \texttt{None} \Comment{No valid cells selected after all conditions}
-% \end{algorithmic}
-% \label{oid_select_algorithm}
-% \end{algorithm}
+By combining dueling DQN with DDQN and PER, our approach effectively addresses overestimation bias, accelerates learning, and mitigates the effects of random noise, leading to improved LEO satellite HO performance with prolonged ToS, elevated RSRP, and reduced FLSO, UFLSO, and UE HO events. The detailed process of the training is described in Algorithm 1.

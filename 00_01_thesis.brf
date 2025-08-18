@@ -3,3 +3,10 @@
 \backcite {beamhopping_drl}{{8}{2.2}{section.2.2}}
 \backcite {beamhopping_loadbalance}{{9}{2.2}{section.2.2}}
 \backcite {beamhopping_drl}{{9}{2.2}{section.2.2}}
+\backcite {3gppchanel}{{12}{3.1}{equation.3.1}}
+\backcite {3gppl3}{{13}{3.1}{equation.3.3}}
+\backcite {singlemachine}{{14}{3.2}{section.3.2}}
+\backcite {intro_RL}{{16}{3.3.1}{subsection.3.3.1}}
+\backcite {mnih2013playing}{{18}{3.3.2}{subsection.3.3.2}}
+\backcite {wang2016dueling}{{18}{3.3.2}{algorithm.3.1}}
+\backcite {schaul2015prioritized}{{20}{3.3.2}{equation.3.17}}

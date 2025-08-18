@@ -3,5 +3,7 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Basic HO procedure}}{7}{figure.caption.5}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces HO and FLSO scenario: multiple satellites' beam to cell and GW}}{11}{figure.caption.6}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces The architecture of the proposed dueling DQN for FLSO optimization in LEO satellite networks.}}{17}{figure.caption.7}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
