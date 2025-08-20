@@ -1,12 +1,12 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.20)  20 AUG 2025 20:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  20 AUG 2025 20:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"c:/Users/qq010/OneDrive/바탕 화면/Master_thesis_kms_main/00_01_thesis.tex"
-(c:/Users/qq010/OneDrive/바탕 화면/Master_thesis_kms_main/00_01_thesis.tex
+**c:/Users/winner/Dropbox/winner/개인폴더/김민식/15.졸업준비/Master_thesis_kms_main/00_01_thesis.tex
+(c:/Users/winner/Dropbox/winner/개인폴더/김민식/15.졸업준비/Master_thesis_kms_main/00_01_thesis.tex
 LaTeX2e <2025-06-01> patch level 1
-L3 programming layer <2025-08-13>
+L3 programming layer <2025-07-20>
 (./classfile/PhDthesisPSnPDF.cls
 Document Class: classfile/PhDthesisPSnPDF 2007/09/06 v2 PhD thesis class
 (c:/texlive/2025/texmf-dist/tex/latex/base/book.cls
@@ -523,7 +523,7 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 ) (c:/texlive/2025/texmf-dist/tex/latex/mwe/mwe.sty
 Package: mwe 2018/03/30 v0.5 Package to support minimal working examples (MWE)
  (c:/texlive/2025/texmf-dist/tex/latex/lipsum/lipsum.sty (c:/texlive/2025/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty (c:/texlive/2025/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2025-08-13 L3 programming layer (loader) 
+Package: expl3 2025-07-20 L3 programming layer (loader) 
  (c:/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-06-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count343
@@ -1273,7 +1273,7 @@ Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on inp
 [25] (./00_01_thesis.aux (./00_x1_MacroFile1.aux) (./0_frontmatter/acknowledgement.aux) (./00_03_abstract.aux) (./00_04_abbreviation.aux) (./01_introduction.aux) (./02_Related_works.aux) (./03_Proposed_framework.aux) (./04_RESULT.aux) (./05_conclusion.aux))
  ***********
 LaTeX2e <2025-06-01> patch level 1
-L3 programming layer <2025-08-13>
+L3 programming layer <2025-07-20>
  ***********
 Package rerunfilecheck Info: File `00_01_thesis.out' has not changed.
 (rerunfilecheck)             Checksum: 47C844736436BFAE49C1D03944E749A4;3791.
@@ -1281,15 +1281,15 @@ Package rerunfilecheck Info: File `00_01_thesis.brf' has not changed.
 (rerunfilecheck)             Checksum: C81A75784C95E1F2D435B8E6DB7EB11A;650.
  ) 
 Here is how much of TeX's memory you used:
- 25835 strings out of 467800
- 480905 string characters out of 5436061
- 1152230 words of memory out of 5000000
- 53874 multiletter control sequences out of 15000+600000
+ 25835 strings out of 467801
+ 480999 string characters out of 5436090
+ 1152183 words of memory out of 5000000
+ 53873 multiletter control sequences out of 15000+600000
  642858 words of font info for 98 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 125i,17n,121p,2219b,718s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 125i,17n,121p,2249b,718s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/euler/eusm10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbac.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbae.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbb1.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbb9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbbb.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc0.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc2.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on 00_01_thesis.pdf (36 pages, 14340542 bytes).
+Output written on 00_01_thesis.pdf (36 pages, 14340570 bytes).
 PDF statistics:
  498 PDF objects out of 1000 (max. 8388607)
  389 compressed objects within 4 object streams
