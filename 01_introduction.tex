@@ -1,31 +1,21 @@
 \chapter{Introduction}
 
 \section{Background and motivation}
-\quad LEO satellite communication has recently emerged as a promising next-generation technology for providing global coverage. The architecture of an LEO network consists of a multitude of satellites concurrently serving numerous terrestrial cells. However, this dense multi-satellite and multi-cell environment can lead to significant inter-cell interference. Furthermore, satellites require stable and high-capacity backhaul connections with GWs to prevent data traffic bottlenecks and ensure seamless service for the cells they cover.
+\quad LEO satellite networks have gained significant attention in recent years due to their potential to provide global broadband coverage with low latency. Operating at altitudes between 160 km and 2,000 km above the Earth's surface, LEO satellites offer several advantages over GEO satellites, including reduced signal propagation delay and lower power requirements for communication \cite{lei2019broadband}. LEO satellite networks are also critical for military communications, where reliable and low-latency connectivity is essential for tactical operations, such as real-time battlefield coordination control \cite{military}. 
 
-One of the most critical challenges in LEO satellite communications stems from the high mobility of the satellites. As satellites orbit the Earth at extremely high speeds, a ground terminal must frequently change its serving satellite. This high mobility necessitates frequent handovers and switchovers, which become a primary cause of degraded service continuity and can lead to temporary network disconnections.
-
-In particular, conventional handover schemes based on received signal strength exhibit several limitations in this dynamic LEO environment. Such schemes, which simply switch the connection to the satellite with the strongest signal, can trigger unnecessarily frequent handovers. Moreover, they often lead to the ping-pong effect, where handovers are rapidly repeated back and forth between two satellites at the cell edge. Consequently, the terminal's ToS with a single satellite becomes very short, which significantly degrades overall network efficiency and stability.
-
-Therefore, to guarantee stable QoS and service continuity in LEO satellite networks, it is essential to develop intelligent handover and switchover schemes that can effectively manage the challenges posed by satellite mobility. This paper proposes a novel approach to address these pressing issues.
-%인트로에서는 LEO위성의 장단점(GEO대비 저지연, 지상망 대비 광대역 커버리지 제공)을 설명하고
+LEO satellites are categorized into transparent types, connecting terrestrial gNBs and GWs to UEs, and regenerative types with onboard gNBs. However, the high orbital velocity of both LEO satellites, approximately 7--8 km/s, introduces significant challenges in maintaining stable communication links such as feeder link and service link. For almost transparent types, LEO satellite feeder link operating with a break-before-make policy must perform switchovers as they pass over multiple ground GWs, which in turn induces HO for the UEs receiving LEO satellite services because the gNB associated with the each GW \cite{3gppfeeder}. In the 6G mMTC scenarios, HO failures may occur due to the transmission of HO commands to a large number of UEs. These frequent FLSO and UE HO can lead to service quality degradation and increased latency, posing a major challenge for NTN in the context of 6G communications \cite{ho_latency}. According to \cite{ho_battery}, UE power consumption during HOs ranges from 100 mW in the best case to 400 mW in the worst case. This energy overhead significantly impacts low-power battlefield devices, including IoT sensors, UAVs, and robots, hastening battery depletion and degrading network energy efficiency. Frequent FLSO and HO can disrupt mission-critical communications, increasing latency and risking security breaches in contested environments. Consequently, optimizing the FLSO strategy to minimize UE HO is crucial for ensuring seamless service in NTN.
 
 \section{Contributions}
-\quad To address the challenges of high mobility and dynamic network topology in LEO satellite networks, this paper proposes a novel handover and resource management scheme based on multi-agent reinforcement learning. The key contributions of this work are summarized as follows:
-
+\quad In this paper, we propose a reinforcement learning-based FLSO scheme that optimizes HO for UEs in LEO satellite coverage. The main contributions are summarized as follows:
 \begin{itemize}
-    \item \textbf{A MARL Framework for Joint Optimization:} We design a MARL framework where each satellite acts as an autonomous agent. These agents learn collaboratively to find the optimal policy for selecting both user cells and gateways simultaneously, adapting to the highly dynamic network environment without the need for a centralized controller.
-
-    \item \textbf{User Link Stability by Minimizing Handovers while Maximizing SINR:} Our proposed scheme enables the satellite agents to select user cells with a sophisticated dual objective. It aims to \textbf{maximize the SINR} for all served cells while concurrently \textbf{minimizing the total number of handovers}. This approach directly mitigates the ping-pong effect and enhances service stability for ground users.
-
-    \item \textbf{Feeder Link Reliability by Preventing Bottlenecks and Reducing Switchovers:} The agents intelligently select gateways to \textbf{prevent traffic bottlenecks} in the backhaul network, ensuring efficient data routing. Crucially, this selection is performed while also \textbf{minimizing the frequency of feeder link switchovers}, which enhances the stability and reliability of the satellite-to-ground connection.
+    \item I created a dynamic system environment to facilitate the reinforcement learning agent's training process. By leveraging locally observable metrics, such as received signal strength and LEO satellite ephemeris data, the agent adapts to rapid orbital dynamics, thereby enhancing link stability and reducing service outages.
+    \item I designed a reward function leveraging RSRP and ToS to optimize long-term LEO satellite and UE connectivity and optimize FLSO, UFLSO and UE HO in LEO satellite networks.
+    \item I proposed a dueling DQN-based FLSO algorithm to enhance robustness in noisy and dynamic LEO environments for transparent LEO satellites. This algorithm dynamically selects ground GW to reduce UE HO frequency, enhance RSRP, and extend ToS across varying UE distributions.
 \end{itemize}
-
-The effectiveness of our proposed scheme is validated through extensive simulations, which demonstrate significant improvements in network stability and user QoS compared to conventional, signal-strength-based methods.
 
 \section{Overview}
 \quad The remainder of this thesis is structured as follows: 
 Sec. \uppercase\expandafter{\romannumeral2} discusses handover, feeder link switching, and related research in beam hopping and resource allocation.
-Sec. \uppercase\expandafter{\romannumeral3} presents the proposed multi-agent reinforcement learning framework in detail. 
+Sec. \uppercase\expandafter{\romannumeral3} presents the proposed reinforcement learning framework in detail. 
 Sec. \uppercase\expandafter{\romannumeral4} discusses the simulation results and compares the proposed strategy with conventional approaches. Finally, 
 Sec. \uppercase\expandafter{\romannumeral5} concludes the thesis.

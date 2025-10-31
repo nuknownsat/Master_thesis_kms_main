@@ -1,7 +1,103 @@
 \chapter[Performance evaluation]{Performance evaluation}
-\section{Simulation setup}
-% \quad In this thesis, the case 9 scenario of the system-level simulation described in \cite{rel_38821} is analyzed, with scenario D2 selected to account for the regenerative payload and EMC environment. The satellite antenna pattern is based on \cite{rel_38811}. Each satellite has 19 slot-beams, and the ISD is arranged uniformly. Additionally, FR1 is considered, resulting in interference between spot-beams. In this simulation, In this simulation, 2,000 UEs are randomly distributed within the blue area of the satellite service region, as shown in Fig. \ref{figure_system_model}. Since the satellite's speed is fast enough to ignore the UE's movement, a fixed UE is deployed. In addition, it is assumed that the UE can update its location information via the GPS. The detailed values are shown in Table. \ref{table:sls_case_9}.
 
+\section{Simulation setup}
+\quad In this section, we evaluate the performance of the proposed algorithm, DDQN-based FLSO and the signal-based FLSO algorithm through extensive simulations. The simulation environment is based on the actual deployment of SpaceX’s Starlink GWs in the United States, servicing UEs in a mMTC environment. We consider operational GW sites and the LEO satellite's orbit was analyzed using the TLE data of Starlink No. 1008, retrieved on December 5, 2024. The LEO satellite periodically measures the RSRP of GWs as it passes over them.
+The simulation environment parameters are summarized in Table~\ref{tab:sim_params} and was performed in Python, iterating 1,000 times to analyze LEO satellite behavior and performance. The discount factor is set to 0.99 to further reward the future. Other algorithms are summarized as follows:
+
+\begin{itemize}
+\item The DDQN-based FLSO: It is trained using the identical state, action, and reward as defined for the dueling DQN. Both algorithms are initially trained with a UE spatial dispersion of 100, and the subsequent simulations are conducted using the learned Q-networks. Learning proceeds via temporal‐difference updates with experience replay and periodic target‐network synchronization without dueling network.
+
+\item Signal-Based FLSO: It is implemented by adapting the conventional HO mechanism. Specifically, we employ the widely used A3 event-based FLSO algorithm as a baseline. In this algorithm, a FLSO event is triggered when the difference between the RSRP of the serving GW and that of target GWs exceeds a predefined threshold, denoted by \( offset \).
+\end{itemize}
+  
+\begin{table}
+% \vspace{0.09 in}
+\centering
+\caption{Simulation parameters}
+    \label{tab:sim_params}
+    \begin{tabular}{l l}   % Two columns (left-aligned for both)
+        \hline
+        %\textbf{Environment Parameter \cite{FCC2020,3gppfeeder}} & \textbf{Value} \\ 
+        \hline      
+        Number of LEO satellite \(N\) & 1 \\  
+        Number of GW \(M\) & 46 \\  
+        Carrier frequency $f_m$ &28 [GHz]\\
+        Bandwidth $B_m$ & $480$ [MHz] \\
+        GW Tx power $P_{m}$ & 47 [dBm] \\
+        GW Tx antenna gain $G_{m}$ & 49.5 [dBi] \\
+        LEO satellite Rx antenna gain $G_{n}$ & 38.5 [dBi] \\
+        Ambient temperature $T_0$ & 150 [K] \\
+        Antenna temperature $T_a$ & 290 [K] \\
+        Noise figure $N_f$ & 3 [dB] \\
+        Boltzmann constant $k$ & $1.379 \times 10^{-23}$ [J/K] \\
+        Number of Resource Block $q_{RB}$ & 6     \\
+        LEO satellite altitude $h$ & 530 [km] \\
+        UE distribution $u_t$ & $\mu = 10^5$, $\sigma \in [100 \sim 5{,}000]$ \\
+        Minimum elevation angle $\theta_{\min}$ & 25 [$^\circ$]\\
+        Minimum RSRP of GW $R_{\min}$ & -110 [dBm] \\
+        \hline
+        \textbf{FLSO Parameter} & \textbf{Value} \\ 
+        \hline
+        Period of measurement \(T_m\) & 200 [ms] \\
+        Minimum time-of-stay & 1 [s] \\
+        L3 filter forgetting factor \(a\) & $(\tfrac{1}{2})^{{K}/4}$ \\
+        L3 filter coefficient K & 4 \\
+        A3 event \(offset\) & 4, 6, 8 [dB] \\
+        \hline
+        \textbf{Reinforcement Learning Parameter} & \textbf{Value} \\ 
+        \hline
+        Learning rate & 0.0001 \\
+        Discount factor $\gamma$ & 0.99 \\
+        Replay buffer limit \(\mathcal D\) & $10^5$ \\
+        Batch size  \(\mathcal Z\)& 512 \\
+        Total step per episode & 4,700 \\
+        % Update \(\theta\) per \# step & 5 \\
+        Polyak tau \(\tau\) & 0.01 \\
+        PER $\alpha$ & 0.6 \\
+        PER $\beta$ Start & 0.4 \\
+        % PER $\beta$ Frames & $10^7$ \\
+        % Epsilon & 1.0 $\sim$ 0.01  \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figure/1.flso.png}
+        \caption{Number of FLSO}
+        \label{fig:sat2_connected}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figure/2.UE_HO.png}
+        \caption{Number of UE HO}
+        \label{fig:sat3_connected}
+    \end{subfigure}
+    
+    \vspace{0.5cm}
+    
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figure/0.tos.png}
+        \caption{Average ToS [sec]}
+        \label{fig:tos}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figure/3.RSRP.png}
+        \caption{Average RSRP [dBm]}
+        \label{fig:sat4_connected}
+    \end{subfigure}
+    
+    \caption{Performance comparison of the proposed, DDQN-based, and signal-based FLSO algorithms across different metrics}
+    \label{fig:compare_algoritms}
+\end{figure}
+
+% Optionally, you can add a summary caption in the text or as a separate figure/table if needed.
 % \begin{table}[h!]
 % \centering
 % \renewcommand{\arraystretch}{1.5}
@@ -122,6 +218,8 @@
 % \end{table}
 
 \section{Results and Discussion}
+\quad This is result.
+
 % \begin{figure}[t]
 % \centering
 % \includegraphics[width=1.0\columnwidth]{figure_results/final_new_8set/results_rlf.png}

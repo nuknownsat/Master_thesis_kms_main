@@ -70,7 +70,7 @@
 %\usepackage{nextpage}
 
 %Inserted by smoh
-\usepackage{subfig}
+%\usepackage{subfig}  % Commented out to avoid conflict with subcaption
 \usepackage{caption}
 \captionsetup{labelsep=period}
 \def\figurename{Fig.}%
