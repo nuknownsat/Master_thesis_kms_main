@@ -29,14 +29,6 @@ L.~Lei, E.~Lagunas, S.~Chatzinotas, and B.~Ottersten, ``Broadband {LEO} satellit
 \bibitem{ho_latency}
 M.~Tayyab, X.~Gelabert, and R.~J{\"a}ntti, ``A survey on handover management: From {LTE} to {NR},'' \emph{IEEE Access}, vol.~7, pp. 118\,907--118\,930, 2019.
 
-\bibitem{beamhopping_loadbalance}
-Z.~Lin, Z.~Ni, L.~Kuang, C.~Jiang, and Z.~Huang, ``Multi-satellite beam hopping based on load balancing and interference avoidance for ngso satellite communication system,'' \emph{IEEE Transactions on Communications}, vol.~69, no.~12, pp. 1234--1245, 2021.
-
-\bibitem{beamhopping_drl}
-\BIBentryALTinterwordspacing
-X.~Xie, K.~Fan, W.~Deng, N.~Pappas, and Q.~Zhang, ``Multi-satellite beam hopping and power allocation using deep reinforcement learning,'' 2025. [Online]. Available: \url{https://arxiv.org/abs/2501.02309}
-\BIBentrySTDinterwordspacing
-
 \bibitem{3gppchanel}
 {3GPP}, ``Study on new radio ({NR}) to support non-terrestrial networks ({NTN}),'' 3rd Generation Partnership Project (3GPP), Tech. Rep. TR 38.811, Sep. 2020.
 

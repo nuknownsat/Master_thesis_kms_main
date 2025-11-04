@@ -1,11 +1,6 @@
 \backcite {lei2019broadband}{{1}{1.1}{section.1.1}}
 \backcite {3gppfeeder}{{1}{1.1}{section.1.1}}
 \backcite {ho_latency}{{1}{1.1}{section.1.1}}
-\backcite {beamhopping_loadbalance}{{6}{2.2}{section.2.2}}
-\backcite {beamhopping_loadbalance}{{7}{2.2}{section.2.2}}
-\backcite {beamhopping_drl}{{7}{2.2}{section.2.2}}
-\backcite {beamhopping_loadbalance}{{8}{2.2}{section.2.2}}
-\backcite {beamhopping_drl}{{8}{2.2}{section.2.2}}
 \backcite {3gppchanel}{{11}{3.1}{equation.3.1}}
 \backcite {3gppl3}{{11}{3.1}{equation.3.3}}
 \backcite {singlemachine}{{13}{3.2}{section.3.2}}

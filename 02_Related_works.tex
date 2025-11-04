@@ -1,71 +1,62 @@
 \chapter[Related works]{Related works}
 \label{chapter:related_works}
 % 다른 사람들의 관련 연구 소개
-\section[LEO satellite HO and FLSO schemes]{LEO satellite HO and FLSO schemes}
-\quad In an NTN environment, the continuity of the service link between the UE and the satellite is ensured through HO. HO is the procedure in Fig. \ref{figure_bho_procedure} by which a UE changes the serving cell. Generally, this network-controlled procedure consists of three main phases: preparation, execution, and completion. Initially, the source gNB configures the UE to perform measurements on neighboring cells, and the UE sends a MR back to the network. Based on this report and other RRM information, the source gNB decides to initiate a HO and sends a HO REQUEST to a target gNB. The target gNB performs admission control, prepares resources, and responds with a HO REQUEST ACK. The source gNB then commands the UE to switch to the target cell by sending an RCR message. Upon receiving this, the UE synchronizes with the target cell and sends an RCRC message to finalize the process. Subsequently, the target gNB requests the core network to switch the data path and triggers the release of the UE's resources at the source gNB. However, applying this procedure in NTNs presents unique challenges. Unlike in terrestrial networks, the difference in received signal strength between satellites is often small, making traditional measurement-based triggers less reliable. Consequently, distance- or time-based HO criteria are also employed to manage the predictable mobility of satellites. In addition to the service link, the continuity of the feeder link connecting the satellite to the ground GW is equally important. The presence or absence of a gNB onboard the satellite determines whether a feeder link switchover impacts the service link. For a transparent satellite without an onboard gNB, a feeder link switchover changes the serving GW on the ground, which in turn changes the serving gNB, resulting in a necessary HO procedure for the UE. In contrast, for a regenerative satellite equipped with an onboard gNB, a feeder link switchover can be handled at the transport layer without changing the serving gNB, making the switch transparent to the UE and avoiding an HO.
+\section[LEO satellite FLSO schemes]{LEO satellite FLSO schemes}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=1.0\columnwidth]{figure/fig_sat_ho.png}
-\caption{Basic HO procedure}
-\label{figure_bho_procedure}
+\quad Mobility management for LEO satellite networks is actively being standardized within 3GPP. Whereas conventional TN possess a static topology, rendering explicit NG interface management procedures unnecessary, the high mobility of LEO satellites necessitates them. Consequently, procedures for NG interface management are actively being defined in 3GPP standards to support this dynamic connectivity [].
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=1\linewidth]{figure/fig_sat_flso_trans.png}
+  \caption{Feeder link architectures for transparent satellite}
+  \label{fig:flso_arch_trans}
 \end{figure}
 
-% \begin{figure}
-% \centering
-% \includegraphics[width=1.0\columnwidth]{figure/figure_beam_type.png}
-% \caption{Beam steering type: (a) quasi-fixed cell, (b) EMC}
-% \label{figure_beam_type}
-% \end{figure}
-
-\section[Reinforcement learning-based Beam hopping]{Reinforcement learning-based Beam hopping}
-\quad BH has been extensively studied as a key resource-allocation technique to cope with spatially and temporally heterogeneous ground traffic. In LEO satellite systems, multi-satellite cooperation becomes a central challenge due to overlapping coverage and rapidly varying link conditions.
-
-Lin \textit{et al.}~\cite{beamhopping_loadbalance} proposed a framework that decomposes the multi-satellite BH problem into two core components: load balancing and interference avoidance. Exploiting the multiple-coverage property of LEO constellations, the framework first distributes hotspot traffic across several satellites load balancing. Each satellite then independently designs a BH pattern for its assigned cells to satisfy per-cell demand while maintaining spatial isolation among simultaneously illuminated beams. Finally, the sequence of per-satellite BH patterns is jointly scheduled to mitigate inter-satellite interference avoidance. While this decomposition provides a clear problem structure, the approach in~\cite{beamhopping_loadbalance} relies on predefined heuristics to solve the subproblems sequentially, limiting adaptability to non-stationary traffic and unpredictable network dynamics.
-
-Complementary to the above line, Xie \textit{et al.} propose a DRL approach for multi-LEO BH with joint beam scheduling and power allocation~\cite{beamhopping_drl}. Their method formulates a hybrid action space—discrete beam-illumination patterns and continuous per-beam power—and employs PPO with two policy heads sharing a common feature extractor. The objective jointly optimizes long-term throughput and long-term cumulative average delay under full-frequency reuse, explicitly accounting for both intra- and inter-satellite interference in the SINR model. Simulation results show notable gains over heuristic baselines (e.g., up to 8.9\% higher throughput and up to 69.2\% lower LTCAD), highlighting the potential of DRL for traffic-driven BH in time-varying environments. Nonetheless, the learning agent is effectively centralized and assumes access to global network state (e.g., via NOCC), and the model does not explicitly consider GW selection or feeder-link switchover effects on service continuity.
-
-To address these limitations, this paper adopts a multi-agent reinforcement learning MARL formulation. We model each satellite as an autonomous agent that observes local network states (e.g., per-cell demand, channel/interference conditions, and GW status) and coordinates with other agents to learn a cooperative BH policy. The learned policy simultaneously optimizes interference avoidance and gateway load balancing, thereby improving service SINR and alleviating traffic bottlenecks. In contrast to the heuristic decomposition in~\cite{beamhopping_loadbalance} and the centralized DRL paradigm in~\cite{beamhopping_drl}, our MARL framework natively supports distributed decision-making under partial observability and explicitly couples BH with GW selection and feeder-link switchover, which are critical for end-to-end performance in practical NTN deployments.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=1.0\columnwidth]{figure/fig_sat_beam_hopping.png}
-\caption{Satellite beam hopping system}
-\label{figure_satellite_beam_hopping_system}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=1\linewidth]{figure/fig_sat_flso_reg.png}
+  \caption{Feeder link architectures for regenerative satellite}
+  \label{fig:flso_arch_reg}
 \end{figure}
+Furthermore, as shown in Fig. \ref{fig:flso_arch_trans}, the architecture impacts the HO process. For transparent satellites, the gNB is located at the ground GW and communicates with the UE via the service link. If the gNBs associated with different GWs are different, a FLSO induces a UE HO.
+In contrast, as shown in Fig. \ref{fig:flso_arch_reg}, a regenerative satellite has an onboard gNB. This allows the UE to maintain its connection with the same gNB even during an FLSO; therefore, a UE HO does not occur as a direct result of the FLSO. Additionally, two FLSO methods exist. The first is hard FLSO, where the link is broken before the new one is established. The second is soft FLSO, where the transition occurs while the original link is maintained.
+While 3GPP defines the architectures and mechanisms for executing an FLSO, the optimal selection policy—determining which available GW to switch to—is non-standardized and remains a critical challenge for network performance.
+Related work addressing this selection problem has traditionally focused on simple heuristic strategies. These include signal-based methods selecting the GW with the strongest RSRP, distance-based methods selecting the closest GW.
+However, these heuristic approaches are overly focused on link-level metrics like signal quality or stability at the moment of switching. They fail to consider the processing load and traffic distribution across the GW network. This omission leads to severe load imbalance, particularly in dense NTN scenarios where multiple satellites may select the same best GW simultaneously. This congestion at a single GW creates a bottleneck, degrading overall NTN backhaul efficiency and increasing latency, regardless of the satellite payload architecture.
 
-% \quad Basic HO (BHO) is the traditional HO method where the serving cell initiates and controls the HO process \cite{enric_5g_new_radio}. First, when the HO conditions are satisfied for a certain period, known as the time-to-trigger (TTT), the UE sends a measurement report (MR) to the serving cell. Upon receiving the MR, the serving cell evaluates the measurement results and selects the most suitable target cell for the UE, making the HO decision. The serving cell then sends a HO request message to the target cell over the Xn interface to check if HO is possible. After receiving the HO Request acknowledgment (ACK) message from the target cell, the serving cell sends the HO command to the UE. Upon receiving the HO command, the UE immediately disconnects from the serving cell and attempts random access (RA) with the selected target cell. The entire procedure is detailed in Fig. \ref{figure_bho_procedure}.
+% LEO 위성망의 이동성 관리는 3GPP에서 활발히 표준화되고 있습니다. 모든 위성은 ng 인터페이스로 게이트웨이와 amf/upf 코어망에 연결됩니다. 따라서 기존 지상망에서는 변화가 거의 없어서 NG 인터페이스의 관리 절차가 표준에 정의 되지 않았지만 LEO위성의 이동성을 위해 NG 인터페이스 관리 절차가 표준에서 정의중입니다 []. 또한 그림1과 같이 transparent 위성의 경우 gNB가 지상의 GW에 위치하고 서비스링크를 통해 UE와 통신하기 때문에 각 GW 간의 gNB가 다른 경우에는 FLSO 시 UE HO가 발생합니다. 반면, 그림 2와 같이 regenerative 위성은 gNB를 탑재하여 FLSO 시에도 UE는 동일한 gNB와 연결을 유지하므로 FLSO가 발생하더라도 UE HO가 발생하지 않습니다. 또한 피더링크 스위치오버 방식에도 두가지 방식이 있으며 먼저 연결이 끊고 다음 게이트웨이에 연결하는 하드 스위치오버 방식과 연결이 유지된 상태에서 게이트웨이를 전환하는 소프트 스위치오버 방식이 있습니다.
 
-% In TN, the cell radius is small due to the very small altitude compared to NTNs, so the propagation delay between the UE and the base station is minimized. However, in NTN, the significant distance between the UE and LEO satellites due to their high altitude causes much larger propagation delays compared to TN, introducing considerable latency in exchanging HO control messages between the UE and the base station \cite{enric_5g_new_radio}. This can lead to the selection of suboptimal target cells, as the MR used to make HO decisions are based on the signal conditions from previous moments. This issue is made worse by the dynamic environment of LEO satellite cells, where the rapid movement of satellites makes precise timing for HOs important to prevent UHOs or RLF.
-% This issue occurs because the target cell is selected based on MR results that are outdated and may no longer match the UE's optimal cell at the current location. Furthermore, due to the effects of signaling fading, there is a risk of selecting an incorrect target cell, leading to UHO or RLF. Therefore, employing the traditional HO method in NTN environments may degrade network performance.
 
-% \quad To address the issues mentioned earlier, NTN adopts the CHO mechanism, initially proposed in NR \cite{rel_38300}. CHO divides the HO process into two different phases: the preparation and the execution phase. Similar to the conventional method, when the HO condition is met, the UE sends an MR to the serving cell. However, in CHO, instead of selecting a single target cell, the serving cell prepares multiple candidate target cells based on the MR and initiates the HO request message procedure. After receiving the HO Request ACK message from these candidate cells, the serving cell sends the HO command to the UE. At this point, rather than immediately executing the HO, the UE evaluates the prepared candidate cells through an execution event and selects the optimal target cell for the HO. This approach enhances flexibility in target cell selection, especially in LEO satellite environments, helping to reduce UHO and RLF. The complete procedure of CHO is illustrated in Fig. \ref{figure_cho_procedure}.
 
-% \begin{figure}
-% \centering
-% \includegraphics[width=1.0\columnwidth]{figure/figure_cho_procedure.png}
-% \caption{Conditional HO procedure}
-% \label{figure_cho_procedure}
-% \end{figure}
+\section[Load Balancing in LEO Satellite Networks]{Load Balancing in LEO Satellite Networks}
+\quad Load balancing in LEO NTN spans two tightly coupled planes: (i) the service-link plane, where beams/cells must be scheduled and powered to match spatio-temporal demand, and (ii) the feeder-link plane, where satellites select among candidate gateways (GWs) via FLSO to provision backhaul capacity. Overlapping satellite footprints and rapidly varying link conditions make naive single-metric selection fragile under realistic traffic and topology changes.
+% LEO NTN의 로드 밸런싱은 (i) 빔/셀을 수요에 맞게 스케줄·전력할당하는 서비스 링크 면과,
+% (ii) 위성이 FLSO를 통해 후보 GW 중에서 백홀을 선택하는 피더 링크 면의 두 차원에서 긴밀히 결합되어 수행됩니다.
+% 위성 커버리지 중첩과 빠르게 변하는 링크 조건 때문에 단일 지표 기반의 단순 선택은 실제 트래픽/토폴로지 변화에 취약합니다.
 
-% This thesis proposes an OID-based CHO approach to enhance existing distance-based CHO mechanisms by incorporating satellite orbital information collected by the UE. Unlike previous methods that rely solely on distance or signal strength, the OID-based CHO considers the satellite's trajectory and predicted future positions, enabling more intelligent and efficient HO decisions. This approach addresses the limitations of existing methods and improves HO performance.
+\quad The coupling depends on payload architecture. In transparent payloads, changing the GW typically changes the serving gNB, so an FLSO may induce a UE HO; thus the policy must trade off radio-quality/ToS gains against HO cost and risk. In regenerative payloads, the UE remains attached to the on-board gNB across an FLSO, but backhaul congestion and path stretch still dominate end-to-end latency and reliability.
+% 이 결합 정도는 페이로드 아키텍처에 달려 있습니다.
+% 투명(transparent) 페이로드에서는 GW 변경이 보통 서비스 gNB 변경을 수반하므로 FLSO가 UE HO를 유발할 수 있어,
+% 무선 품질/ToS 이득과 HO 비용·리스크 간의 절충이 필요합니다.
+% 재생(regenerative) 페이로드에서는 UE가 탑재 gNB에 계속 부착되지만, 백홀 혼잡과 경로 증가가 종단 간 지연/신뢰성에 큰 영향을 줍니다.
 
-%시작을 어떻게 해야할까? 위성의 핸드오버와 피더링크 스위칭 설명
-%위성의 핸드오버부터 설명, 
+\quad Practical constraints include finite GW processing/backhaul capacity, feeder-link spectrum/time constraints, visibility and elevation masks, and control-plane overhead. Excessive switchover induces thrashing; hard FLSO risks packet loss, whereas soft FLSO consumes duplicate backhaul resources during overlap. Effective policies therefore require hysteresis and cooldown to stabilize decisions.
+% 실제 제약으로는 GW의 처리/백홀 용량 한계, 피더링크 자원 제약, 가시성·고도 마스크, 제어면 오버헤드 등이 있습니다.
+% 과도한 스위치오버는 스래싱을 유발하며, 하드 FLSO는 패킷 유실 위험이, 소프트 FLSO는 겹침 구간 동안의 중복 자원 소비가 발생합니다.
+% 따라서 안정화를 위한 히스테리시스와 쿨다운이 필요합니다.
 
-% 위성의 높은 속도로 인한 서비스 및 피더 링크의 잦은 변동이 불가피하다. 
-% 핸드오버의 절차 설명, rsrp, 거리기반, time 기반도 설명
-% 핸드오버로 인한 전력소모 참조
-% transparent와 regenerative 위성의 피더링크 스위칭 차이 설명
-% 표준에서 나와 있는 빔호핑 정리
-% 빔 호핑의 장단점
-% 장점:자원 효율성 극대화, 유연한 용량 할당, 간섭 감소
-% 단점: 복잡한 스케줄링, 높은 지연, 핸드오버 발생 가능성, 정확한 시간 동기화
-% 위성의 빔호핑에서 cell은 중앙의 기지국을 지원한다.
-% 결론적으로 우리 연구의 목표는 cell의 sinr을 최대로 하는 beam hopping 기법을 적용하면서 cell의 traffic 병목현상이 발생하지 않도록 GW선택과 피더링크 스위치오버를 수행하는 것이다.
+\quad Representative objectives are: (1) maximize end-to-end throughput or minimize flow delay; (2) balance GW load (e.g., fairness across GWs) to avoid bottlenecks; (3) maintain radio quality (RSRP/SINR) and acceptable ToS; and (4) minimize switching costs, measured by FLSO frequency and, when applicable, UE HO count. Queue stability at GWs serves as an operational constraint.
+% 대표 목표는 (1) 종단 간 처리량 최대화/지연 최소화, (2) 병목을 피하기 위한 GW 간 로드 밸런싱(공정성),
+% (3) 무선 품질(RSRP/SINR)과 허용 가능한 ToS 유지, (4) FLSO 빈도와(해당 시) UE HO 횟수로 측정되는 스위칭 비용 최소화입니다.
+% 또한 GW 큐 안정성은 운용 제약으로 고려됩니다.
 
-%NTN 환경에서 UE와 위성 간의 서비스 링크 연속성은 핸드오버를 통해 보장됩니다. 핸드오버는 UE가 서비스 받는 셀을 변경하는 절차이며, 지상에서는 주변 셀의 신호를 측정하는 방식이 사용되었습니다. 하지만 NTN 환경에서는 위성간의 신호차이가 크지 않아 거리 혹은 time 기반의 핸드오버를 수행하기도 한다. 서비스 링크와 더불어, 위성과 지상 게이트웨이를 연결하는 피더 링크의 연속성도 중요하다. 특히, 위성에 gNB의 탑재 여부에 따라 피더링크 스위치오버에 따른 서비스 링크의 핸드오버가 달라진다. gNB가 탑재 되지 않은 transparent 위성의 경우 피더링크 스위치오버에 따라 지상의 GW가 달라지면서 gNB 또한 달라지게 되므로 핸드오버가 동반된다. 반면, gNB가 탑재된 regenerative 위성의 경우 피더링크 스위치오버를 수행하더라도 gNB가 달라지지 않아 핸드오버가 발생하지 않는다.
-%보완점: 절차에 대한 설명 추가
+\quad Heuristic baselines\textemdash strongest-RSRP, nearest-GW, fixed thresholds, or distance/time triggers\textemdash are simple but myopic, ignoring time-varying congestion and multi-satellite interactions. We instead target an adaptive policy: the state aggregates per-GW load, candidate link quality and ToS, recent FLSO history, and short-term visibility; the action selects a target GW (and can be extended to joint beam scheduling); the reward combines throughput/SINR and fairness, with penalties for overload and switching. Such a learning-based design anticipates congestion rather than merely reacting to it.
+% RSRP 최대, 최근접 GW, 고정 임계값, 거리/시간 트리거 등 휴리스틱 기법은 단순하지만,
+% 시간에 따라 변하는 혼잡과 다중 위성 상호작용을 간과하는 단견을 갖습니다.
+% 본 연구는 적응형 정책을 지향합니다: 상태는 GW별 부하, 후보 링크 품질과 ToS, 최근 FLSO 이력, 단기 가시성 정보를 포함하고,
+% 행위는 대상 GW 선택(확장 시 빔 스케줄링 결합)이며, 보상은 처리량/SINR과 공정성을 결합하고 과부하·스위칭에 패널티를 부여합니다.
+% 이러한 학습 기반 설계는 단순 반응이 아닌 혼잡을 선제적으로 예견합니다.
+
+
 
 %한상민 논문 12,14랑 LG cto 발표자료 확인해보기
 %하나의 저궤도 위성이 운용할 수 있는 총 빔의 개수와 동시에 운용하는 빔 최대 개수를 각각 1,658개, 424개
