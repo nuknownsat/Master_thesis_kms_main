@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  4 NOV 2025 20:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  4 NOV 2025 22:14
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1076,7 +1076,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 pdfTeX warning (ext4): destination with the same identifier (name{page.ii}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.17 ... {4}Performance evaluation}{21}{chapter.4}
+l.17 ... {4}Performance evaluation}{20}{chapter.4}
                                                   % [2
 
 
@@ -1165,11 +1165,9 @@ Package pdftex.def Info: figure/fig_sat_flso_reg.png  used on input line 16.
 
 [5 <./figure/fig_sat_flso_trans.png>]
 
-[6 <./figure/fig_sat_flso_reg.png>]
+[6 <./figure/fig_sat_flso_reg.png>])
 
-[7])
-
-[8]
+[7]
 \openout2 = `03_Proposed_framework.aux'.
 
  (./03_Proposed_framework.tex
@@ -1178,21 +1176,23 @@ LaTeX Font Info:    Trying to load font information for U+eus on input line 4.
 (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/ueus.fd
 File: ueus.fd 2013/01/14 v3.01 Euler Script
 )
-<figure/fig_system_model.png, id=243, 415.91385pt x 301.22136pt>
+<figure/fig_system_model.png, id=238, 415.91385pt x 301.22136pt>
 File: figure/fig_system_model.png Graphic file (type png)
 <use figure/fig_system_model.png>
 Package pdftex.def Info: figure/fig_system_model.png  used on input line 8.
 (pdftex.def)             Requested size: 369.88582pt x 267.88852pt.
 
 
-[9
+[8
 
 
 
 
 ]
 
-[10 <./figure/fig_system_model.png>]
+[9 <./figure/fig_system_model.png>]
+
+[10]
 
 [11]
 
@@ -1201,72 +1201,70 @@ Package pdftex.def Info: figure/fig_system_model.png  used on input line 8.
 [13]
 
 [14]
-
-[15]
-<figure/dueling_dqn_archi.png, id=305, 606.20076pt x 379.85112pt>
+<figure/dueling_dqn_archi.png, id=301, 606.20076pt x 379.85112pt>
 File: figure/dueling_dqn_archi.png Graphic file (type png)
 <use figure/dueling_dqn_archi.png>
 Package pdftex.def Info: figure/dueling_dqn_archi.png  used on input line 112.
 (pdftex.def)             Requested size: 289.07999pt x 181.13828pt.
 
 
-[16 <./figure/dueling_dqn_archi.png>]
+[15 <./figure/dueling_dqn_archi.png>]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 126.
 
 
-[17]
+[16]
 
-[18])
+[17])
+
+[18]
 
 [19]
-
-[20]
 \openout2 = `04_RESULT.aux'.
 
  (./04_RESULT.tex
  4.
 
 
-[21
+[20
 
 
 
 
 ]
-<figure/1.flso.png, id=345, 967.39418pt x 369.66106pt>
+<figure/1.flso.png, id=341, 967.39418pt x 369.66106pt>
 File: figure/1.flso.png Graphic file (type png)
 <use figure/1.flso.png>
 Package pdftex.def Info: figure/1.flso.png  used on input line 68.
 (pdftex.def)             Requested size: 177.54361pt x 67.83908pt.
-<figure/2.UE_HO.png, id=346, 967.39418pt x 369.90195pt>
+<figure/2.UE_HO.png, id=342, 967.39418pt x 369.90195pt>
 File: figure/2.UE_HO.png Graphic file (type png)
 <use figure/2.UE_HO.png>
 Package pdftex.def Info: figure/2.UE_HO.png  used on input line 75.
 (pdftex.def)             Requested size: 177.54361pt x 67.88329pt.
-<figure/0.tos.png, id=347, 967.39418pt x 369.66106pt>
+<figure/0.tos.png, id=343, 967.39418pt x 369.66106pt>
 File: figure/0.tos.png Graphic file (type png)
 <use figure/0.tos.png>
 Package pdftex.def Info: figure/0.tos.png  used on input line 84.
 (pdftex.def)             Requested size: 177.54361pt x 67.83908pt.
-<figure/3.RSRP.png, id=348, 967.39418pt x 369.90195pt>
+<figure/3.RSRP.png, id=344, 967.39418pt x 369.90195pt>
 File: figure/3.RSRP.png Graphic file (type png)
 <use figure/3.RSRP.png>
 Package pdftex.def Info: figure/3.RSRP.png  used on input line 91.
 (pdftex.def)             Requested size: 177.54361pt x 67.88329pt.
 )
 
-[22 <./figure/1.flso.png (PNG copy)> <./figure/2.UE_HO.png (PNG copy)> <./figure/0.tos.png (PNG copy)> <./figure/3.RSRP.png (PNG copy)>]
+[21 <./figure/1.flso.png (PNG copy)> <./figure/2.UE_HO.png (PNG copy)> <./figure/0.tos.png (PNG copy)> <./figure/3.RSRP.png (PNG copy)>]
+
+[22]
 
 [23]
-
-[24]
 \openout2 = `05_conclusion.aux'.
 
  (./05_conclusion.tex
  5.
 )
 
-[25
+[24
 
 
 
@@ -1277,13 +1275,13 @@ Package pdftex.def Info: figure/3.RSRP.png  used on input line 91.
 
 
 
-[26
+[25
 
 
 
 ])
 
-[27] (./00_01_thesis.aux (./00_x1_MacroFile1.aux) (./0_frontmatter/acknowledgement.aux) (./00_03_abstract.aux) (./00_04_abbreviation.aux) (./01_introduction.aux) (./02_Related_works.aux) (./03_Proposed_framework.aux) (./04_RESULT.aux) (./05_conclusion.aux))
+[26] (./00_01_thesis.aux (./00_x1_MacroFile1.aux) (./0_frontmatter/acknowledgement.aux) (./00_03_abstract.aux) (./00_04_abbreviation.aux) (./01_introduction.aux) (./02_Related_works.aux) (./03_Proposed_framework.aux) (./04_RESULT.aux) (./05_conclusion.aux))
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-07-20>
@@ -1291,21 +1289,21 @@ L3 programming layer <2025-07-20>
 Package rerunfilecheck Info: File `00_01_thesis.out' has not changed.
 (rerunfilecheck)             Checksum: 0E94A37B0888FC244B42A0A99B14AF46;3689.
 Package rerunfilecheck Info: File `00_01_thesis.brf' has not changed.
-(rerunfilecheck)             Checksum: BC78D54D69EA98722541A6961C5F7E5C;515.
+(rerunfilecheck)             Checksum: E1AA00BD503316F4DF8FB7207CBABD3B;515.
  ) 
 Here is how much of TeX's memory you used:
- 25834 strings out of 467801
- 481396 string characters out of 5436090
- 1149236 words of memory out of 5000000
+ 25833 strings out of 467801
+ 481389 string characters out of 5436090
+ 1149234 words of memory out of 5000000
  53870 multiletter control sequences out of 15000+600000
  640758 words of font info for 90 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  125i,17n,121p,1702b,716s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/euler/eusm10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbac.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbae.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbb1.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbb9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbbb.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc0.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc2.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on 00_01_thesis.pdf (38 pages, 28634005 bytes).
+Output written on 00_01_thesis.pdf (37 pages, 28633258 bytes).
 PDF statistics:
- 511 PDF objects out of 1000 (max. 8388607)
- 398 compressed objects within 4 object streams
- 94 named destinations out of 1000 (max. 500000)
+ 507 PDF objects out of 1000 (max. 8388607)
+ 395 compressed objects within 4 object streams
+ 93 named destinations out of 1000 (max. 500000)
  244 words of extra memory for PDF output out of 10000 (max. 10000000)
 

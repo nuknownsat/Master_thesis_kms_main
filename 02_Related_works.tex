@@ -28,33 +28,15 @@ However, these heuristic approaches are overly focused on link-level metrics lik
 
 
 \section[Load Balancing in LEO Satellite Networks]{Load Balancing in LEO Satellite Networks}
-\quad Load balancing in LEO NTN spans two tightly coupled planes: (i) the service-link plane, where beams/cells must be scheduled and powered to match spatio-temporal demand, and (ii) the feeder-link plane, where satellites select among candidate gateways (GWs) via FLSO to provision backhaul capacity. Overlapping satellite footprints and rapidly varying link conditions make naive single-metric selection fragile under realistic traffic and topology changes.
-% LEO NTN의 로드 밸런싱은 (i) 빔/셀을 수요에 맞게 스케줄·전력할당하는 서비스 링크 면과,
-% (ii) 위성이 FLSO를 통해 후보 GW 중에서 백홀을 선택하는 피더 링크 면의 두 차원에서 긴밀히 결합되어 수행됩니다.
-% 위성 커버리지 중첩과 빠르게 변하는 링크 조건 때문에 단일 지표 기반의 단순 선택은 실제 트래픽/토폴로지 변화에 취약합니다.
+\quad Load balancing is a critical challenge in LEO satellite networks to ensure overall system efficiency and Quality of Service (QoS). The time-varying topology of the LEO constellation and the uneven global traffic demand can cause severe congestion on specific satellite nodes or links.
 
-\quad The coupling depends on payload architecture. In transparent payloads, changing the GW typically changes the serving gNB, so an FLSO may induce a UE HO; thus the policy must trade off radio-quality/ToS gains against HO cost and risk. In regenerative payloads, the UE remains attached to the on-board gNB across an FLSO, but backhaul congestion and path stretch still dominate end-to-end latency and reliability.
-% 이 결합 정도는 페이로드 아키텍처에 달려 있습니다.
-% 투명(transparent) 페이로드에서는 GW 변경이 보통 서비스 gNB 변경을 수반하므로 FLSO가 UE HO를 유발할 수 있어,
-% 무선 품질/ToS 이득과 HO 비용·리스크 간의 절충이 필요합니다.
-% 재생(regenerative) 페이로드에서는 UE가 탑재 gNB에 계속 부착되지만, 백홀 혼잡과 경로 증가가 종단 간 지연/신뢰성에 큰 영향을 줍니다.
+To solve this, much of the existing research has been concentrated on load balancing from a routing perspective via Inter-Satellite Links (ISLs). These studies propose techniques such as adaptive routing using Software-Defined Networking (SDN), back-pressure routing, or traffic diversion schemes. These approaches primarily aim to distribute horizontal traffic among satellites and avoid congestion on the ISL links.
 
-\quad Practical constraints include finite GW processing/backhaul capacity, feeder-link spectrum/time constraints, visibility and elevation masks, and control-plane overhead. Excessive switchover induces thrashing; hard FLSO risks packet loss, whereas soft FLSO consumes duplicate backhaul resources during overlap. Effective policies therefore require hysteresis and cooldown to stabilize decisions.
-% 실제 제약으로는 GW의 처리/백홀 용량 한계, 피더링크 자원 제약, 가시성·고도 마스크, 제어면 오버헤드 등이 있습니다.
-% 과도한 스위치오버는 스래싱을 유발하며, 하드 FLSO는 패킷 유실 위험이, 소프트 FLSO는 겹침 구간 동안의 중복 자원 소비가 발생합니다.
-% 따라서 안정화를 위한 히스테리시스와 쿨다운이 필요합니다.
+Another domain of research focuses on Radio Resource Management (RRM) at the service link level. These studies aim to balance the load among beams by efficiently allocating limited radio resources, such as beams, spectrum, or time slots, to User Equipments (UEs) on the ground.
 
-\quad Representative objectives are: (1) maximize end-to-end throughput or minimize flow delay; (2) balance GW load (e.g., fairness across GWs) to avoid bottlenecks; (3) maintain radio quality (RSRP/SINR) and acceptable ToS; and (4) minimize switching costs, measured by FLSO frequency and, when applicable, UE HO count. Queue stability at GWs serves as an operational constraint.
-% 대표 목표는 (1) 종단 간 처리량 최대화/지연 최소화, (2) 병목을 피하기 위한 GW 간 로드 밸런싱(공정성),
-% (3) 무선 품질(RSRP/SINR)과 허용 가능한 ToS 유지, (4) FLSO 빈도와(해당 시) UE HO 횟수로 측정되는 스위칭 비용 최소화입니다.
-% 또한 GW 큐 안정성은 운용 제약으로 고려됩니다.
+However, existing load balancing research is predominantly focused on balancing load between satellites (ISLs) or below the satellite (service link RRM). In contrast, load balancing at the feeder link level, where the satellite connects to the ground network, remains a relatively unexplored area. Even if satellite node congestion is avoided, the terrestrial network bottleneck cannot be solved if all traffic ultimately converges on a single, overloaded GW.
 
-\quad Heuristic baselines\textemdash strongest-RSRP, nearest-GW, fixed thresholds, or distance/time triggers\textemdash are simple but myopic, ignoring time-varying congestion and multi-satellite interactions. We instead target an adaptive policy: the state aggregates per-GW load, candidate link quality and ToS, recent FLSO history, and short-term visibility; the action selects a target GW (and can be extended to joint beam scheduling); the reward combines throughput/SINR and fairness, with penalties for overload and switching. Such a learning-based design anticipates congestion rather than merely reacting to it.
-% RSRP 최대, 최근접 GW, 고정 임계값, 거리/시간 트리거 등 휴리스틱 기법은 단순하지만,
-% 시간에 따라 변하는 혼잡과 다중 위성 상호작용을 간과하는 단견을 갖습니다.
-% 본 연구는 적응형 정책을 지향합니다: 상태는 GW별 부하, 후보 링크 품질과 ToS, 최근 FLSO 이력, 단기 가시성 정보를 포함하고,
-% 행위는 대상 GW 선택(확장 시 빔 스케줄링 결합)이며, 보상은 처리량/SINR과 공정성을 결합하고 과부하·스위칭에 패널티를 부여합니다.
-% 이러한 학습 기반 설계는 단순 반응이 아닌 혼잡을 선제적으로 예견합니다.
+As reviewed in Section 2.1, conventional FLSO strategies tend to rely solely on link-level metrics like RSRP or LCT. Because these methods do not consider the real-time processing load or traffic status of the GWs, they fail to perform intelligent load balancing. This paper addresses this specific gap: integrating GW load balancing into the FLSO decision-making process to optimize the overall efficiency of the NTN backhaul.
 
 
 
