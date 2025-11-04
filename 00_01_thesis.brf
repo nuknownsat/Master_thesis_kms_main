@@ -1,8 +1,6 @@
 \backcite {lei2019broadband}{{1}{1.1}{section.1.1}}
-\backcite {military}{{1}{1.1}{section.1.1}}
-\backcite {3gppfeeder}{{2}{1.1}{section.1.1}}
-\backcite {ho_latency}{{2}{1.1}{section.1.1}}
-\backcite {ho_battery}{{2}{1.1}{section.1.1}}
+\backcite {3gppfeeder}{{1}{1.1}{section.1.1}}
+\backcite {ho_latency}{{1}{1.1}{section.1.1}}
 \backcite {beamhopping_loadbalance}{{6}{2.2}{section.2.2}}
 \backcite {beamhopping_loadbalance}{{7}{2.2}{section.2.2}}
 \backcite {beamhopping_drl}{{7}{2.2}{section.2.2}}
