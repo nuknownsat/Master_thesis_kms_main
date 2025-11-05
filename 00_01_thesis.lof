@@ -7,5 +7,5 @@
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Network scenario of a LEO satellite performing FLSO while serving UEs across Starlink GWs in the United States.}}{9}{figure.caption.7}%
 \contentsline {figure}{\numberline {3.2}{\ignorespaces The architecture of the proposed dueling DQN for FLSO optimization in LEO satellite networks.}}{15}{figure.caption.8}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Performance comparison of the proposed, DDQN-based, and signal-based FLSO algorithms across different metrics}}{21}{figure.caption.10}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Performance comparison of the proposed, DDQN-based, and signal-based FLSO algorithms across different metrics}}{20}{figure.caption.10}%
 \addvspace {10\p@ }

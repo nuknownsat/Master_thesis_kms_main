@@ -3,8 +3,7 @@
 \backcite {ho_latency}{{1}{1.1}{section.1.1}}
 \backcite {3gppchanel}{{10}{3.1}{equation.3.1}}
 \backcite {3gppl3}{{10}{3.1}{equation.3.3}}
-\backcite {singlemachine}{{12}{3.2}{section.3.2}}
-\backcite {intro_RL}{{14}{3.3.1}{subsection.3.3.1}}
-\backcite {mnih2013playing}{{16}{3.3.2}{subsection.3.3.2}}
+\backcite {intro_RL}{{13}{3.3.1}{subsection.3.3.1}}
+\backcite {mnih2013playing}{{15}{3.3.2}{subsection.3.3.2}}
 \backcite {wang2016dueling}{{16}{3.3.2}{algorithm.3.1}}
-\backcite {schaul2015prioritized}{{18}{3.3.2}{equation.3.17}}
+\backcite {schaul2015prioritized}{{17}{3.3.2}{equation.3.15}}

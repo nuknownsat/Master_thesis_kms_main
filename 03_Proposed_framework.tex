@@ -1,11 +1,13 @@
-\chapter[Proposed reinforcement learning-based link scheduling algorithm]{Proposed reinforcement learning-based link scheduling algorithm}
+\chapter[Proposed reinforcement learning-based FLSO algorithm]{Proposed reinforcement learning-based FLSO algorithm}
 
 \section{System model}
-\quad This thesis considers the transparent LEO satellite constellation consist of $N$ LEO satellites, represented by the set $\mathcal{S} = \left\{n \mid n = 1, 2, \dots, N\right\}$. The LEO satellite connects to ground GW via feeder link, where the set of GW denoted as $\mathcal{G} = \left\{m \mid m = 1, 2, \dots, M\right\}$. The GWs consists of both an antenna and a gNB. Since the GWs are widely separated, each is equipped with its own dedicated gNB. The coordinates of each LEO satellite in the ECEF coordinate system at a given time slot $t$, where $t \in \{0, 1, \dots, T\}$, are given by $l_n(t) = (x_n(t), y_n(t), z_n(t))$. As the LEO satellite services the region, it covers UEs, denoted by the set \( U = \{ u_t \mid u_t = N_t(\mu,\sigma^2) \} \), distributed according to a 2-D Gaussian footprint. With a hard FLSO applied, each UE within the LEO satellite’s coverage area simultaneously initiates a HO to the subsequent gNB upon every FLSO. Fig.~\ref{figure_system_model} shows the network scenario where a transparent Starlink LEO satellite passes over $M$ ground GWs in the United States, serving UEs.
+\quad This thesis considers a large-scale LEO satellite constellation deployed across $P$ orbital planes, represented by the set $\mathcal{P} = \left\{p \mid p = 1, \dots, P\right\}$. The constellation consists of $N$ LEO satellites in total, distributed across these planes, with $N_p$ satellites in plane $p$. The total set of satellites is $\mathcal{S} = \bigcup_{p=1}^{P} \mathcal{S}_p$, where $\mathcal{S}_p = \{s_{p,i} \mid i = 1, \dots, N_p\}$ is the set of satellites in plane $p$, and $N = \sum_{p=1}^{P} N_p$. For simplicity in the following equations, we denote a single satellite by its global index $n \in \{1, \dots, N\}$. The LEO satellite $n$ connects to ground GWs via feeder link, where the set of GWs is denoted as $\mathcal{G} = \left\{m \mid m = 1, 2, \dots, M\right\}$. The coordinates of each LEO satellite $n$ in the ECEF coordinate system at a given time slot $t$, where $t \in \{0, 1, \dots, T\}$, are given by $l_n(t) = (x_n(t), y_n(t), z_n(t))$.
+
+The primary challenge addressed in this thesis is GW load balancing. We define the load of a GW \( m \) at time \( t \), denoted as $\mathcal{L}_m(t)$, as the set of satellites $n \in \mathcal{S}$ currently connected to it. The instantaneous load is $\lvert \mathcal{L}_m(t) \rvert$.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1.0\columnwidth]{figure/fig_system_model.png}
+\includegraphics[width=1.0\columnwidth]{figure/fig_load_bal2.png}
 \caption{Network scenario of a LEO satellite performing FLSO while serving UEs across Starlink GWs in the United States.}
 \label{figure_system_model}
 \end{figure}
@@ -32,50 +34,69 @@ At each measurement instant $t$, the LEO satellite \( n \) samples the RSRP from
 \end{equation}
 where $a \in (0,1)$ is the L3 forgetting factor, defined as $a = \left(\frac{1}{2}\right)^{K/4}$, and $K$ is the filter coefficient. The initial condition is set as $\widetilde{R}_{m,n}(0) = R_{m,n}(0)$. Finally, the LEO satellite compiles a measurement report containing the L3-filtered RSRP $\widetilde{R}_{m,n}(t)$ of the serving and neighboring GWs and transmits this report back to the serving GW \( m \) over the feeder link.
 
-To quantify the link quality during the simulation, we calculate the channel capacity $C$ using the Shannon capacity formula, which is calculated as follows:
-\begin{equation}
-C = B_m \log_2(1+{\zeta}),
-\label{eq:capacity}
-\end{equation}
-where the $B_m$ is the uplink bandwidth of GW \( m \) and $\zeta$ is the SNR calculated as follows:
-\begin{equation}
-{\zeta} = {EIRP_{m}}+\frac{G_{n}}{T}-k-{PL_{m,n}}-B_m,
-\label{eq:snr}
-\end{equation}
-where, $k$ is the Boltzmann constant, $G_n/T$ is the antenna gain-to-noise temperature ratio, is calculated as follows:
-\begin{equation}
-\frac{G_n}{T} = G_{n} - N_{f} - 10\log_{10}\left(T_0 + (T_a - T_0) 10^{-0.1 N_{f}} \right),
-\end{equation}
-where $N_{f}$ is LEO satellite noise figure, $T_0$ and $T_a$ is ambient and antenna temperature.
+% To quantify the link quality during the simulation, we calculate the channel capacity $C$ using the Shannon capacity formula, which is calculated as follows:
+% \begin{equation}
+% C = B_m \log_2(1+{\zeta}),
+% \label{eq:capacity}
+% \end{equation}
+% where the $B_m$ is the uplink bandwidth of GW \( m \) and $\zeta$ is the SNR calculated as follows:
+% \begin{equation}
+% {\zeta} = {EIRP_{m}}+\frac{G_{n}}{T}-k-{PL_{m,n}}-B_m,
+% \label{eq:snr}
+% \end{equation}
+% where, $k$ is the Boltzmann constant, $G_n/T$ is the antenna gain-to-noise temperature ratio, is calculated as follows:
+% \begin{equation}
+% \frac{G_n}{T} = G_{n} - N_{f} - 10\log_{10}\left(T_0 + (T_a - T_0) 10^{-0.1 N_{f}} \right),
+% \end{equation}
+% where $N_{f}$ is LEO satellite noise figure, $T_0$ and $T_a$ is ambient and antenna temperature.
 
 
 
 \section{Problem formulation}
-\quad In this section, we address the optimization problem of performing optimal FLSO to minimize the number of HO for UE served by a LEO satellite. We formulate this problem as an NP-hard problem \cite{singlemachine} and propose a solution by modeling it as a MDP, which is then solved using reinforcement learning techniques.
+\quad In this section, we address the optimization problem for the LEO satellite constellation. The objective is to find an optimal FLSO policy $\pi$ that dynamically assigns each satellite $n \in \mathcal{S}$ to a GW $m \in \mathcal{G}$ at each time slot $t$.
 
-% The satellite is assumed to connect to a GW only when the elevation angle to that GW exceeds $\theta_{\min}$ and the RSRP surpasses $\sigma_{\min}$, while the GW antenna continuously tracks the LEO satellite. 문제 정의로 ㄱㄱ
+The primary goal is to minimize the overall network load imbalance while simultaneously maximizing the collective link quality RSRP and minimizing the instability caused by frequent FLSOs. We define $m_t^{(n)}$ as the GW selected by satellite $n$ at time $t$. This problem can be formulated as a multi-objective optimization problem.
 
-In LEO networks, frequent FLSO and HO events cause elevated latency and power consumption. FLSO \(FS_{m,n}\) and HO \(H_{m,n}\) are measured when the serving \( m \) transitions from \(t-1\) to \(t\) calculated as follows:
+We define the following cost and reward components for each satellite $n$ at time $t$:
 
-\begin{equation}
-FS_{m,n} = \sum_{t=0}^{T} \left(1 \text{ if } m_t \neq m_{t-1} \text{ else } 0 \right),
-\label{eq:flso_cost}
-\end{equation}
-\begin{equation}
-H_{m,n} = \sum_{t=0}^{T} \left(u_{t-1} \text{ if } m_t \neq m_{t-1} \text{ else } 0 \right).
-\label{eq:ho_cost}
-\end{equation}
+\begin{itemize}
+    \item \textbf{FLSO Cost:} A cost $C_{FS}$ is incurred if the satellite switches its serving GW, penalizing instability.
+    \begin{equation}
+    FS_{n}(t) = \begin{cases} C_{FS} & \text{if } m_t^{(n)} \neq m_{t-1}^{(n)} \\ 0 & \text{otherwise} \end{cases}
+    \label{eq:flso_cost}
+    \end{equation}
+    
+    \item \textbf{Load Imbalance Cost:} A cost is incurred for connecting to a congested GW. We use a convex function (i.e., quadratic) of the normalized load $\lambda_m(t)$ to strongly penalize highly congested GWs. This cost is central to our problem.
+    \begin{equation}
+    L_{n}(t) = (\lambda_{m_t^{(n)}}(t))^2
+    \label{eq:load_cost}
+    \end{equation}
+    
+    \item \textbf{Link Quality Reward:} A reward is gained based on the L3-filtered RSRP from the selected GW.
+    \begin{equation}
+    R_{n}(t) = \widetilde{R}_{m_t^{(n)},n}(t)
+    \label{eq:rsrp_reward}
+    \end{equation}
+\end{itemize}
 
-To address these issues, we formulate an optimization problem that enables the LEO satellite to perform optimal FLSO while minimizing UE HO and UFLSO, and maximizing ToS and RSRP, meeting the conditions calculated as follows:
+The global optimization problem \textbf{P1} is to find the policy $\pi$ that minimizes the total expected cumulative cost (and maximizes rewards) for all $N$ satellites over the time horizon $T$.
+
 \begin{align}
-& \textbf{P1:}\quad \operatorname*{min}_{m} \sum_{n=1}^{N}\sum_{m=1}^{M}\sum_{t=0}^{T} \big( FS_{m,n} + H_{m,n} + UFS_{m,n} - ToS_{m,n} - \widetilde R_{m,n} \big),\\
+& \textbf{P1:}\quad \operatorname*{\min}_{\pi} \mathbb{E}\left[ \sum_{t=0}^{T} \sum_{n=1}^{N} \gamma^t \Big( w_{FS} FS_{n}(t) + w_{L} L_{n}(t) - w_{R} R_{n}(t) \Big) \right]\\
 & \quad \text{s.t.} \nonumber \\
-& \quad \textbf{C1 :}\quad \theta_{m,n}\geq \theta_{\text {min}}, \quad \forall{n}, \forall{m}, \forall{t},\\
-& \quad \textbf{C2 :}\quad \widetilde R_{m,n} \geq R_{\text {min}}, \quad \forall{n}, \forall{m}, \forall{t},\\
-& \quad \textbf{C3 :}\quad I_{m,n}(t) = 1, \quad  \forall{n}, \forall{m}, \forall{t}.
+& \quad \textbf{C1 :}\quad \theta_{m,n}(t) \geq \theta_{\text {min}}, \quad \forall{n}, \forall{m} \in \mathcal{G}_t^{(n)}, \forall{t},\\
+& \quad \textbf{C2 :}\quad \widetilde R_{m,n}(t) \geq R_{\text {min}}, \quad \forall{n}, \forall{m} \in \mathcal{G}_t^{(n)}, \forall{t},\\
+& \quad \textbf{C3 :}\quad m_t^{(n)} \in \mathcal{G}_t^{(n)}, \quad \forall{n}, \forall{t}.
 \end{align}
 
-In \textbf{P1}, \( {UFS_{m,n}} \) represents the cost of an UFLSO, which occurs when the LEO satellite \( n \) switches to another GW within the MTS and \( {ToS_{m,n}}\) represents ToS the duration of the LEO satellite \( n \) remains connected to the GW \( m \). The objective function minimizes the total cost, which includes the FLSO, HO of UEs and UFLSO events and maximizes ToS and RSRP across \(N\) LEO satellites, \(M\) GWs, and \(T\) time slots. Constraint \textbf{C1} ensures the elevation angle \(\theta_{m,n}\) between LEO satellite \( n \) and GW \( m \) exceeds the minimum threshold \(\theta_{\min}\), guaranteeing reliable communication by maintaining a sufficient line-of-sight. Constraint \textbf{C2} ensures the filtered RSRP \(\widetilde{R}_{m,n}\) exceeds the minimum required rate \(R_{\min}\), ensuring adequate link quality for effective data transmission. Constraint \textbf{C3} enforces that each LEO satellite connects to exactly one GW at all time \(t\), using the indicator variable \(I_{m,n}(t)\), which is 1 if LEO satellite \( n \) is connected to GW \( m \) at time \(t\). 
+In \textbf{P1}, $w_{FS}$, $w_{L}$, and $w_{R}$ are the weighting factors that balance the trade-off between switching stability, load balancing, and link quality. $\gamma \in [0, 1]$ is the discount factor for future costs.
+
+The constraints define the set of available GWs, $\mathcal{G}_t^{(n)}$, for satellite $n$ at time $t$.
+Constraint \textbf{C1} ensures the elevation angle $\theta_{m,n}(t)$ to an available GW $m$ exceeds the minimum threshold $\theta_{\min}$, guaranteeing a reliable line-of-sight.
+Constraint \textbf{C2} ensures the filtered RSRP $\widetilde{R}_{m,n}(t)$ from an available GW exceeds the minimum required signal quality $R_{\min}$.
+Constraint \textbf{C3} mandates that each satellite $n$ must select a GW $m_t^{(n)}$ from the set of currently available GWs $\mathcal{G}_t^{(n)}$ that satisfy C1 and C2.
+
+This problem is characterized by high-dimensional state spaces and complex, time-varying dynamics, making it NP-hard. We therefore model this problem as a Markov Decision Process (MDP) to find an optimal FLSO policy using reinforcement learning techniques.
 
 \section{Proposed algorithm}
 \quad To address the problem, we transform it into a dynamic programming framework to derive an optimal FLSO policy. We model the FLSO optimization problem as an MDP due to its ability to handle sequential decision-making in dynamic environments.
@@ -114,10 +135,10 @@ Discount factor $\gamma$ is a value between 0 and 1, which represents the rate a
       \label{Fig:system_model2}
  \end{figure}
 
-\subsection{Proposed dueling DQN algorithm}
+\subsection{Proposed dueling DDQN algorithm}
 %복잡도 측면에서 얼마나 걸리는지 설명, GeForce RTX 3080 Ti GPU에서 수 밀리초 내에 행동을 출력할 수 있다.
-\label{Proposed Dueling DQN Algorithm}
-\quad In this paper, we employ a reinforcement learning algorithm to enable LEO satellites to operate in an dynamic environment. As depicted in Fig. 2, the architecture of the proposed dueling DQN algorithm, incorporating a \(\epsilon\)-greedy policy, is designed to optimize FLSO in LEO satellite networks. The LEO satellite receives feedback to execute actions that sustain both a prolonged ToS and an elevated RSRP, while minimizing the frequency of FLSO, UFLSO, and UE HO events. We enhance the traditional DQN framework by incorporating DDQN, PER, and dueling DQN to improve stability, learning efficiency, and robustness against noise in LEO satellite communication systems.
+\label{Proposed Dueling DDQN Algorithm}
+\quad In this paper, we employ a reinforcement learning algorithm to enable LEO satellites to operate in an dynamic environment. As depicted in Fig. 2, the architecture of the proposed dueling DDQN algorithm, incorporating a \(\epsilon\)-greedy policy, is designed to optimize FLSO in LEO satellite networks. The LEO satellite receives feedback to execute actions that sustain both a prolonged ToS and an elevated RSRP, while minimizing the frequency of FLSO, UFLSO, and UE HO events. We enhance the traditional DQN framework by incorporating DDQN, PER, and dueling DQN to improve stability, learning efficiency, and robustness against noise in LEO satellite communication systems.
 
 The DQN algorithm \cite{mnih2013playing} approximates the Q-function \( Q(s_t, a_t; \theta) \), which maps a state \( s_t \) and action \( a_t \) to an expected cumulative reward, using a DNN parameterized by \( \theta \). Two DNNs are utilized: an online network for action selection and a target network for value estimation. The Q-function is trained to minimize the following loss function and loss function is calculated as follows:
 

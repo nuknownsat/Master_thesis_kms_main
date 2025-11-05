@@ -28,13 +28,13 @@ However, these heuristic approaches are overly focused on link-level metrics lik
 
 
 \section[Load Balancing in LEO Satellite Networks]{Load Balancing in LEO Satellite Networks}
-\quad Load balancing is a critical challenge in LEO satellite networks to ensure overall system efficiency and Quality of Service (QoS). The time-varying topology of the LEO constellation and the uneven global traffic demand can cause severe congestion on specific satellite nodes or links.
+\quad Load balancing is a critical challenge in LEO satellite networks to ensure overall system efficiency and QoS. The time-varying topology of the LEO constellation and the uneven global traffic demand can cause severe congestion on specific satellite nodes or links.
 
-To solve this, much of the existing research has been concentrated on load balancing from a routing perspective via Inter-Satellite Links (ISLs). These studies propose techniques such as adaptive routing using Software-Defined Networking (SDN), back-pressure routing, or traffic diversion schemes. These approaches primarily aim to distribute horizontal traffic among satellites and avoid congestion on the ISL links.
+To solve this, much of the existing research has been concentrated on load balancing from a routing perspective via ISLs. These studies propose techniques such as adaptive routing using SDN, back-pressure routing, or traffic diversion schemes. These approaches primarily aim to distribute horizontal traffic among satellites and avoid congestion on the ISL links.
 
-Another domain of research focuses on Radio Resource Management (RRM) at the service link level. These studies aim to balance the load among beams by efficiently allocating limited radio resources, such as beams, spectrum, or time slots, to User Equipments (UEs) on the ground.
+Another domain of research focuses on RRM at the service link level. These studies aim to balance the load among beams by efficiently allocating limited radio resources, such as beams, spectrum, or time slots, to UEs on the ground.
 
-However, existing load balancing research is predominantly focused on balancing load between satellites (ISLs) or below the satellite (service link RRM). In contrast, load balancing at the feeder link level, where the satellite connects to the ground network, remains a relatively unexplored area. Even if satellite node congestion is avoided, the terrestrial network bottleneck cannot be solved if all traffic ultimately converges on a single, overloaded GW.
+However, existing load balancing research is predominantly focused on balancing load between satellite ISLs or below the satellite service link RRM. In contrast, load balancing at the feeder link level, where the satellite connects to the ground network, remains a relatively unexplored area. Even if satellite node congestion is avoided, the terrestrial network bottleneck cannot be solved if all traffic ultimately converges on a single, overloaded GW.
 
 As reviewed in Section 2.1, conventional FLSO strategies tend to rely solely on link-level metrics like RSRP or LCT. Because these methods do not consider the real-time processing load or traffic status of the GWs, they fail to perform intelligent load balancing. This paper addresses this specific gap: integrating GW load balancing into the FLSO decision-making process to optimize the overall efficiency of the NTN backhaul.
 
