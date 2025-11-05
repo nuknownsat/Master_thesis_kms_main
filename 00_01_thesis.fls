@@ -481,6 +481,12 @@ INPUT ./figure/fig_sat_flso_reg.png
 INPUT ./figure/fig_sat_flso_reg.png
 INPUT ./figure/fig_sat_flso_reg.png
 INPUT ./figure/fig_sat_flso_reg.png
+INPUT ./figure/fig_packetloss_flso.png
+INPUT ./figure/fig_packetloss_flso.png
+INPUT ./figure/fig_packetloss_flso.png
+INPUT ./figure/fig_packetloss_flso.png
+INPUT ./figure/fig_packetloss_flso.png
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
 INPUT ./03_Proposed_framework.tex
 INPUT ./03_Proposed_framework.tex
 OUTPUT 03_Proposed_framework.aux
@@ -591,6 +597,7 @@ INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb
+INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/euler/eusm10.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 INPUT c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbac.pfb
