@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  5 NOV 2025 12:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  5 NOV 2025 13:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1199,22 +1199,22 @@ Package pdftex.def Info: figure/fig_load_bal2.png  used on input line 10.
 [12]
 
 [13]
-<figure/dueling_dqn_archi.png, id=291, 606.20076pt x 379.85112pt>
+
+[14]
+<figure/dueling_dqn_archi.png, id=302, 606.20076pt x 379.85112pt>
 File: figure/dueling_dqn_archi.png Graphic file (type png)
 <use figure/dueling_dqn_archi.png>
 Package pdftex.def Info: figure/dueling_dqn_archi.png  used on input line 133.
 (pdftex.def)             Requested size: 289.07999pt x 181.13828pt.
 
 
-[14]
-
 [15 <./figure/dueling_dqn_archi.png>]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 147.
 
 
-[16])
+[16]
 
-[17]
+[17])
 
 [18]
 \openout2 = `04_RESULT.aux'.
@@ -1229,22 +1229,22 @@ Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on inp
 
 
 ]
-<figure/1.flso.png, id=333, 967.39418pt x 369.66106pt>
+<figure/1.flso.png, id=336, 967.39418pt x 369.66106pt>
 File: figure/1.flso.png Graphic file (type png)
 <use figure/1.flso.png>
 Package pdftex.def Info: figure/1.flso.png  used on input line 68.
 (pdftex.def)             Requested size: 177.54361pt x 67.83908pt.
-<figure/2.UE_HO.png, id=334, 967.39418pt x 369.90195pt>
+<figure/2.UE_HO.png, id=337, 967.39418pt x 369.90195pt>
 File: figure/2.UE_HO.png Graphic file (type png)
 <use figure/2.UE_HO.png>
 Package pdftex.def Info: figure/2.UE_HO.png  used on input line 75.
 (pdftex.def)             Requested size: 177.54361pt x 67.88329pt.
-<figure/0.tos.png, id=335, 967.39418pt x 369.66106pt>
+<figure/0.tos.png, id=338, 967.39418pt x 369.66106pt>
 File: figure/0.tos.png Graphic file (type png)
 <use figure/0.tos.png>
 Package pdftex.def Info: figure/0.tos.png  used on input line 84.
 (pdftex.def)             Requested size: 177.54361pt x 67.83908pt.
-<figure/3.RSRP.png, id=336, 967.39418pt x 369.90195pt>
+<figure/3.RSRP.png, id=339, 967.39418pt x 369.90195pt>
 File: figure/3.RSRP.png Graphic file (type png)
 <use figure/3.RSRP.png>
 Package pdftex.def Info: figure/3.RSRP.png  used on input line 91.
@@ -1287,21 +1287,21 @@ L3 programming layer <2025-07-20>
 Package rerunfilecheck Info: File `00_01_thesis.out' has not changed.
 (rerunfilecheck)             Checksum: 8136FD97E86AB1D0819892C512313AC6;3636.
 Package rerunfilecheck Info: File `00_01_thesis.brf' has not changed.
-(rerunfilecheck)             Checksum: 42C79C729741402F4A58D012B5A35989;465.
+(rerunfilecheck)             Checksum: EDAF8398D0BF6F893ECBF1CD63E443AB;465.
  ) 
 Here is how much of TeX's memory you used:
  25820 strings out of 467801
  481166 string characters out of 5436090
- 1149187 words of memory out of 5000000
+ 1149204 words of memory out of 5000000
  53861 multiletter control sequences out of 15000+600000
  640758 words of font info for 90 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  125i,17n,121p,1702b,722s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/euler/eusm10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbac.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbae.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbb1.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbb9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbbb.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc0.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc2.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on 00_01_thesis.pdf (36 pages, 24087740 bytes).
+Output written on 00_01_thesis.pdf (36 pages, 24089000 bytes).
 PDF statistics:
- 503 PDF objects out of 1000 (max. 8388607)
- 388 compressed objects within 4 object streams
+ 506 PDF objects out of 1000 (max. 8388607)
+ 391 compressed objects within 4 object streams
  89 named destinations out of 1000 (max. 500000)
  244 words of extra memory for PDF output out of 10000 (max. 10000000)
 
