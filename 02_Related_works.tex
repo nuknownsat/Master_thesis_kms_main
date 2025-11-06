@@ -83,6 +83,11 @@ Therefore, standards also define distance-based measurement events. In the dista
 \end{table}
 % 이 선택 문제에 대한 기존 연구는 대체로 단순 휴리스틱에 의존해 왔습니다.
 % 예: 가장 강한 RSRP의 GW 선택, 가장 가까운 GW 선택 등.
+
+However, these heuristic approaches are overly focused on link-level metrics like signal quality or stability at the moment of switching. They fail to consider the processing load and traffic distribution across the GW network. This omission leads to severe load imbalance, particularly in dense NTN scenarios where multiple satellites may select the same "best" GW simultaneously. This congestion at a single GW creates a bottleneck, degrading overall NTN backhaul efficiency and increasing latency, regardless of the satellite payload architecture.
+% 그러나 이러한 휴리스틱은 스위칭 시점의 링크 지표에 치우쳐 GW 네트워크 전반의 처리 부하와 트래픽 분포를 고려하지 못한다.
+% 그 결과, 밀집 NTN 환경에서는 여러 위성이 동시에 동일한 "최적" GW를 선택해 심각한 부하 불균형이 발생하고,
+% 단일 GW 혼잡으로 백홀 효율 저하와 지연 증가가 초래된다(페이로드 아키텍처와 무관).
 \newcommand{\dist}[2]{\left\lVert #1-#2 \right\rVert}
 \begin{align}
 \text{CondEvent L4:}\quad 
@@ -93,11 +98,6 @@ Therefore, standards also define distance-based measurement events. In the dista
 where $\mathbf{p}_{\text{UE}}$ is the UE position (e.g., GNSS-based), 
 $\mathbf{p}_{\text{ref}}^{(\cdot)}$ denotes the cell reference location (cell center), and
 $\alpha_1,\alpha_2$ are RRC-configured absolute distance thresholds.
-However, these heuristic approaches are overly focused on link-level metrics like signal quality or stability at the moment of switching. They fail to consider the processing load and traffic distribution across the GW network. This omission leads to severe load imbalance, particularly in dense NTN scenarios where multiple satellites may select the same "best" GW simultaneously. This congestion at a single GW creates a bottleneck, degrading overall NTN backhaul efficiency and increasing latency, regardless of the satellite payload architecture.
-% 그러나 이러한 휴리스틱은 스위칭 시점의 링크 지표에 치우쳐 GW 네트워크 전반의 처리 부하와 트래픽 분포를 고려하지 못한다.
-% 그 결과, 밀집 NTN 환경에서는 여러 위성이 동시에 동일한 "최적" GW를 선택해 심각한 부하 불균형이 발생하고,
-% 단일 GW 혼잡으로 백홀 효율 저하와 지연 증가가 초래된다(페이로드 아키텍처와 무관).
-
 % NTN 환경에서 UE의 핸드오버를 위한 여러 측정 이벤트 조건이 정의되어 있다. 신호기반의 경우 표와 같이 serving gNB와 target gNB의 RSRP를 사용하여 핸드오버 트리거에 사용되며 A3 이벤트가 가장 일반적으로 사용된다. 하지만 위성의 경우 높은 고도에서 빠르게 이동하기 때문에 신호 기반의 측정 이벤트는 불안정할 수 있다. 또한 지상의 신호가 셀 반경내에서 거의 차이가 없기 때문에, 신호 기반의 측정 이벤트는 위성 환경에 적합하지 않을 수 있다. 따라서 표준에서는 거리 기반의 측정 이벤트 조건도 정의하고 있다. 거리 기반의 경우 UE의 GNSS 기반 위치와 셀 중심(기지국 위치) 간의 거리를 사용하여 핸드오버 트리거에 사용된다. 예를 들어, 식과 같이 L4 이벤트는 serving gNB와 target gNB 각각에 대해 RRC에서 설정한 절대 거리 임계값을 사용하여 핸드오버를 트리거한다.
 % 그러나 이러한 휴리스틱은 스위칭은 GW 네트워크 전반의 처리 부하와 트래픽 분포를 고려하지 못합니다.
 % 그 결과, 밀집 NTN 환경에서는 여러 위성이 동시에 동일한 "최적" GW를 선택하여 심각한 부하 불균형이 발생하고,
@@ -123,26 +123,32 @@ As reviewed in Section 2.1, conventional FLSO strategies tend to rely solely on 
 
 \section[Reinforcement Learning for LEO Mobility Management]{Reinforcement Learning for LEO Mobility Management}
 \label{sec:rl_mobility}
+\quad Deep reinforcement learning (DRL) learns control policies through interaction with an environment: at each decision step the agent observes a state, selects an action, receives a scalar reward, and transitions to the next state. The objective is to learn a policy that maximizes the discounted long-term return. We model the problem as a Markov decision process (MDP). The state aggregates decision-relevant signals; the action set enumerates feasible choices; the reward encodes task goals, operational constraints, and trade-offs; the discount factor fixes the effective planning horizon.
 
-\quad Reinforcement Learning provides a model-free framework to learn sequential decision policies under non-stationary dynamics and partial observability both intrinsic to LEO mobility. Unlike fixed heuristics, RL can optimize long-horizon objectives while adapting to time-varying traffic and topology, making it a natural fit for multi-objective problems such as FLSO gateway selection.
-% 강화학습(RL)은 비정상(non-stationary) 동역학과 부분 관측 환경에서 순차적 의사결정 정책을 학습하는 모델 프리 프레임워크입니다.
-% 고정 휴리스틱과 달리, RL은 시간에 따라 변하는 트래픽과 토폴로지에 적응하면서 장기 목표를 최적화할 수 있어,
-% FLSO 게이트웨이 선택과 같은 다중 목표 문제에 적합합니다.
-To elaborate, RL models this problem as a MDP. An agent observes the current state of the environment. Based on this state, it selects an action. The environment then transitions to a new state and provides the agent with a scalar reward or penalty. The agent's goal is to learn an optimal policy—a mapping from states to actions—that maximizes its cumulative discounted reward over a long-term horizon.
-% % 구체적으로, RL은 이 문제를 MDP(마르코프 결정 과정)로 모델링합니다. 
-% % '에이전트'(예: LEO 위성)는 '환경'(동적 LEO 네트워크)의 현재 '상태'(예: 위치, 링크 품질, 트래픽)를 관찰합니다.
-% % 이 상태를 기반으로, 에이전트는 '행동'(예: "GW 2로 전환" 또는 "GW 1에 머무르기")을 선택합니다.
-% % 그러면 환경은 새로운 상태로 전환되고 에이전트에게 스칼라 값의 '보상' 또는 '페널티'를 제공합니다.
-% % 에이전트의 목표는 장기적인 누적 할인 보상을 최대화하는 최적의 '정책'(상태에서 행동으로의 매핑)을 학습하는 것입니다.
-Furthermore, RL's optimization of a long-horizon objective is a key advantage over greedy heuristics. A greedy policy, which only selects what appears best at the current moment, can easily get stuck in a local optimum by making a choice that is immediately beneficial but leads to poor outcomes later. In contrast, an RL agent, by maximizing the total cumulative reward, can learn to accept a small, short-term penalty (a lower immediate reward) if it leads to a much larger total reward over the long term. This allows the agent to find a more robust and globally optimal policy.
-% % 또한, RL이 장기 목표를 최적화하는 것은 탐욕적 휴리스틱보다 핵심적인 이점입니다. 현재 가장 잘 보이는 것만 선택하는 탐욕적 정책은 즉시 유익하지만 나중에 나쁜 결과를 초래하는 선택을 함으로써 지역 최적점에 쉽게 갇힐 수 있습니다. 반면, RL 에이전트는 총 누적 보상을 최대화함으로써 장기적으로 훨씬 더 큰 총 보상을 초래할 경우 소액의 단기 페널티(즉시 보상이 낮아지는 경우)를 수용하는 방법을 배울 수 있습니다. 이를 통해 에이전트는 보다 견고하고 전역적으로 최적의 정책을 찾을 수 있습니다.
 
-Furthermore, in complex problems like LEO networks, the state space (e.g., the combination of all RSRPs, all GW loads, and satellite coordinates) is often continuous and high-dimensional. Traditional RL methods that rely on tables (Q-tables) fail in such scenarios. This necessitates the use of Deep Reinforcement Learning (DRL), which employs Deep Neural Networks (DNNs) as function approximators. Algorithms such as the Deep Q-Network (DQN) and its variants (e.g., Dueling DQN, DDQN) or policy-gradient methods (e.g., PPO, A3C) can learn complex policies by mapping these high-dimensional states directly to optimal actions.
-% % 더욱이, LEO 네트워크와 같은 복잡한 문제에서는 상태 공간(예: 모든 RSRP, 모든 GW 부하, 위성 좌표의 조합)이
-% % 종종 연속적이고 고차원적입니다. 테이블(Q-table)에 의존하는 전통적인 RL 방법은 이러한 시나리오에서 실패합니다.
-% % 이것이 심층 신경망(DNN)을 함수 근사치로 활용하는 심층 강화학습(DRL)을 필요하게 만듭니다.
-% % DQN(Deep Q-Network) 및 그 변형(예: Dueling DQN, DDQN) 또는 정책 경사(Policy-Gradient) 방법(예: PPO, A3C)과 같은 알고리즘은
-% % 이러한 고차원 상태를 최적의 행동으로 직접 매핑하는 복잡한 정책을 학습할 수 있습니다.
+Value-based approaches approximate the action--value function \(Q(s,a)\). A Deep Q-Network (DQN) predicts \(Q(s,a)\) and selects the action with the highest predicted value. To improve stability and accuracy, common enhancements include \textit{Double DQN} (decoupling action selection and evaluation), \textit{dueling architecture} (separate value and advantage streams), \textit{prioritized replay} (sampling transitions with large temporal-difference errors more often), \textit{target networks}, and \textit{Polyak averaging} for smooth target updates. Function approximators are kept lightweight yet expressive---typically multilayer perceptrons with normalization and nonlinear activations---and feasibility is enforced by \textit{action masking} so invalid actions are eliminated before scoring. Parameters are updated via backpropagation using Adam or AdamW. Exploration in value agents follows an \(\epsilon\)-greedy schedule, whereas policy methods rely on entropy regularization that is gradually annealed.
+\textit{Experience replay} breaks temporal correlations and increases sample reuse, and \textit{Huber} (smooth-\(L_1\)) loss is preferred for TD regression due to robustness to outliers and non-stationary targets.
+
+
+% \quad Reinforcement Learning provides a model-free framework to learn sequential decision policies under non-stationary dynamics and partial observability both intrinsic to LEO mobility. Unlike fixed heuristics, RL can optimize long-horizon objectives while adapting to time-varying traffic and topology, making it a natural fit for multi-objective problems such as FLSO gateway selection.
+% % 강화학습(RL)은 비정상(non-stationary) 동역학과 부분 관측 환경에서 순차적 의사결정 정책을 학습하는 모델 프리 프레임워크입니다.
+% % 고정 휴리스틱과 달리, RL은 시간에 따라 변하는 트래픽과 토폴로지에 적응하면서 장기 목표를 최적화할 수 있어,
+% % FLSO 게이트웨이 선택과 같은 다중 목표 문제에 적합합니다.
+% To elaborate, RL models this problem as a MDP. An agent observes the current state of the environment. Based on this state, it selects an action. The environment then transitions to a new state and provides the agent with a scalar reward or penalty. The agent's goal is to learn an optimal policy—a mapping from states to actions—that maximizes its cumulative discounted reward over a long-term horizon.
+% % % 구체적으로, RL은 이 문제를 MDP(마르코프 결정 과정)로 모델링합니다. 
+% % % '에이전트'(예: LEO 위성)는 '환경'(동적 LEO 네트워크)의 현재 '상태'(예: 위치, 링크 품질, 트래픽)를 관찰합니다.
+% % % 이 상태를 기반으로, 에이전트는 '행동'(예: "GW 2로 전환" 또는 "GW 1에 머무르기")을 선택합니다.
+% % % 그러면 환경은 새로운 상태로 전환되고 에이전트에게 스칼라 값의 '보상' 또는 '페널티'를 제공합니다.
+% % % 에이전트의 목표는 장기적인 누적 할인 보상을 최대화하는 최적의 '정책'(상태에서 행동으로의 매핑)을 학습하는 것입니다.
+% Furthermore, RL's optimization of a long-horizon objective is a key advantage over greedy heuristics. A greedy policy, which only selects what appears best at the current moment, can easily get stuck in a local optimum by making a choice that is immediately beneficial but leads to poor outcomes later. In contrast, an RL agent, by maximizing the total cumulative reward, can learn to accept a small, short-term penalty (a lower immediate reward) if it leads to a much larger total reward over the long term. This allows the agent to find a more robust and globally optimal policy.
+% % % 또한, RL이 장기 목표를 최적화하는 것은 탐욕적 휴리스틱보다 핵심적인 이점입니다. 현재 가장 잘 보이는 것만 선택하는 탐욕적 정책은 즉시 유익하지만 나중에 나쁜 결과를 초래하는 선택을 함으로써 지역 최적점에 쉽게 갇힐 수 있습니다. 반면, RL 에이전트는 총 누적 보상을 최대화함으로써 장기적으로 훨씬 더 큰 총 보상을 초래할 경우 소액의 단기 페널티(즉시 보상이 낮아지는 경우)를 수용하는 방법을 배울 수 있습니다. 이를 통해 에이전트는 보다 견고하고 전역적으로 최적의 정책을 찾을 수 있습니다.
+
+% Furthermore, in complex problems like LEO networks, the state space (e.g., the combination of all RSRPs, all GW loads, and satellite coordinates) is often continuous and high-dimensional. Traditional RL methods that rely on tables (Q-tables) fail in such scenarios. This necessitates the use of Deep Reinforcement Learning (DRL), which employs Deep Neural Networks (DNNs) as function approximators. Algorithms such as the Deep Q-Network (DQN) and its variants (e.g., Dueling DQN, DDQN) or policy-gradient methods (e.g., PPO, A3C) can learn complex policies by mapping these high-dimensional states directly to optimal actions.
+% % % 더욱이, LEO 네트워크와 같은 복잡한 문제에서는 상태 공간(예: 모든 RSRP, 모든 GW 부하, 위성 좌표의 조합)이
+% % % 종종 연속적이고 고차원적입니다. 테이블(Q-table)에 의존하는 전통적인 RL 방법은 이러한 시나리오에서 실패합니다.
+% % % 이것이 심층 신경망(DNN)을 함수 근사치로 활용하는 심층 강화학습(DRL)을 필요하게 만듭니다.
+% % % DQN(Deep Q-Network) 및 그 변형(예: Dueling DQN, DDQN) 또는 정책 경사(Policy-Gradient) 방법(예: PPO, A3C)과 같은 알고리즘은
+% % % 이러한 고차원 상태를 최적의 행동으로 직접 매핑하는 복잡한 정책을 학습할 수 있습니다.
 
 \quad Recent studies have applied DRL to NTN mobility subproblems, including service-link HO and beam/resource scheduling, reporting improved throughput and reduced delay compared with heuristic baselines. However, most designs assume centralized observability or ignore the coupling to the feeder link, and thus do not address gateway selection or backhaul load balancing explicitly.
 % 최근 연구는 DRL을 서비스 링크 HO나 빔/자원 스케줄링 등에 적용해, 휴리스틱 대비 처리량 향상과 지연 감소를 보였습니다.
