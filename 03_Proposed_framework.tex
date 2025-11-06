@@ -1,14 +1,14 @@
 \chapter[Proposed reinforcement learning-based FLSO algorithm]{Proposed reinforcement learning-based FLSO algorithm}
 
 \section{System model}
-\quad This thesis considers a large-scale LEO satellite constellation deployed across $P$ orbital planes, represented by the set $\mathcal{P} = \left\{p \mid p = 1, \dots, P\right\}$. The constellation consists of $N$ LEO satellites in total, distributed across these planes, with $N_p$ satellites in plane $p$. The total set of satellites is $\mathcal{S} = \bigcup_{p=1}^{P} \mathcal{S}_p$, where $\mathcal{S}_p = \{s_{p,i} \mid i = 1, \dots, N_p\}$ is the set of satellites in plane $p$, and $N = \sum_{p=1}^{P} N_p$. For simplicity in the following equations, we denote a single satellite by its global index $n \in \{1, \dots, N\}$. The LEO satellite $n$ connects to ground GWs via feeder link, where the set of GWs is denoted as $\mathcal{G} = \left\{m \mid m = 1, 2, \dots, M\right\}$. The coordinates of each LEO satellite $n$ in the ECEF coordinate system at a given time slot $t$, where $t \in \{0, 1, \dots, T\}$, are given by $l_n(t) = (x_n(t), y_n(t), z_n(t))$.
+\quad This thesis considers a large-scale LEO satellite constellation deployed across $P$ orbital planes, represented by the set $\mathcal{P} = \left\{p \mid p = 1, \dots, P\right\}$. The constellation consists of $N$ LEO satellites in total, distributed across these planes, with $N_p$ satellites in plane $p$. We write the overall satellite index set as $\mathcal{S} = \{ s_{p,i} \mid p = 1, \dots, P;\ i = 1, \dots, N_p \}$, and its cardinality as $\lvert\mathcal{S}\rvert = \sum_{p=1}^{P} N_p$. For simplicity in the following equations, we denote a single satellite by its global index $n \in \{1, \dots, N\}$. The LEO satellite $n$ connects to ground GWs via feeder link, where the set of GWs is denoted as $\mathcal{G} = \left\{m \mid m = 1, 2, \dots, M\right\}$. The coordinates of each LEO satellite $n$ in the ECEF coordinate system at a given time slot $t$, where $t \in \{0, 1, \dots, T\}$, are given by $l_n(t) = (x_n(t), y_n(t), z_n(t))$.
 
 The primary challenge addressed in this thesis is GW load balancing. We define the load of a GW \( m \) at time \( t \), denoted as $\mathcal{L}_m(t)$, as the set of satellites $n \in \mathcal{S}$ currently connected to it. The instantaneous load is $\lvert \mathcal{L}_m(t) \rvert$.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1.0\columnwidth]{figure/fig_system_model.png}
-\caption{Network scenario of a LEO satellite performing FLSO while serving UEs across Starlink GWs in the United States.}
+\caption{Network scenario of a LEO satellite performing FLSO while across Starlink GWs in the United States.}
 \label{figure_system_model}
 \end{figure}
 
