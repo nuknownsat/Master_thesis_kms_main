@@ -3,7 +3,9 @@
 % 다른 사람들의 관련 연구 소개
 \section[LEO satellite FLSO schemes]{LEO satellite FLSO schemes}
 
-\quad Mobility management for LEO satellite networks is actively being standardized within 3GPP. Whereas conventional TN possess a static topology, rendering explicit NG interface management procedures unnecessary, the high mobility of LEO satellites necessitates them. Consequently, procedures for NG interface management are actively being defined in 3GPP standards to support this dynamic connectivity [].
+\quad In NTN, wide-area coverage and low end-to-end latency are pursued by employing LEO satellites. Because LEO satellites continuously move in LEO, global service is achieved through multi-satellite, multi-orbit constellations. Mobility management for LEO satellite networks is actively being standardized within 3GPP. Whereas conventional TN possess a static topology, rendering explicit NG interface management procedures unnecessary, the high mobility of LEO satellites necessitates them. Consequently, procedures for NG interface management are actively being defined in 3GPP standards to support this dynamic connectivity [].
+% NTN에서는 넓은 커버리지와 낮은 종단간 지연을 위해 LEO 위성을 활용합니다.
+% LEO는 낮은 궤도로 지속적으로 이동하므로, 다중 위성·다중 궤도 성좌를 통해 전 지구 커버리지를 제공합니다.
 % LEO 위성망의 이동성 관리는 3GPP에서 활발히 표준화되고 있습니다.
 % 전통적인 TN은 정적 토폴로지여서 NG 인터페이스 관리 절차가 불필요했지만,
 % LEO 위성은 높은 이동성 때문에 이러한 절차가 필수적입니다.
@@ -52,49 +54,105 @@ These procedural challenges underscore that FLSO is a complex and costly operati
 While 3GPP defines the architectures for executing an FLSO, the optimal selection policy—determining which available GW to switch to—is non-standardized and remains a critical challenge for network performance.
 % 3GPP는 FLSO 실행을 위한 아키텍처는 정의하지만,
 % 사용할 수 있는 GW 중 어느 대상으로 전환할지에 대한 최적 정책은 표준화되어 있지 않아 여전히 핵심 과제입니다.
-Related work addressing this selection problem has traditionally focused on simple heuristic strategies. These include signal-based methods selecting the GW with the strongest RSRP , and distance-based methods selecting the closest GW.
+
+In NTN, multiple measurement event conditions are defined to trigger UE handover. For signal-based triggers, as summarized in Table~\ref{tab:entering_conditions}, the serving and target gNBs' RSRPs drive the handover decision; among them, Event~A3 is most commonly used. However, for satellites operating at high altitude and moving rapidly, such signal-based events can be unstable. Moreover, on the ground the received signal levels often differ only marginally within a cell radius, making pure signal-based triggering ill-suited to NTN.
+% NTN 환경에서 UE의 핸드오버를 위한 여러 측정 이벤트 조건이 정의되어 있다.
+% 신호 기반의 경우 표와 같이 serving gNB와 target gNB의 RSRP를 사용하여 핸드오버를 트리거하며 A3 이벤트가 가장 일반적으로 사용된다.
+% 하지만 위성은 높은 고도에서 빠르게 이동하므로 신호 기반 측정 이벤트는 불안정할 수 있다.
+% 또한 지상에서는 셀 반경 내 신호 차이가 작아 순수 신호 기반 트리거는 NTN 환경에 적합하지 않을 수 있다.
+
+Therefore, standards also define distance-based measurement events. In the distance-based design, the UE’s GNSS-based position and the cell center (gNB location) are used to trigger handover. For example, Event~L4 can be configured in RRC to use absolute distance thresholds for both the serving and the target gNB to trigger a handover.
+% 따라서 표준에서는 거리 기반의 측정 이벤트 조건도 정의한다.
+% 거리 기반의 경우 UE의 GNSS 기반 위치와 셀 중심(기지국 위치) 간의 거리를 사용하여 핸드오버를 트리거한다.
+% 예를 들어, L4 이벤트는 serving gNB와 target gNB 각각에 대해 RRC에서 설정한 절대 거리 임계값을 사용하여 핸드오버를 트리거한다.
+\begin{table}[h]
+\centering
+\caption{Entering conditions for measurement events}
+\label{tab:entering_conditions}
+    \begin{tabular}{l p{11cm}}
+    \hline
+        \textbf{Event} & \textbf{Entering Condition} \\
+    \hline
+    A1 & Serving gNB's signal becomes stronger than the threshold. \\
+    A2 & Serving gNB's signal becomes weaker than the threshold. \\
+    A3 & Target gNB's signal becomes stronger than the serving gNB's signal by an Offset margin. (The most common handover trigger.) \\
+    A4 & Target gNB's signal becomes stronger than the threshold. \\
+    A5 & Serving gNB's signal becomes weaker than threshold 1, AND Target gNB's signal becomes stronger than threshold 2. \\
+    \hline
+    \end{tabular}
+\end{table}
 % 이 선택 문제에 대한 기존 연구는 대체로 단순 휴리스틱에 의존해 왔습니다.
 % 예: 가장 강한 RSRP의 GW 선택, 가장 가까운 GW 선택 등.
+\newcommand{\dist}[2]{\left\lVert #1-#2 \right\rVert}
+\begin{align}
+\text{CondEvent L4:}\quad 
+&\dist{\mathbf{p}_{\text{UE}}}{\mathbf{p}_{\text{ref}}^{\text{(serv)}}} > \alpha_1
+\ \land\ 
+\dist{\mathbf{p}_{\text{UE}}}{\mathbf{p}_{\text{ref}}^{\text{(tgt)}}} < \alpha_2,
+\end{align}
+where $\mathbf{p}_{\text{UE}}$ is the UE position (e.g., GNSS-based), 
+$\mathbf{p}_{\text{ref}}^{(\cdot)}$ denotes the cell reference location (cell center), and
+$\alpha_1,\alpha_2$ are RRC-configured absolute distance thresholds.
 However, these heuristic approaches are overly focused on link-level metrics like signal quality or stability at the moment of switching. They fail to consider the processing load and traffic distribution across the GW network. This omission leads to severe load imbalance, particularly in dense NTN scenarios where multiple satellites may select the same "best" GW simultaneously. This congestion at a single GW creates a bottleneck, degrading overall NTN backhaul efficiency and increasing latency, regardless of the satellite payload architecture.
-% 그러나 이러한 휴리스틱은 스위칭 시점의 신호 품질/안정성과 같은 링크 수준 지표에 치우쳐 있으며,
-% GW 네트워크 전반의 처리 부하와 트래픽 분포를 고려하지 못합니다.
+% 그러나 이러한 휴리스틱은 스위칭 시점의 링크 지표에 치우쳐 GW 네트워크 전반의 처리 부하와 트래픽 분포를 고려하지 못한다.
+% 그 결과, 밀집 NTN 환경에서는 여러 위성이 동시에 동일한 "최적" GW를 선택해 심각한 부하 불균형이 발생하고,
+% 단일 GW 혼잡으로 백홀 효율 저하와 지연 증가가 초래된다(페이로드 아키텍처와 무관).
+
+% NTN 환경에서 UE의 핸드오버를 위한 여러 측정 이벤트 조건이 정의되어 있다. 신호기반의 경우 표와 같이 serving gNB와 target gNB의 RSRP를 사용하여 핸드오버 트리거에 사용되며 A3 이벤트가 가장 일반적으로 사용된다. 하지만 위성의 경우 높은 고도에서 빠르게 이동하기 때문에 신호 기반의 측정 이벤트는 불안정할 수 있다. 또한 지상의 신호가 셀 반경내에서 거의 차이가 없기 때문에, 신호 기반의 측정 이벤트는 위성 환경에 적합하지 않을 수 있다. 따라서 표준에서는 거리 기반의 측정 이벤트 조건도 정의하고 있다. 거리 기반의 경우 UE의 GNSS 기반 위치와 셀 중심(기지국 위치) 간의 거리를 사용하여 핸드오버 트리거에 사용된다. 예를 들어, 식과 같이 L4 이벤트는 serving gNB와 target gNB 각각에 대해 RRC에서 설정한 절대 거리 임계값을 사용하여 핸드오버를 트리거한다.
+% 그러나 이러한 휴리스틱은 스위칭은 GW 네트워크 전반의 처리 부하와 트래픽 분포를 고려하지 못합니다.
 % 그 결과, 밀집 NTN 환경에서는 여러 위성이 동시에 동일한 "최적" GW를 선택하여 심각한 부하 불균형이 발생하고,
 % 단일 GW 혼잡으로 백홀 효율이 떨어지고 지연이 증가합니다(페이로드 아키텍처와 무관).
 
-\section[Load Balancing in LEO Satellite Networks]{Load Balancing in LEO Satellite Networks} \label{sec:related_load_balancing} \quad Load balancing is a critical challenge in LEO satellite networks to ensure overall system efficiency and QoS. The time-varying topology of the LEO constellation and the uneven global traffic demand can cause severe congestion on specific satellite nodes or links. % LEO 위성망에서 로드 밸런싱은 전체 시스템 효율과 QoS를 보장하기 위한 핵심 과제입니다. % 시변 궤도군 토폴로지와 불균등한 지상 트래픽 수요는 특정 위성 노드나 링크에 심각한 혼잡을 유발할 수 있습니다.
+\section[Load Balancing in LEO Satellite Networks]{Load Balancing in LEO Satellite Networks} \label{sec:related_load_balancing} 
+\quad Load balancing is a critical challenge in LEO satellite networks to ensure overall system efficiency and QoS. The time-varying topology of the LEO constellation and the uneven global traffic demand can cause severe congestion on specific satellite nodes or links. % LEO 위성망에서 로드 밸런싱은 전체 시스템 효율과 QoS를 보장하기 위한 핵심 과제입니다. % 시변 궤도군 토폴로지와 불균등한 지상 트래픽 수요는 특정 위성 노드나 링크에 심각한 혼잡을 유발할 수 있습니다.
 
-To solve this, much of the existing research has been concentrated on load balancing from a \textbf{routing perspective via Inter-Satellite Links (ISLs)} []. These studies aim to manage the \textit{horizontal} traffic flow between satellites to avoid congestion on the space-based backbone. These ISL-centric approaches include techniques such as adaptive routing using SDN [], back-pressure routing [], or traffic diversion schemes []. For instance, Roth et al. [] propose a distributed SDN-based routing scheme that divides the constellation into clusters and performs load balancing for ISL paths \textit{within} the cluster. Similarly, Deng et al. [] propose a Distance-Based Back-Pressure Routing (DBPR) strategy, which calculates ISL link weights based on both the queue backlogs of satellite nodes and the propagation delay, thereby balancing traffic loads \textit{among satellite nodes}. % 이를 해결하기 위해, 많은 기존 연구가 \textbf{ISL(위성 간 링크)을 통한 라우팅 관점}의 로드 밸런싱에 집중해 왔습니다 \cite{Wu2024ISL}. % 이 연구들은 우주 기반 백본망의 혼잡을 피하기 위해 위성 간의 \textit{수평적(horizontal)} 트래픽 흐름을 관리하는 것을 목표로 합니다. % 이러한 ISL 중심 접근 방식에는 SDN을 사용한 적응형 라우팅 \cite{Roth2022SDN, Liu2023Adaptive}, 백프레셔(back-pressure) 라우팅 \cite{Deng2023DBPR}, 또는 트래픽 우회 기법 \cite{Jin2022DTDR} 등이 포함됩니다. % 예를 들어, Roth 등 \cite{Roth2022SDN}은 위성군을 클러스터로 나누고 클러스터 \textit{내부}의 ISL 경로에 대한 로드 밸런싱을 수행하는 분산형 SDN 기반 라우팅 기법을 제안합니다. % 유사하게, Deng 등 \cite{Deng2023DBPR}은 위성 노드의 큐 백로그와 전파 지연을 기반으로 ISL 링크 가중치를 계산하는 DBPR(거리 기반 백프레셔 라우팅) 전략을 제안하며, 이는 \textit{위성 노드 간의} 트래픽 부하를 분산시킵니다.
+To solve this, much of the existing research has been concentrated on load balancing from a routing perspective via ISLs []. These studies aim to manage the horizontal traffic flow between satellites to avoid congestion on the space-based backbone. These ISL-centric approaches include techniques such as adaptive routing using SDN [], back-pressure routing [], or traffic diversion schemes []. For instance, Roth et al. [] propose a distributed SDN-based routing scheme that divides the constellation into clusters and performs load balancing for ISL paths within the cluster. Similarly, Deng et al. [] propose a Distance-Based Back-Pressure Routing strategy, which calculates ISL link weights based on both the queue backlogs of satellite nodes and the propagation delay, thereby balancing traffic loads \textit{among satellite nodes}. % 이를 해결하기 위해, 많은 기존 연구가 \textbf{ISL(위성 간 링크)을 통한 라우팅 관점}의 로드 밸런싱에 집중해 왔습니다 \cite{Wu2024ISL}. % 이 연구들은 우주 기반 백본망의 혼잡을 피하기 위해 위성 간의 \textit{수평적(horizontal)} 트래픽 흐름을 관리하는 것을 목표로 합니다. % 이러한 ISL 중심 접근 방식에는 SDN을 사용한 적응형 라우팅 \cite{Roth2022SDN, Liu2023Adaptive}, 백프레셔(back-pressure) 라우팅 \cite{Deng2023DBPR}, 또는 트래픽 우회 기법 \cite{Jin2022DTDR} 등이 포함됩니다. % 예를 들어, Roth 등 \cite{Roth2022SDN}은 위성군을 클러스터로 나누고 클러스터 \textit{내부}의 ISL 경로에 대한 로드 밸런싱을 수행하는 분산형 SDN 기반 라우팅 기법을 제안합니다. % 유사하게, Deng 등 \cite{Deng2023DBPR}은 위성 노드의 큐 백로그와 전파 지연을 기반으로 ISL 링크 가중치를 계산하는 DBPR(거리 기반 백프레셔 라우팅) 전략을 제안하며, 이는 \textit{위성 노드 간의} 트래픽 부하를 분산시킵니다.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=1\linewidth]{figure/fig_load_bal.png}
+    \caption{Load balancing in LEO satellite networks}
+    \label{fig:load_bal}
+\end{figure}
 
 Another domain of research focuses on RRM at the service link level. These studies aim to balance the load among beams by efficiently allocating limited radio resources, such as beams, spectrum, or time slots, to UEs on the ground. % 또 다른 연구 분야는 서비스 링크 레벨의 무선 자원 관리(RRM)에 초점을 둡니다. % 이 연구들은 빔, 스펙트럼, 시간 슬롯과 같은 한정된 무선 자원을 지상의 UE에게 효율적으로 할당하여 빔 간의 부하를 조절하는 것을 목표로 합니다.
 
-However, existing load balancing research, such as the ISL-centric routing schemes discussed [], is predominantly focused on balancing load \textit{between} satellites (ISLs) or \textit{below} the satellite (service link RRM). In contrast, \textbf{load balancing at the feeder link level}—where the satellite constellation as a whole connects to the ground network—remains a relatively unexplored area. Even if satellite node congestion (ISL load) is avoided, the terrestrial network bottleneck cannot be solved if all traffic ultimately converges on a single, overloaded GW. % \textit{연구 공백:} 하지만 \cite{Roth2022SDN, Deng2023DBPR, Liu2023Adaptive}에서 논의된 ISL 중심 라우팅 기법과 같은 기존 로드 밸런싱 연구는, % 주로 위성 \textit{간}(ISL) 또는 위성 \textit{아래}(서비스 링크 RRM)의 부하 분산에 집중되어 있습니다. % 반면, 위성군 전체가 지상망과 연결되는 \textbf{피더 링크 레벨의 로드 밸런싱}은 상대적으로 연구가 미흡한 영역으로 남아있습니다. % 위성 노드 혼잡(ISL 부하)을 피하더라도, 모든 트래픽이 결국 하나의 과부하 상태인 GW로 수렴한다면 지상망 병목 현상은 해결될 수 없습니다.
+However, existing load balancing research, such as the ISL-centric routing schemes discussed [], is predominantly focused on balancing load between satellites ISLs or below the satellite service link RRM. In contrast, load balancing at the feeder link level—as illustrated in Fig. \ref{fig:load_bal}, where the satellite constellation as a whole connects to the ground network—remains a relatively unexplored area. Even if satellite node congestion (ISL load) is avoided, the terrestrial network bottleneck cannot be solved if all traffic ultimately converges on a single, overloaded GW. % \textit{연구 공백:} 하지만 \cite{Roth2022SDN, Deng2023DBPR, Liu2023Adaptive}에서 논의된 ISL 중심 라우팅 기법과 같은 기존 로드 밸런싱 연구는, % 주로 위성 \textit{간}(ISL) 또는 위성 \textit{아래}(서비스 링크 RRM)의 부하 분산에 집중되어 있습니다. % 반면, 위성군 전체가 지상망과 연결되는 \textbf{피더 링크 레벨의 로드 밸런싱}은 상대적으로 연구가 미흡한 영역으로 남아있습니다. % 위성 노드 혼잡(ISL 부하)을 피하더라도, 모든 트래픽이 결국 하나의 과부하 상태인 GW로 수렴한다면 지상망 병목 현상은 해결될 수 없습니다.
 
 As reviewed in Section 2.1, conventional FLSO strategies tend to rely solely on link-level metrics like RSRP or LCT. Because these methods do not consider the real-time processing load or traffic status of the GWs, they fail to perform intelligent load balancing. This paper addresses this specific gap: integrating GW load balancing into the FLSO decision-making process to optimize the overall efficiency of the NTN backhaul. % 2.1절에서 검토했듯이, 기존 FLSO 전략은 RSRP나 LCT 같은 링크 수준 지표에만 의존하는 경향이 있습니다. % 이러한 방법은 GW의 실시간 처리 부하나 트래픽 상태를 고려하지 못해 지능적인 로드 밸런싱에 실패합니다. % 본 논문은 이 공백을 메우기 위해 FLSO 의사결정에 GW 로드 밸런싱을 통합하여 NTN 백홀의 전체 효율을 최적화합니다.
 
 \section[Reinforcement Learning for LEO Mobility Management]{Reinforcement Learning for LEO Mobility Management}
 \label{sec:rl_mobility}
 
-\quad To overcome the limitations of such model-based and greedy heuristics, Reinforcement Learning (RL) has emerged as a powerful, model-free tool for solving complex, high-speed mobility challenges in LEO networks.
-% \cite{zhou_sensors_2023}와 같은 모델 기반 및 탐욕적 휴리스틱의 한계를 극복하기 위해,
-% 강화학습(RL)은 LEO 네트워크의 복잡하고 빠른 이동성 문제를 해결하는 강력한 모델 프리(model-free) 도구로 부상했습니다.
+\quad Reinforcement Learning provides a model-free framework to learn sequential decision policies under non-stationary dynamics and partial observability both intrinsic to LEO mobility. Unlike fixed heuristics, RL can optimize long-horizon objectives while adapting to time-varying traffic and topology, making it a natural fit for multi-objective problems such as FLSO gateway selection.
+% 강화학습(RL)은 비정상(non-stationary) 동역학과 부분 관측 환경에서 순차적 의사결정 정책을 학습하는 모델 프리 프레임워크입니다.
+% 고정 휴리스틱과 달리, RL은 시간에 따라 변하는 트래픽과 토폴로지에 적응하면서 장기 목표를 최적화할 수 있어,
+% FLSO 게이트웨이 선택과 같은 다중 목표 문제에 적합합니다.
+To elaborate, RL models this problem as a MDP. An agent observes the current state of the environment. Based on this state, it selects an action. The environment then transitions to a new state and provides the agent with a scalar reward or penalty. The agent's goal is to learn an optimal policy—a mapping from states to actions—that maximizes its cumulative discounted reward over a long-term horizon.
+% % 구체적으로, RL은 이 문제를 MDP(마르코프 결정 과정)로 모델링합니다. 
+% % '에이전트'(예: LEO 위성)는 '환경'(동적 LEO 네트워크)의 현재 '상태'(예: 위치, 링크 품질, 트래픽)를 관찰합니다.
+% % 이 상태를 기반으로, 에이전트는 '행동'(예: "GW 2로 전환" 또는 "GW 1에 머무르기")을 선택합니다.
+% % 그러면 환경은 새로운 상태로 전환되고 에이전트에게 스칼라 값의 '보상' 또는 '페널티'를 제공합니다.
+% % 에이전트의 목표는 장기적인 누적 할인 보상을 최대화하는 최적의 '정책'(상태에서 행동으로의 매핑)을 학습하는 것입니다.
+Furthermore, RL's optimization of a long-horizon objective is a key advantage over greedy heuristics. A greedy policy, which only selects what appears best at the current moment, can easily get stuck in a local optimum by making a choice that is immediately beneficial but leads to poor outcomes later. In contrast, an RL agent, by maximizing the total cumulative reward, can learn to accept a small, short-term penalty (a lower immediate reward) if it leads to a much larger total reward over the long term. This allows the agent to find a more robust and globally optimal policy.
+% % 또한, RL이 장기 목표를 최적화하는 것은 탐욕적 휴리스틱보다 핵심적인 이점입니다. 현재 가장 잘 보이는 것만 선택하는 탐욕적 정책은 즉시 유익하지만 나중에 나쁜 결과를 초래하는 선택을 함으로써 지역 최적점에 쉽게 갇힐 수 있습니다. 반면, RL 에이전트는 총 누적 보상을 최대화함으로써 장기적으로 훨씬 더 큰 총 보상을 초래할 경우 소액의 단기 페널티(즉시 보상이 낮아지는 경우)를 수용하는 방법을 배울 수 있습니다. 이를 통해 에이전트는 보다 견고하고 전역적으로 최적의 정책을 찾을 수 있습니다.
 
-A prominent example is the work by Lee et al. , which addresses the **UE Handover (HO)** problem on the **service link** (UE-to-satellite). This study proposes a Deep Reinforcement Learning (DRL) protocol, named DHO, where the serving satellite acts as the agent. The DHO agent learns an optimal HO policy to minimize access delay and collision rate by intelligently *skipping* the traditional Measurement Report (MR) step. By using a DRL algorithm (IMPALA) and a minimal set of locally observable information (e.g., time index, HO status), the DHO protocol successfully learns a complex HO policy adapted to the LEO environment's long propagation delays and high dynamics.
-% % (Lee et al. 논문 리뷰)
-% % 대표적인 예로, Lee 등 \cite{lee_twc_2024}의 연구는 '서비스 링크'(UE-위성)에서의 'UE 핸드오버(HO)' 문제를 다룹니다.
-% % 이 연구는 DHO라는 DRL 프로토콜을 제안하며, 서빙 위성이 에이전트 역할을 합니다.
-% % DHO 에이전트는 전통적인 측정 보고(MR) 단계를 지능적으로 '생략'함으로써
-% % 접근 지연과 충돌률을 최소화하는 최적의 HO 정책을 학습합니다.
-% % DRL 알고리즘(IMPALA)과 최소한의 로컬 관측 정보(시간 인덱스, HO 상태)만을 사용하여,
-% % DHO 프로토콜은 LEO 환경의 긴 전파 지연과 높은 역동성에 적응하는 복잡한 HO 정책을 성공적으로 학습합니다.
+Furthermore, in complex problems like LEO networks, the state space (e.g., the combination of all RSRPs, all GW loads, and satellite coordinates) is often continuous and high-dimensional. Traditional RL methods that rely on tables (Q-tables) fail in such scenarios. This necessitates the use of Deep Reinforcement Learning (DRL), which employs Deep Neural Networks (DNNs) as function approximators. Algorithms such as the Deep Q-Network (DQN) and its variants (e.g., Dueling DQN, DDQN) or policy-gradient methods (e.g., PPO, A3C) can learn complex policies by mapping these high-dimensional states directly to optimal actions.
+% % 더욱이, LEO 네트워크와 같은 복잡한 문제에서는 상태 공간(예: 모든 RSRP, 모든 GW 부하, 위성 좌표의 조합)이
+% % 종종 연속적이고 고차원적입니다. 테이블(Q-table)에 의존하는 전통적인 RL 방법은 이러한 시나리오에서 실패합니다.
+% % 이것이 심층 신경망(DNN)을 함수 근사치로 활용하는 심층 강화학습(DRL)을 필요하게 만듭니다.
+% % DQN(Deep Q-Network) 및 그 변형(예: Dueling DQN, DDQN) 또는 정책 경사(Policy-Gradient) 방법(예: PPO, A3C)과 같은 알고리즘은
+% % 이러한 고차원 상태를 최적의 행동으로 직접 매핑하는 복잡한 정책을 학습할 수 있습니다.
 
-\textit{Research Gap:} While  demonstrates the significant potential of DRL for solving LEO mobility problems, its focus is strictly on the *service link (UE HO)*. To the best of our knowledge, the application of a model-free DRL approach to solve the specific multi-objective problem of **FLSO gateway load balancing** remains unexplored.
-% \textit{연구 공백:} Lee 등의 연구 \cite{lee_twc_2024}는 LEO 이동성 문제 해결에 DRL의 큰 잠재력을 보여주지만,
-% 그 초점은 '서비스 링크(UE HO)'에 엄격히 맞춰져 있습니다.
-% 우리가 아는 한, 'FLSO 게이트웨이 로드 밸런싱'이라는 특정 다중 목표 문제를 해결하기 위해
-% 모델 프리 DRL 접근 방식을 적용한 연구는 아직 없습니다.
+\quad Recent studies have applied DRL to NTN mobility subproblems, including service-link HO and beam/resource scheduling, reporting improved throughput and reduced delay compared with heuristic baselines. However, most designs assume centralized observability or ignore the coupling to the feeder link, and thus do not address gateway selection or backhaul load balancing explicitly.
+% 최근 연구는 DRL을 서비스 링크 HO나 빔/자원 스케줄링 등에 적용해, 휴리스틱 대비 처리량 향상과 지연 감소를 보였습니다.
+% 하지만 다수의 설계는 중앙집중형 가시성을 가정하거나 피더 링크와의 결합을 무시해,
+% 게이트웨이 선택 및 백홀 로드 밸런싱을 명시적으로 다루지 못합니다.
 
-This paper aims to fill this gap. We propose a DRL framework where a LEO satellite agent learns an optimal FLSO policy. Our work is the first to apply a DRL *methodology* (proven effective in ) to the critical *problem* of GW load balancing (identified in ), optimizing the complex trade-off between GW load, RSRP, and FLSO stability in a dynamic, model-free, and long-term optimal manner.
-% 본 논문은 이 공백을 메우는 것을 목표로 합니다.
-% 우리는 LEO 위성 에이전트가 최적의 FLSO 정책을 학습하는 DRL 프레임워크를 제안합니다.
-% 본 연구는 GW 로드 밸런싱이라는 중요한 '문제' \cite{zhou_sensors_2023}에 DRL '방법론' \cite{lee_twc_2024}을 적용한 최초의 시도이며,
-% GW 부하, RSRP, FLSO 안정성 간의 복잡한 트레이드오프를 동적인 모델 프리 방식으로, 그리고 장기적 최적화를 통해 해결합니다.
+We target the feeder-link decision itself. Building on the findings in Sections  we formulate FLSO gateway selection as an RL problem: the state aggregates per-GW filtered RSRP/ToS, instantaneous visibility and elevation masks, recent FLSO history (hysteresis), and normalized GW load/queue metrics; the action selects a GW from the currently feasible set; the reward combines link-quality and fairness (throughput/SINR proxies and GW-load balancing) with penalties for overload and switching frequency. Practical guards such as minimum elevation/RSRP thresholds, cooldowns, and soft/hard switchover handling are enforced as constraints or reward shaping.
+% 우리는 피더 링크 의사결정 자체를 대상으로 합니다.
+% 앞선 섹션의 논의를 바탕으로, FLSO 게이트웨이 선택을 RL 문제로 정식화합니다:
+% 상태(state)는 GW별 L3 필터된 RSRP/ToS, 가시성·고도 마스크, 최근 FLSO 이력(히스테리시스), 정규화된 GW 부하/큐 정보를 포함하고,
+% 행위(action)는 현재 가능 집합에서 GW를 선택하며,
+% 보상(reward)은 링크 품질과 공정성(처리량/SINR 대용치 및 GW 로드 밸런싱)을 결합하고 과부하·잦은 스위칭에 패널티를 부여합니다.
+% 최소 고도/RSRP 임계, 쿨다운, 하드/소프트 스위치오버 처리 등은 제약 또는 보상 설계로 반영합니다.

@@ -4,9 +4,10 @@
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Feeder link architectures for transparent satellite}}{5}{figure.caption.5}%
 \contentsline {figure}{\numberline {2.2}{\ignorespaces Feeder link architectures for regenerative satellite}}{6}{figure.caption.6}%
 \contentsline {figure}{\numberline {2.3}{\ignorespaces Packet loss during FLSO process}}{7}{figure.caption.7}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Load balancing in LEO satellite networks}}{10}{figure.caption.9}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Network scenario of a LEO satellite performing FLSO while serving UEs across Starlink GWs in the United States.}}{12}{figure.caption.8}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces The architecture of the proposed dueling DQN for FLSO optimization in LEO satellite networks.}}{18}{figure.caption.9}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Network scenario of a LEO satellite performing FLSO while serving UEs across Starlink GWs in the United States.}}{15}{figure.caption.10}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces The architecture of the proposed dueling DQN for FLSO optimization in LEO satellite networks.}}{21}{figure.caption.11}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Performance comparison of the proposed, DDQN-based, and signal-based FLSO algorithms across different metrics}}{23}{figure.caption.11}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Performance comparison of the proposed, DDQN-based, and signal-based FLSO algorithms across different metrics}}{26}{figure.caption.13}%
 \addvspace {10\p@ }

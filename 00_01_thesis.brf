@@ -1,9 +1,9 @@
 \backcite {lei2019broadband}{{1}{1.1}{section.1.1}}
 \backcite {3gppfeeder}{{1}{1.1}{section.1.1}}
 \backcite {ho_latency}{{1}{1.1}{section.1.1}}
-\backcite {3gppchanel}{{13}{3.1}{equation.3.1}}
-\backcite {3gppl3}{{13}{3.1}{equation.3.3}}
-\backcite {intro_RL}{{16}{3.3.1}{subsection.3.3.1}}
-\backcite {mnih2013playing}{{19}{3.3.2}{subsection.3.3.2}}
-\backcite {wang2016dueling}{{19}{3.3.2}{algorithm.3.1}}
-\backcite {schaul2015prioritized}{{21}{3.3.2}{equation.3.15}}
+\backcite {3gppchanel}{{16}{3.1}{equation.3.1}}
+\backcite {3gppl3}{{16}{3.1}{equation.3.3}}
+\backcite {intro_RL}{{19}{3.3.1}{subsection.3.3.1}}
+\backcite {mnih2013playing}{{22}{3.3.2}{subsection.3.3.2}}
+\backcite {wang2016dueling}{{22}{3.3.2}{algorithm.3.1}}
+\backcite {schaul2015prioritized}{{24}{3.3.2}{equation.3.15}}
