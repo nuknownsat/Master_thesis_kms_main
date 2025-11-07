@@ -17,49 +17,53 @@ Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: 1_backmatter/references.bib
+Warning--I didn't find a database entry for "drl_HO"
 -- IEEEtran.bst version 1.13 (2008/09/30) by Michael Shell.
 -- http://www.michaelshell.org/tex/ieeetran/bibtex/
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+Warning--empty author in rel_38413
+Warning--empty author in rel_38821
 
 Done.
-You've used 9 entries,
+You've used 15 entries,
             4039 wiz_defined-function locations,
-            871 strings with 8994 characters,
-and the built_in function-call counts, 6828 in all, are:
-= -- 535
-> -- 197
-< -- 52
-+ -- 112
-- -- 44
-* -- 341
-:= -- 1033
-add.period$ -- 19
-call.type$ -- 9
-change.case$ -- 9
-chr.to.int$ -- 120
-cite$ -- 9
-duplicate$ -- 493
-empty$ -- 511
-format.name$ -- 44
-if$ -- 1530
+            902 strings with 10026 characters,
+and the built_in function-call counts, 10041 in all, are:
+= -- 789
+> -- 277
+< -- 67
++ -- 154
+- -- 60
+* -- 499
+:= -- 1554
+add.period$ -- 31
+call.type$ -- 15
+change.case$ -- 15
+chr.to.int$ -- 150
+cite$ -- 17
+duplicate$ -- 755
+empty$ -- 792
+format.name$ -- 64
+if$ -- 2252
 int.to.chr$ -- 0
-int.to.str$ -- 9
-missing$ -- 97
-newline$ -- 50
-num.names$ -- 9
-pop$ -- 214
+int.to.str$ -- 15
+missing$ -- 144
+newline$ -- 70
+num.names$ -- 13
+pop$ -- 333
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 501
+skip$ -- 752
 stack$ -- 0
-substring$ -- 305
-swap$ -- 414
-text.length$ -- 12
+substring$ -- 381
+swap$ -- 589
+text.length$ -- 17
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 9
-warning$ -- 0
-while$ -- 25
-width$ -- 10
-write$ -- 107
+type$ -- 15
+warning$ -- 2
+while$ -- 33
+width$ -- 17
+write$ -- 161
+(There were 3 warnings)
