@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  7 NOV 2025 22:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  10 NOV 2025 15:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1076,7 +1076,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 pdfTeX warning (ext4): destination with the same identifier (name{page.ii}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.18 ... {4}Performance evaluation}{25}{chapter.4}
+l.18 ... {4}Performance evaluation}{26}{chapter.4}
                                                   % [2
 
 
@@ -1088,4 +1088,181 @@ l.18 ... {4}Performance evaluation}{25}{chapter.4}
 
 
 
-pdfTeX warning (ext4): destination with the same identif
+pdfTeX warning (ext4): destination with the same identifier (name{page.iii}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.228 \listoffigures
+                      % print list of figures [3] (./00_01_thesis.lof)
+\tf@lof=\write6
+\openout6 = `00_01_thesis.lof'.
+
+
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.iv}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.230 \listoftables
+                     % print list of tables [4
+
+] (./00_01_thesis.lot)
+\tf@lot=\write7
+\openout7 = `00_01_thesis.lot'.
+
+
+
+[5
+
+]
+\openout2 = `00_04_abbreviation.aux'.
+
+ (./00_04_abbreviation.tex [6
+
+
+])
+
+[7]
+No file 00_01_thesis.nls.
+\openout2 = `01_introduction.aux'.
+
+(./01_introduction.tex
+ 1.
+
+
+[1
+
+
+
+
+
+]
+
+[2{c:/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}])
+
+[3]
+\openout2 = `02_Related_works.aux'.
+
+ (./02_Related_works.tex
+ 2.
+<figure/fig_sat_flso_trans.png, id=236, 526.27014pt x 356.72472pt>
+File: figure/fig_sat_flso_trans.png Graphic file (type png)
+<use figure/fig_sat_flso_trans.png>
+Package pdftex.def Info: figure/fig_sat_flso_trans.png  used on input line 14.
+(pdftex.def)             Requested size: 369.88582pt x 250.7289pt.
+<figure/fig_sat_flso_reg.png, id=238, 453.49425pt x 358.67601pt>
+File: figure/fig_sat_flso_reg.png Graphic file (type png)
+<use figure/fig_sat_flso_reg.png>
+Package pdftex.def Info: figure/fig_sat_flso_reg.png  used on input line 21.
+(pdftex.def)             Requested size: 369.88582pt x 292.5619pt.
+
+
+[4
+
+
+
+
+]
+
+[5 <./figure/fig_sat_flso_trans.png>]
+<figure/fig_packetloss_flso.png, id=255, 437.52258pt x 349.56999pt>
+File: figure/fig_packetloss_flso.png Graphic file (type png)
+<use figure/fig_packetloss_flso.png>
+Package pdftex.def Info: figure/fig_packetloss_flso.png  used on input line 42.
+(pdftex.def)             Requested size: 369.88582pt x 295.54103pt.
+
+
+[6 <./figure/fig_sat_flso_reg.png>]
+
+[7 <./figure/fig_packetloss_flso.png>]
+Overfull \hbox (1.24033pt too wide) in paragraph at lines 63--74
+ [][] 
+ []
+
+
+
+[8]
+
+[9]
+<figure/fig_load_bal.png, id=293, 251.28279pt x 170.05132pt>
+File: figure/fig_load_bal.png Graphic file (type png)
+<use figure/fig_load_bal.png>
+Package pdftex.def Info: figure/fig_load_bal.png  used on input line 122.
+(pdftex.def)             Requested size: 369.88582pt x 250.31233pt.
+
+
+[10 <./figure/fig_load_bal.png>]
+<figure/fig_drl_MDP.png, id=304, 252.87273pt x 132.39864pt>
+File: figure/fig_drl_MDP.png Graphic file (type png)
+<use figure/fig_drl_MDP.png>
+Package pdftex.def Info: figure/fig_drl_MDP.png  used on input line 148.
+(pdftex.def)             Requested size: 369.88582pt x 193.68422pt.
+
+
+[11]
+
+Package natbib Warning: Citation `drl_HO' on page 12 undefined on input line 182.
+
+
+
+[12 <./figure/fig_drl_MDP.png>])
+
+[13]
+\openout2 = `03_Proposed_framework.aux'.
+
+ (./03_Proposed_framework.tex
+ 3.
+LaTeX Font Info:    Trying to load font information for U+eus on input line 4.
+(c:/texlive/2025/texmf-dist/tex/latex/amsfonts/ueus.fd
+File: ueus.fd 2013/01/14 v3.01 Euler Script
+)
+<figure/fig_system_model.png, id=321, 282.50343pt x 173.52026pt>
+File: figure/fig_system_model.png Graphic file (type png)
+<use figure/fig_system_model.png>
+Package pdftex.def Info: figure/fig_system_model.png  used on input line 10.
+(pdftex.def)             Requested size: 369.88582pt x 227.19403pt.
+
+
+[14
+
+
+
+
+]
+
+[15 <./figure/fig_system_model.png>]
+
+[16]
+
+[17]
+
+[18]
+
+[19]
+
+[20]
+<figure/dueling_dqn_archi.png, id=380, 604.61082pt x 382.3083pt>
+File: figure/dueling_dqn_archi.png Graphic file (type png)
+<use figure/dueling_dqn_archi.png>
+Package pdftex.def Info: figure/dueling_dqn_archi.png  used on input line 134.
+(pdftex.def)             Requested size: 369.88582pt x 233.89024pt.
+
+
+[21]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 148.
+
+
+[22 <./figure/dueling_dqn_archi.png>]
+
+[23])
+
+[24]
+
+[25]
+\openout2 = `04_RESULT.aux'.
+
+ (./04_RESULT.tex
+ 4.
+<figure/0.complexity table.png, id=413, 1653.41714pt x 903.25455pt>
+File: figure/0.complexity table.png Graphic file (type png)
+<use figure/0.complexity table.png>
+Package

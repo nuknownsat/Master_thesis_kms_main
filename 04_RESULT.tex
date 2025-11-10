@@ -1,25 +1,36 @@
 \chapter[Performance evaluation]{Performance evaluation}
 
 \section{Simulation setup}
-\quad In this section, we evaluate the performance of the proposed algorithm, DDQN-based FLSO and the signal-based FLSO algorithm through extensive simulations. The simulation environment is based on the actual deployment of SpaceX’s Starlink GWs in the United States, servicing UEs in a mMTC environment. We consider operational GW sites and the LEO satellite's orbit was analyzed using the TLE data of Starlink No. 1008, retrieved on December 5, 2024. The LEO satellite periodically measures the RSRP of GWs as it passes over them.
-The simulation environment parameters are summarized in Table~\ref{tab:sim_params} and was performed in Python, iterating 1,000 times to analyze LEO satellite behavior and performance. The discount factor is set to 0.99 to further reward the future. Other algorithms are summarized as follows:
+\quad In this section, we evaluate the performance of the proposed algorithm alongside DQN-based FLSO, distance-based and signal-based FLSO algorithms through extensive simulations. The simulation environment considers the actual deployment of gateways and satellites; specifically, it is based on operational SpaceX Starlink gateway sites in the United States and models the partially approved Gen2 satellite constellation by the FCC. The orbit of the agent satellite is propagated using TLE data for Starlink satellite No. 1008, retrieved on December 5, 2024. As the satellite passes over the GWs, it periodically measures the RSRP. 
+GW load for baseline characterization is obtained by running the distance-based selection over the deployed constellation snapshot and counting attached satellites at each time step. % 게이트웨이 부하는 배치된 성좌 스냅샷에서 거리 기반 선택 알고리즘을 수행하며 시간별 GW에 연결된 위성 수를 집계하여 산출.
+Consequently, as illustrated in the following figure, we visualize the normalized number of satellites attached per gateway under random satellite placements. % 결과적으로 다음의 그림과 같이 위성의 랜덤 배치에 따라 게이트웨이별 연결된 위성을 노말라이제이션한 결과 그림과 같다.
 
-\begin{itemize}
-\item The DDQN-based FLSO: It is trained using the identical state, action, and reward as defined for the dueling DQN. Both algorithms are initially trained with a UE spatial dispersion of 100, and the subsequent simulations are conducted using the learned Q-networks. Learning proceeds via temporal‐difference updates with experience replay and periodic target‐network synchronization without dueling network.
+\begin{sidewaysfigure}[p]
+    \centering
+    \includegraphics[width=\linewidth]{figure/0.complexity table.png}
+    \caption{Satellite-GW association complexity comparison.}
+    \label{fig:0.complexity}
+\end{sidewaysfigure}
 
-\item Signal-Based FLSO: It is implemented by adapting the conventional HO mechanism. Specifically, we employ the widely used A3 event-based FLSO algorithm as a baseline. In this algorithm, a FLSO event is triggered when the difference between the RSRP of the serving GW and that of target GWs exceeds a predefined threshold, denoted by \( offset \).
-\end{itemize}
-  
-\begin{table}
+The simulation parameters are summarized in Table~\ref{tab:sim_params}. The simulation was performed in Python, iterating 1,000 times to analyze LEO satellite behavior and performance. The discount factor is set to 0.99 to further reward the future. The benchmark algorithms are summarized as follows:
+
+\begin{table}[p]
 % \vspace{0.09 in}
 \centering
+\small
 \caption{Simulation parameters}
     \label{tab:sim_params}
     \begin{tabular}{l l}   % Two columns (left-aligned for both)
         \hline
-        %\textbf{Environment Parameter \cite{FCC2020,3gppfeeder}} & \textbf{Value} \\ 
-        \hline      
-        Number of LEO satellite \(N\) & 1 \\  
+        \textbf{Environment Parameter} & \textbf{Value} \\ 
+        \hline
+        Constellation type & Walker-delta \\ 
+        LEO satellite altitude $h$ & 530 [km] \\    
+        Inclination $i$ & $43^\circ$ \\ 
+        Number of LEO satellite \(N\) & 3360 \\  
+        Orbit planes $P$ & 28 \\
+        Satellites per plane $S$ & 120 \\
+        Phasing factor $F$ & 9 \\
         Number of GW \(M\) & 46 \\  
         Carrier frequency $f_m$ &28 [GHz]\\
         Bandwidth $B_m$ & $480$ [MHz] \\
@@ -29,10 +40,9 @@ The simulation environment parameters are summarized in Table~\ref{tab:sim_param
         Ambient temperature $T_0$ & 150 [K] \\
         Antenna temperature $T_a$ & 290 [K] \\
         Noise figure $N_f$ & 3 [dB] \\
+        Atmospheric attenuation $AT_{m,n}$ & 0.02 [dB/km] \\
         Boltzmann constant $k$ & $1.379 \times 10^{-23}$ [J/K] \\
         Number of Resource Block $q_{RB}$ & 6     \\
-        LEO satellite altitude $h$ & 530 [km] \\
-        UE distribution $u_t$ & $\mu = 10^5$, $\sigma \in [100 \sim 5{,}000]$ \\
         Minimum elevation angle $\theta_{\min}$ & 25 [$^\circ$]\\
         Minimum RSRP of GW $R_{\min}$ & -110 [dBm] \\
         \hline
@@ -42,7 +52,8 @@ The simulation environment parameters are summarized in Table~\ref{tab:sim_param
         Minimum time-of-stay & 1 [s] \\
         L3 filter forgetting factor \(a\) & $(\tfrac{1}{2})^{{K}/4}$ \\
         L3 filter coefficient K & 4 \\
-        A3 event \(offset\) & 4, 6, 8 [dB] \\
+        Distance thresholds $\Delta d_{\mathrm{th}}$ & 0, 10, 20, 30, 40, 50 [km] \\
+        A3 event \(offset\) & 0, 2, 4, 6, 8 [dB] \\
         \hline
         \textbf{Reinforcement Learning Parameter} & \textbf{Value} \\ 
         \hline
@@ -61,268 +72,72 @@ The simulation environment parameters are summarized in Table~\ref{tab:sim_param
     \end{tabular}
 \end{table}
 
-\begin{figure}[t]
-    \centering
-    \begin{subfigure}[t]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figure/1.flso.png}
-        \caption{Number of FLSO}
-        \label{fig:sat2_connected}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figure/2.UE_HO.png}
-        \caption{Number of UE HO}
-        \label{fig:sat3_connected}
-    \end{subfigure}
-    
-    \vspace{0.5cm}
-    
-    \begin{subfigure}[t]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figure/0.tos.png}
-        \caption{Average ToS [sec]}
-        \label{fig:tos}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.48\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{figure/3.RSRP.png}
-        \caption{Average RSRP [dBm]}
-        \label{fig:sat4_connected}
-    \end{subfigure}
-    
-    \caption{Performance comparison of the proposed, DDQN-based, and signal-based FLSO algorithms across different metrics}
-    \label{fig:compare_algoritms}
-\end{figure}
+\begin{itemize}
+\item DQN-based FLSO: It is trained using the identical state, action, and reward as defined for the dueling DQN. Both algorithms are initially trained the subsequent simulations are conducted using the learned Q-networks. Learning proceeds via temporal difference updates with experience replay and periodic target network synchronization without dueling network.
 
-% Optionally, you can add a summary caption in the text or as a separate figure/table if needed.
-% \begin{table}[h!]
-% \centering
-% \renewcommand{\arraystretch}{1.5}
-% \caption{System-level simulation: parameters for study case 9}
-% \label{table:sls_case_9}
-% \resizebox{\textwidth}{!}{%
-% \begin{tabular}{c|c|c|c}
-% \hline\hline
-% \multicolumn{2}{c|}{\textbf{LEO Satellite}} & \multicolumn{2}{c}{\textbf{UE (Handheld)}} \\
-% \hline
-% \textbf{Parameter} & \textbf{Value} & \textbf{Parameter} & \textbf{Value} \\
-% \hline\hline
-% \textbf{Altitude} & 600 km & \textbf{Type} & Handheld \\
-% \textbf{Antenna aperture} & 2 m & \textbf{Distribution} & 100\% outdoor \\
-% \textbf{EIRP density} & 34 dBW/MHz & \textbf{Frequency band} & S-band (2 GHz) \\
-% \textbf{3dB beamwidth} & 4.4127 deg & \textbf{FR factor} & Option: 1 \\
-% \textbf{Tx max gain} & 30 dBi & \textbf{Rx antenna gain} & 0 dBi \\
-% \hline\hline
-% \end{tabular}
-% }
-% \end{table}
+\item Distance-based FLSO: This algorithm selects the GW based on the minimum distance between the LEO satellite and GWs. A FLSO event is triggered when the distance to a target GW is shorter than that to the serving GW by a predefined threshold, denoted by \( \Delta d_{\mathrm{th}} \).
 
-% The path loss model for satellite communications is based on the large-scale satellite channel model provided in \cite{rel_38821}. The total path loss between the UE and the LEO satellite is given by:
+\item Signal-Based FLSO: It is implemented by adapting the conventional HO mechanism. Specifically, we employ the widely used A3 event-based FLSO algorithm as a baseline. In this algorithm, a FLSO event is triggered when the difference between the RSRP of the serving GW and that of target GWs exceeds a predefined threshold, denoted by \( offset \).
+\end{itemize}
+  
 
-% \begin{equation} PL_{total}[dB]=PL_{b}+PL_{att}+PL_{gas}+PL_{entry}, \end{equation}
-% where $PL_{b}$ represents the basic path loss, $PL_{att}$ accounts for atmospheric or ionospheric attenuation, $PL_{gas}$ represents gas attenuation, and $PL_{entry}$ refers to building loss. The basic path loss is defined as:
 
-% \begin{equation} PL_{b}[dB]=FSPL(f_{c},d)+SL(\alpha,f_c)+CL(\alpha,f_c), \end{equation}
-
-% where $FSPL(f_{c},d)$ represents FSPL, $d$ is distance between the satellite and UE, and $c$ is speed of light. $CL(\alpha,f_c)$ represents clutter loss, and $SL(\alpha,f_c)$ refers to shadow fading modeled as $SL \sim N(0, \sigma^2_{SL})$. The LOS probability, along with the values for $SL(\alpha,f_c)$ and $CL(\alpha,f_c)$, as shown in Table. \ref{table:los_nlos}, are provided in \cite{rel_38811}. Total path loss is calculated as follows:
-
-% \begin{equation} PL_{b} = P_{LOS}(FSPL(f_{c},d) + SF) + P_{NLOS}(FSPL(f_{c},d) + SF + CL. \end{equation}
-% Since frequencies below 6 GHz are considered, atmospheric and gas attenuation ($PL_{att}$ and $PL_{gas}$) can be neglected \cite{rel_38811}, as can building loss $PL_{entry}$ for outdoor users. This thesis focuses on dense urban regions in the 2 GHz band, so these attenuations are excluded.
-
-% \begin{table}[h!]
-% \centering
-% \renewcommand{\arraystretch}{1.5}
-% \caption{LOS Probability, $SR$ and $CL$ (S-band, dense urban)}
-% \label{table:los_nlos}
-% \resizebox{\textwidth}{!}{%
-% \begin{tabular}{c|c|c|c|c}
-% \hline\hline
-% \textbf{Elev. angle ($\alpha$)} & \textbf{LOS prob.} & \textbf{$\sigma_{SF}$(LOS)} & \textbf{$\sigma_{SF}$(NLOS)} & \textbf{CL} \\
-% \hline\hline
-% 10° & 28.2\% & 1.79 dB & 8.93 dB & 19.52 dB \\
-% 20° & 33.1\% & 1.14 dB & 9.08 dB & 18.17 dB \\
-% 30° & 39.8\% & 1.14 dB & 8.78 dB & 18.42 dB \\
-% 40° & 46.8\% & 0.92 dB & 10.25 dB & 18.28 dB \\
-% 50° & 53.7\% & 1.42 dB & 10.56 dB & 18.63 dB \\
-% 60° & 61.2\% & 1.56 dB & 10.74 dB & 17.68 dB \\
-% 70° & 73.8\% & 0.85 dB & 10.17 dB & 16.50 dB \\
-% 80° & 82.0\% & 0.72 dB & 11.52 dB & 16.30 dB \\
-% 90° & 98.1\% & 0.72 dB & 11.52 dB & 16.30 dB \\
-% \hline\hline
-% \end{tabular}
-% }
-% \end{table}
-
-% The simulation set used in this study consists of eight different configurations designed to evaluate various HO strategies. These strategies are divided into signal strength-based CHO strategies using the A3 event and distance-based CHO strategies. Sets 1 to 4 focus on signal strength-based CHO strategies, considering CHO in satellite environments, and each simulation set is differentiated by the assigned offset and TTT values \cite{rel_36839}, \cite{juan_5g}.
-% The distance-based CHO strategies consist of three standardized sets defined by 3GPP. Sets 5, 6, and 7 implement the 3GPP-standardized distance-based CHO strategies \cite{rel_38331}. Each set modifies $Thresh_1$, the threshold for exiting the serving cell, to compare performance variations based on changes in HO triggering points. In Set 5, HO is triggered when the UE exits the inner radius of the serving cell, initiating an early HO within the serving cell.
-% \begin{table}[h!]
-% \centering
-% \renewcommand{\arraystretch}{1.5}
-% \caption{Simulation sets}
-% \resizebox{\textwidth}{!}{%
-% \begin{tabular}{c|c|c|c|c|c}
-% \noalign{\smallskip}\noalign{\smallskip}\hline\hline
-% \# & \textbf{Strategy} & \textbf{Offset} & \textbf{$Thresh_1$} & \textbf{$Thresh_2$} & \textbf{TTT} \\
-% \hline\hline
-% 1  & CHO (A3)      & 0 dB  & -   & -   & 0 ms \\
-% 2  & CHO (A3)      & 2 dB  & -   & -   & 0 ms \\
-% 3  & CHO (A3)      & 0 dB  & -   & -   & 256 ms \\
-% 4  & CHO (A3)      & 2 dB  & -   & -   & 256 ms \\
-% 5  & DCHO \cite{rel_38331} & -   & 16.93 km ($d_{rad}^{I}$) & 23.12 km ($d_{rad}^{T}$) & -    \\
-% 6  & DCHO \cite{rel_38331} & - & 20.02 km ($\frac{ISD}{2}$) & 23.12 km ($d_{rad}^{T}$) & -    \\
-% 7 & DCHO \cite{rel_38331} & - & 23.12 km ($d_{rad}^{S}$) & 23.12 km ($d_{rad}^{T}$) & -    \\
-% 8 & OID-based CHO & - & 16.93 km ($d_{rad}^{I}$) & 23.12 km ($d_{rad}^{T}$) & -    \\
-% \hline\hline
-% \end{tabular}%
-% }
-% \label{sim set}
-% \end{table}
-% Set 6 uses half of the ISD as the threshold, which corresponds to the moment when the target cell becomes closer to the UE than the serving cell. Set 7 allows HO to be triggered when the UE reaches the outer radius of the serving cell, i.e. the maximum boundary of the cell, while $Thresh_2$ is satisfied. Each set is designed to observe performance variations based on the UE's HO triggering location.
-% The final set, Set 8, evaluates the newly proposed distance-based CHO mechanism, the OID-based CHO. Additionally, the K filter, which represents the number of averaged measurements, is considered as 1 for all simulation sets.
 
 \section{Key Performance Indicators}
-% \quad The first is the average downlink (DL) signal-to-interference-plus-noise ratio (SINR), which represents the quality of the signal received by the UE from the serving cell. It measures the signal strength from the serving cell relative to the interference and noise from adjacent cells. Higher SINR implies better signal quality and more stable communication, significantly enhancing network performance, data transmission rates, and communication reliability. In this thesis, the average SINR values of each UE were analyzed during the simulation to assess how effectively the network is operating.
-
-% RLF occurs when the UE's SINR falls below the threshold \(Q_{\text{out}}\) (typically -8 dB) and does not recover within a certain time (T310 timer, typically 1 second). If the SINR recovers above the \(Q_{\text{in}}\) threshold (typically -6 dB), the timer stops, and no RLF occurs. RLF indicates a breakdown in communication, representing a critical issue when the network is unable to maintain stable connections. In this thesis, the number of RLF occurrences was measured for each UE and calculated as the rate of RLF per second per UE to evaluate HO performance. The higher the number of RLF occurrences, the lower the network stability and the higher the likelihood of HO failures. More detail can be found in \cite{rel_38300}, \cite{rel_38331} and \cite{rel_36839}.
-
-% ToS measures the duration the UE remains connected to a specific cell, indicating how long the connection is maintained in that cell \cite{rel_36839}. In this thesis, ToS is defined as the time from when the UE sends the HO complete message to cell A until it sends a HO complete message to cell B. A shortToS implies frequent HOs, which can lead to unnecessary resource wastage and degrade communication quality.
-
-% \begin{figure} [t]
-% \centering
-% \includegraphics[width=1.0\columnwidth]{figure/figure_UHO_PP_ToS.png}
-% \caption{Definition of UHO and HOPP according to ToS}
-% \label{4_kpi_uhopptos.pdf}
-% \end{figure}
-% UHO is defined as when the UE performs a HO from the serving cell to a target cell, only to HO back to the original serving cell or another cell within 1 second \cite{juan_ho_all}. As shown in Fig. \ref{4_kpi_uhopptos.pdf}(a), UHO is a key metric for evaluating the efficiency of the HO algorithm. A high UHO occurrence rate indicates an increase in unnecessary signaling overhead and inefficient HO decisions. In this thesis, the UHO occurrence rate was measured based on the number of UHO events during the simulation. A low UHO rate indicates more accurate HO decisions and efficient use of system resources. HO Ping-pong (HOPP), shown in Fig. \ref{4_kpi_uhopptos.pdf}(b), is a specific type of UHO where the UE returns to the original serving cell within 1 second \cite{wile_com} and \cite{rel_38133}. This represents an even more inefficient case of UHO, leading to excessive signaling overhead and instability in the connection. This thesis evaluates the performance of each strategy by calculating the occurrence ratio of HOPP and UHO among the total number of HOs.
-
-% The average number of resource blocks (RBs) used during the HO process is an important metric for evaluating signaling overhead and resource efficiency. RB usage is computed using the RBs consumed for each step of the HO process, which allows us to estimate the signaling overhead of the system. The RBs generated during the HO process are referenced in \cite{wcnc_rbs} and listed in Table \ref{chart_4_2}.
- 
-% \begin{table}[t]
-% \centering
-% \renewcommand{\arraystretch}{1.5}
-% \caption{Number of RBs in the HO control message used}
-% \begin{tabular}{>{\centering\arraybackslash}m{1cm}|>{\centering\arraybackslash}m{8.5cm}|>{\centering\arraybackslash}m{1cm}}
-% \noalign{\smallskip}\noalign{\smallskip}\hline\hline
-% \textbf{Type} & \textbf{Description} & \textbf{RBs} \\
-% \hline\hline
-% $N_{MR}$ & Resource blocks used for the MR & 1 \\
-% $N_{cmd}$ & Resource blocks used for the HO command & 2 \\
-% $N_{RA}$ & Resource blocks used for RA & 6 \\
-% $N_{cnf}$ & Resource blocks used for HO confirmation & 1 \\
-% \hline\hline
-% \end{tabular}
-% \label{chart_4_2}
-% \end{table}
+\quad We evaluate five key performance indicators that together capture feeder-link switching stability, link quality, and gateway load balancing. Unless otherwise noted, all metrics are computed per episode and averaged over time and satellites.
+FLSO measures how many times, on average, each satellite changes its serving gateway during an episode. It reflects the overall switching activity of the FLSO policy. A smaller value indicates a more stable association with fewer disruptions and reduced control overhead.
+UFLSO refines this by counting switchovers that are followed by a very short dwell time, shorter than a predefined minimum time-of-stay (set to 1 s in our configuration). Such events correspond to ping–pong or impulsive decisions that do not yield lasting performance gains. This KPI quantifies how many switches are effectively wasteful, and a desirable policy minimizes both the total number of switchovers and the fraction that are unnecessary.
+ToS denotes how long a satellite continuously remains connected to the same gateway between two consecutive switchovers. We report the average dwell time over all satellites and all stays. Larger ToS values indicate that the policy maintains more persistent feeder-link associations, which reduces signaling overhead and limits service interruptions while still allowing handovers when they are genuinely beneficial.
+RSRP evaluates the long-term quality of the selected feeder links. At each time step, we observe the L3-filtered RSRP of the gateway actually serving each satellite, using the standardized IIR-based filtering parameters defined in Table~\ref{tab:sim_params}. We then average this serving-link RSRP across all satellites and time. Higher values mean that satellites are more consistently attached to gateways providing strong received power, indicating that the policy improves link quality rather than achieving stability at the expense of performance.
+GW load characterizes how evenly the feeder-link load is distributed across gateways. For each gateway, we monitor how many satellites are attached over time, summarize this as its average load, and also track the maximum load observed across all gateways and time. Lower peak load and a tighter spread of average loads across gateways indicate more balanced utilization of feeder-link resources and a reduced risk of gateway congestion or bottlenecks.
 
 \section{Results and Discussion}
-\quad This is result.
+\quad Fig.~\ref{fig:1.flso} compares the average number of FLSO for the proposed FLSO scheme against the DQN baseline, distance-based, and signal-based heuristics. The proposed method achieves a substantially lower switching frequency than the DQN baseline, reducing the average FLSO count by roughly one quarter while also exhibiting a smaller variability across episodes. This indicates that simply applying a conventional value-based agent without explicit load-aware design leads to unstable gateway selection, whereas the proposed formulation yields more consistent decisions.
 
-% \begin{figure}[t]
-% \centering
-% \includegraphics[width=1.0\columnwidth]{figure_results/final_new_8set/results_rlf.png}
-% \caption{RLF performance results}
-% \label{results_rlf.png}
-% \end{figure}
-% \quad Fig. \ref{results_rlf.png} clearly illustrates the RLF rate per UE per second across various HO strategies. The blue bar graph represents the results of signal-based CHO, which evaluates the signal strength of the serving and candidate cells. However, due to environmental factors, weakening, and fading, the signal strength does not increase or decrease steadily, leading to a higher likelihood of additional HOs occurring within the cell or near its boundaries. The RLF rate in Sets 3 and 4 is higher than in Sets 1 and 2. This indicates that adjusting HO parameters such as signal strength offset and TTT to delay HO decisions can allow for more careful HOs and help resolve such issues. However, increasing parameter values also makes the HO conditions more difficult to satisfy, causing delays in HO execution. In such cases, weakening of the signal strength in the serving cell leads to a reduction in DL SINR, increasing the risk of RLF.
-% On the other hand, distance-based CHO strategies are unaffected by signal strength variability and can perform HOs at optimal cell and UE locations. Consequently, Sets 5 to 7 exhibit significantly lower RLF rates compared to Sets 1 to 4. However, the RLF gradually increases in Sets 6 and 7 compared to Set 5. This is because, in certain sets, the event satisfaction point is farther from the serving cell, resulting in RLFs primarily caused by weakening of the signal strength in the serving cell. This delay in HO timing can lead to frequent HOs near the serving cell boundary.
-% In contrast, the proposed method evaluates target cell selection to delay HO timing when necessary. Unlike Sets 6 and 7, it introduces an exception condition that triggers HO to the nearest cell when the signal strength of the serving cell drops below a specific threshold, even if HO timing is delayed due to target cell selection. As a result, the proposed method effectively prevents RLF caused by weakening of the signal strength, showing its effectiveness in reducing RLF occurrences.
- 
-% \begin{figure} [t]
-% \centering
-% \includegraphics[width=1.0\columnwidth]{figure_results/final_new_8set/results_uho.png}
-% \caption{UHO performance results}
-% \label{results_uho.png}
-% \end{figure}
+For the distance-based heuristic, the FLSO count is highly sensitive to the distance threshold. Small thresholds (0--20 km) result in persistently higher switching rates than the proposed method, as satellites aggressively move to marginally closer gateways. Increasing the threshold (30--50 km) alleviates this effect and brings the FLSO count close to that of the proposed scheme, but only at the cost of relying on a hand-tuned parameter that does not account for gateway load or link quality beyond geometry.
 
-% \begin{figure} [t]
-% \centering
-% \includegraphics[width=1.0\columnwidth]{figure_results/final_new_8set/results_hopp.png}
-% \caption{HOPP performance results}
-% \label{results_hopp.png}
-% \end{figure}
+The signal-based A3-type scheme exhibits the most pronounced trade-off. Low offsets (0 and 2 dB) trigger excessive switchovers, saturating the FLSO metric and clearly demonstrating the ping–pong tendency of purely RSRP-driven decisions. Larger offsets (4--8 dB) progressively suppress switchovers and can attain fewer FLSOs than the proposed method at the highest offset; however, such aggressive hysteresis inevitably forces satellites to remain attached to suboptimal gateways for extended periods, which, as shown in other KPIs, degrades link quality and load balancing performance. Overall, the results confirm that the proposed FLSO policy provides a favorable balance between minimizing unnecessary switchovers and avoiding overly conservative behavior that harms backhaul efficiency.
 
-% Fig. \ref{results_uho.png} and Fig. \ref{results_hopp.png} show the ratio of UHO and HOPP among the HOs that occurred in the UE during the simulation, respectively. In signal strength-based CHO using the A3 event, Sets 1 to 4 exhibit a significant decrease in the UHO occurrence rate as the offset and TTT values are increased. In Set 1, frequent HO attempts occur due to the small difference between the center and boundary of the cell and the effects of signal strength fading, resulting in a relatively high UHO rate and frequent HOPP occurrences due to incorrect triggers. In most cases, this is attributed to UHOs that return to the previous serving cell due to incorrect triggers. However, increasing the offset and TTT reduces the number of incorrect HO triggers caused by signal strength fading, leading to a decrease in both UHO and HOPP occurrences. This indicates that delaying HO through offset and TTT settings reduces the frequency of HO attempts compared to immediate HO execution. Furthermore, as signal strength attenuation in the serving cell becomes more pronounced, the total number of HOs, UHOs, and HOPPs also decreases.
-% On the other hand, in Sets 5 to 7, which use distance-based CHO conditions, the UHO occurrence rate is significantly lower than in Set 1. This is because distance-based CHO is unaffected by signal strength fading and provides a more reliable HO trigger based on linear changes in distance information within the EMC environment. In particular, in Set 7, where the HO timing is delayed closer to the boundary of the serving cell, stricter HO conditions further reduce the UHO rate. However, as shown in Fig. \ref{figure_uho_in_emc}, UHOs can still occur in distance-based CHO when the UE deviates from its trajectory and meets the HO condition for an adjacent orbital cell. Therefore, while HOPP occurrences can be significantly decreased, it is not possible to completely eliminate UHO occurrences.
-% Additionally, delaying HO timing by increasing the offset can impact the average DL SINR due to signal strength attenuation. However, in the case of the proposed OID-based CHO strategy in Set 7, it was confirmed that UHO occurrences can be effectively decreased by connecting the UE to the most suitable cell based on its position using orbital information.
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figure/1.flso.png}
+    \caption{Average FLSO [dB]}
+    \label{fig:1.flso}
+\end{figure}
 
-% \begin{figure} [t]
-% \centering
-% \includegraphics[width=1.0\columnwidth]{figure_results/final_new_8set/results_DLSINR_box.png}
-% \caption{Box plot of DL SINR performance results}
-% \label{results_DLSINR_box.png}
-% \end{figure}
+Fig.~\ref{fig:2.ufso} evaluates the number of unnecessary feeder-link switchovers (UFLSO). The proposed scheme and all distance-based variants effectively suppress UFLSO events, indicating that their FLSOs are mostly persistent and justified. The DQN baseline exhibits a small but non-negligible number of unnecessary switches, reflecting instability in its learned policy. The signal-based scheme with low offsets is clearly problematic: it generates a large number of short-lived switchovers, which directly manifests the ping-pong behavior implied by its high FLSO count. Increasing the offset mitigates UFLSO but only by making the policy overly sticky. Overall, the proposed method uniquely combines low FLSO and near-zero UFLSO, achieving stable adaptations without ad hoc parameter choices.
 
-% Fig. \ref{results_DLSINR_box.png} illustrates the average DL SINR experienced by the UE during the simulation as a box plot. As shown in the plot, Set 1, which uses signal strength-based CHO without any HO parameter settings, is more likely to select an incorrect target cell compared to distance-based CHO strategies due to the effect of signal strength fading, resulting in an overall lower signal strength distribution. Additionally, Sets 2, 3, and 4, which apply HO parameters, exhibit progressively lower average DL SINR distributions compared to Set 1, which immediately performs HO to the cell with higher signal strength. The signal strength-based CHO method cannot completely avoid the effects of signal strength fading and faces challenges in selecting ideal cells, often requiring acceptance of signal attenuation. Furthermore, signal strength-based strategies tend to have a relatively high risk of RLF occurrence, further lowering the average signal strength.
-% In contrast, distance-based CHO shows higher average signal strength compared to the signal strength-based CHO. This is because it avoids the effects of signal strength fading and improves DL SINR performance by utilizing clear distance information to perform HO at an optimal location. Specifically, strategies such as those in Sets 4 and 5, which execute HO immediately upon entering the valid region of the target cell from the serving cell's area, achieve the highest average signal strength. However, in Set 6, where HO timing is significantly delayed, the average DL SINR may decrease. This suggests that additional processes are needed to adjust appropriate thresholds based on the situation when relying on HO parameters.
-% The proposed OID-based CHO provides flexible timing for target cell selection, allowing HO to be delayed when a more suitable candidate cell is expected, even if a closer cell is available. As a result, it exhibits a wider range of average DL SINR distributions compared to conventional distance-based CHO strategies. The proposed method demonstrates its ability to select the most suitable cell for the UE state in an EMC environment and shows that it can enhance overall DL SINR performance without relying on specific HO offset adjustments.
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figure/2.ufso.png}
+    \caption{Average UFSo [dB]}
+    \label{fig:2.ufso}
+\end{figure}
 
-% \begin{figure} [t]
-% \centering
-% \includegraphics[width=1.0\columnwidth]{figure_results/final_new_8set/results_DLSINR_cdf.png}
-% \caption{CDF of DL SINR performance results}
-% \label{results_DLSINR_cdf.png}
-% \end{figure}
+Fig.~\ref{fig:3.tos} compares the average ToS. Excluding the aggressively reactive signal-based cases (0-2 dB), all schemes yield relatively long ToS due to the minimum dwell-time constraint. Nonetheless, the proposed method consistently attains the longest or near-longest ToS with tight episode-wise variation, confirming that its switchovers are both infrequent and durable. The DQN baseline and distance-based heuristics provide slightly shorter ToS or larger spread, indicating residual oscillations or sensitivity to the chosen distance thresholds. Low-offset signal-based schemes suffer from significantly reduced ToS, aligned with their high UFLSO, while large offsets recover long ToS at the cost of degraded RSRP and load balancing. These trends reinforce that the proposed policy realizes stable gateway associations without sacrificing responsiveness.
 
-% These results can be confirmed in Fig. \ref{results_DLSINR_cdf.png}, which illustrates the CDF (cumulative distribution function) of all DL SINR values observed during the simulation period. Among all strategies, Set 1 shows the highest performance among signal strength-based strategies but is lower than Sets 5 and 6, which exhibit the best DL SINR trends. In contrast, Sets 2, 3, and 4, which applied HO offsets, show the lowest performance in the DL SINR distribution. This indicates that signal strength-based strategies face challenges in selecting and maintaining the ideal cell in the NTN EMC environment.
-% On the other hand, Sets 5 and 6 demonstrate the highest signal strength distribution by immediately selecting the most ideal cell. However, Set 7 exhibits a lower signal strength distribution than Set 1 due to signal attenuation in the serving cell caused by delayed HO timing through threshold adjustments. This highlights that even in distance-based CHO strategies, threshold adjustments significantly impact performance.
-% Finally, the proposed strategy in Set 8 shows slightly lower DL SINR tendencies compared to Sets 5 and 6 but outperforms signal strength-based strategies. Notably, it demonstrates a higher DL SINR performance distribution compared to Set 7, where UHO was reduced by adjusting the distance threshold. Therefore, when analyzed in relation to the previous UHO results, it is confirmed that the proposed strategy can achieve the most optimal performance by appropriately balancing the trade-off between DL SINR and UHO through threshold adjustments in distance-based CHO.
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figure/3.tos.png}
+    \caption{Average ToS [s]}
+    \label{fig:3.tos}
+\end{figure}
 
-% \begin{figure} [t]
-% \centering
-% \includegraphics[width=1.0\columnwidth]{figure_results/final_new_8set/results_avgToS.png}
-% \caption{ToS performance results}
-% \label{results_avgToS.png}
-% \end{figure}
+Fig.~\ref{fig:4.rsrp} shows the distribution of the average serving-link RSRP. The proposed scheme achieves RSRP levels comparable to, or slightly higher than, those of the DQN and optimized distance-based baselines, while maintaining a significantly lower FLSO count. In contrast, the signal-based scheme with small A3 offsets (0–2 dB) attains marginally higher RSRP at the expense of extremely frequent switchovers, which is undesirable in practice. As the offset increases (4–8 dB), the signal-based scheme becomes overly conservative: satellites remain attached to outdated gateways, and the average RSRP degrades sharply. These results confirm that the proposed method operates close to the Pareto frontier between link-quality maximization and switching overhead, whereas heuristic hysteresis tuning either overreacts or underreacts to channel variations.
 
-% \begin{figure} [t]
-% \centering
-% \includegraphics[width=1.0\columnwidth]{figure_results/final_new_8set/results_shortToS_ratio.png}
-% \caption{ShortToS performance results}
-% \label{results_shortToS_ratio.png}
-% \end{figure}
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figure/4.rsrp.png}
+    \caption{Average RSRP [dBm]}
+    \label{fig:4.rsrp}
+\end{figure}
 
-% Fig. \ref{results_avgToS.png} illustrates the average ToS experienced by the UE during the simulation, while Fig. \ref{results_shortToS_ratio.png} shows the ratio of shortToS to total ToS. Here, shortToS refers to ToS durations of less than 1 second. Set 1 recorded the highest UHO and HOPP occurrence rates among all strategies, resulting in the lowest ToS and the highest shortToS ratio. This is because HO conditions are frequently satisfied in this strategy, leading to continuous UHO, especially HOPP, which significantly degrades service quality due to frequent service interruptions during the HO process.
-% In contrast, Sets 2, 3, and 4 showed an improving trend in ToS performance as HO parameters increased in the signal strength-based method, with noticeable improvements in the shortToS ratio. Additionally, as HOPP occurrences decreased, overall ToS increased. Sets 5, 6, and 7 applied distance-based methods to perform HOs at ideal locations, resulting in higher ToS compared to Set 1, with no HOPP occurrences. However, due to UHO, the average performance of ToS was lower than in Sets 2, 3, and 4, and the shortToS ratio was relatively higher. In particular, sets 5 and 6 showed some improvements in set 6, where threshold adjustments were made to modify the HO timing near the cell boundary. However, the impact of small positional changes in boundary areas was relatively limited compared to the overall cell size, resulting in minimal improvement in ToS performance.
-% On the other hand, the proposed method, Set 8, recorded the highest ToS among all comparison groups by selecting the appropriate target cell based on the cell trajectory and UE location.
+Fig.~\ref{fig:5.complexity} investigates gateway load in terms of the average number of attached satellites per GW. While the global mean is fixed by the constellation size, the spread of these distributions reveals the effectiveness of load balancing. The proposed method exhibits the tightest box and shortest whiskers, indicating that satellites are distributed across gateways in a highly uniform manner and that no gateway persistently attracts a disproportionate share of the load. The DQN baseline shows a wider spread, implying less regularized gateway selection. Distance-based methods gradually worsen the load distribution as the distance threshold increases: larger thresholds promote “sticky” associations to geographically nearby gateways, thereby amplifying spatial skewness. Signal-based schemes display substantial variability across offsets; low offsets lead to volatile associations, while high offsets lock satellites to a subset of gateways, in both cases degrading load fairness. Taken together with the RSRP and (U)FLSO results, these observations demonstrate that the proposed FLSO framework jointly optimizes switching stability, feeder-link quality, and gateway load balancing in a way that heuristic and standard DRL baselines cannot match.
 
-% \begin{figure} [t]
-% \centering
-% \includegraphics[width=1.0\columnwidth]{figure_results/final_new_8set/results_avgRBs.png}
-% \caption{Average RB usage results}
-% \label{results_rbs.png}
-% \end{figure}
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figure/5.complexity.png}
+    \caption{Average Complexity [dB]}
+    \label{fig:5.complexity}
+\end{figure}
 
-
-% Finally, Fig. \ref{results_rbs.png} measures the average RB usage for HO control messages to evaluate how much signaling overhead within the network has been reduced. Set 1 recorded the highest UHO and HOPP occurrence rates among all strategies, leading to the highest number of HO attempts and, consequently, the highest average RB usage.
-% In contrast, Sets 2, 3, and 4, which applied HO parameters, made it more challenging to satisfy HO conditions compared to Set 1, resulting in fewer HO occurrences and a corresponding reduction in average RB usage within the network. In the case of Set 5, the average RB usage was lower than Set 1 but higher than Sets 2, 3, and 4, following a trend similar to UHO performance.
-% Meanwhile, Sets 6 and 7 showed significantly reduced RB usage compared to Sets 1 through 5, as stricter HO conditions reduced the number of HO attempts. But, the method proposed in this thesis, Set 8, was evaluated with stricter criteria for target cell selection and HO execution than other strategies. By allowing target cell selection and HO delays to be controlled based on conditions, the method can guide the UE to the most ideal cell, minimizing average RB usage.
-% Therefore, it was confirmed that the proposed approach effectively addresses the issue of signaling overhead within the network, demonstrating its potential for improvement in network efficiency.
-
-% Table \ref{table_summary} summarizes the detailed results of all simulations. In conclusion, the proposed OID-based CHO strategy effectively prevents UHO and HOPP occurrences while demonstrating performance improvements over existing HO strategies in key metrics, such as extended average ToS and minimized RB usage. These improvements have the potential to significantly enhance overall network performance in EMC-based LEO satellite communication systems.
-% Moreover, the proposed method is not influenced by HO parameter settings. The key parameter, $X_p$, is utilized through distance-based CHO by leveraging the default position information, eliminating the need for additional data exchange. As a result, the method imposes minimal processing burden on the terminal, making it a practical and feasible approach for real-world deployments.
-
-% \begin{landscape}
-% \begin{table}[t]
-% \centering
-% \renewcommand{\arraystretch}{1.5}
-% \begin{tabular}{c|c|c|c|c|c|c|c|c}
-% \noalign{\smallskip}\noalign{\smallskip}\hline\hline
-% & \textbf{Set 1} & \textbf{Set 2} & \textbf{Set 3} & \textbf{Set 4} & \textbf{Set 5} & \textbf{Set 6} & \textbf{Set 7} & \textbf{Set 8} \\ \hline
-% \textbf{RLF [\#/UE/sec]}       & 0.004 & 0.004 & 0.015 & 0.032 & 0 & 0 & 0.001 & 0 \\
-% \textbf{Avg UHO ratio [\%]}    & 24.387 & 8.95 & 6.182  & 2.495 & 10.438 & 10.438  & 1.736 & 0 \\
-% \textbf{Avg HOPP ratio [\%]}   & 15.259 & 1.377 & 0 & 0 & 0 & 0 & 0 & 0 \\
-% \textbf{Avg DL SINR (25\%) [dB]} & -2.457 & -2.652 & -2.844 & -3.161 & -2.266 & -2.284 & -2.647 & -2.315 \\
-% \textbf{Avg DL SINR (50\%) [dB]} & -1.657 & -1.791 & -1.968 & -2.205 & -1.533 & -1.507 & -1.754 & -1.612 \\
-% \textbf{Avg DL SINR (75\%) [dB]} & -0.806 & -0.922 & -1.067  & -1.257  & -0.722 & -0.710 & -0.902 & -0.673 \\
-% \textbf{Avg ToS [sec]}         & 2.786 & 3.609 & 3.846 & 4.067 & 3.534 & 3.534 & 3.626 & 5.276 \\
-% \textbf{ShortToS ratio [\%]}  & 28.233 & 10.811 & 7.556 & 3.088 & 12.551 & 12.551 & 2.101 & 0 \\
-% \textbf{Avg RBs usage [\#/UE]} & 98 & 92.57 & 77.57 & 81 & 92.08 & 65.58 & 57.66 & 45.6 \\ \hline
-% \hline
-% \end{tabular}
-% \caption{Summary of Simulation Results by Set}
-% \label{table_summary}
-% \end{table}
-% \end{landscape}

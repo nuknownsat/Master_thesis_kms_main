@@ -481,3 +481,50 @@ INPUT ./figure/fig_sat_flso_reg.png
 INPUT ./figure/fig_sat_flso_reg.png
 INPUT ./figure/fig_sat_flso_reg.png
 INPUT ./figure/fig_sat_flso_reg.png
+INPUT ./figure/fig_packetloss_flso.png
+INPUT ./figure/fig_packetloss_flso.png
+INPUT ./figure/fig_packetloss_flso.png
+INPUT ./figure/fig_packetloss_flso.png
+INPUT ./figure/fig_packetloss_flso.png
+INPUT ./figure/fig_load_bal.png
+INPUT ./figure/fig_load_bal.png
+INPUT ./figure/fig_load_bal.png
+INPUT ./figure/fig_load_bal.png
+INPUT ./figure/fig_load_bal.png
+INPUT ./figure/fig_drl_MDP.png
+INPUT ./figure/fig_drl_MDP.png
+INPUT ./figure/fig_drl_MDP.png
+INPUT ./figure/fig_drl_MDP.png
+INPUT ./figure/fig_drl_MDP.png
+INPUT ./03_Proposed_framework.tex
+INPUT ./03_Proposed_framework.tex
+OUTPUT 03_Proposed_framework.aux
+INPUT ./03_Proposed_framework.tex
+INPUT ./03_Proposed_framework.tex
+INPUT 03_Proposed_framework.tex
+INPUT c:/texlive/2025/texmf-dist/tex/latex/amsfonts/ueus.fd
+INPUT c:/texlive/2025/texmf-dist/tex/latex/amsfonts/ueus.fd
+INPUT c:/texlive/2025/texmf-dist/tex/latex/amsfonts/ueus.fd
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/euler/eusm10.tfm
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/euler/eusm10.tfm
+INPUT c:/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/euler/eusm7.tfm
+INPUT ./figure/fig_system_model.png
+INPUT ./figure/fig_system_model.png
+INPUT ./figure/fig_system_model.png
+INPUT ./figure/fig_system_model.png
+INPUT ./figure/fig_system_model.png
+INPUT ./figure/dueling_dqn_archi.png
+INPUT ./figure/dueling_dqn_archi.png
+INPUT ./figure/dueling_dqn_archi.png
+INPUT ./figure/dueling_dqn_archi.png
+INPUT ./04_RESULT.tex
+INPUT ./04_RESULT.tex
+OUTPUT 04_RESULT.aux
+INPUT ./04_RESULT.tex
+INPUT ./04_RESULT.tex
+INPUT 04_RESULT.tex
+INPUT ./figure/0.complexity table.png
+INPUT ./figure/0.complexity table.png
+INPUT ./figure/0.complexity table.png
+INPUT ./figure/0.complexity table.png
+INPUT ./figure/0.complexity table.png
