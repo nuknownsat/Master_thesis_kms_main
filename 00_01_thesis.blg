@@ -23,47 +23,48 @@ Warning--I didn't find a database entry for "drl_HO"
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
 Warning--empty author in rel_38413
 Warning--empty author in rel_38821
+Warning--empty author in rel_38331
 
 Done.
-You've used 15 entries,
+You've used 16 entries,
             4039 wiz_defined-function locations,
-            902 strings with 10026 characters,
-and the built_in function-call counts, 10041 in all, are:
-= -- 789
-> -- 277
+            905 strings with 10128 characters,
+and the built_in function-call counts, 10332 in all, are:
+= -- 811
+> -- 278
 < -- 67
-+ -- 154
++ -- 155
 - -- 60
-* -- 499
-:= -- 1554
-add.period$ -- 31
-call.type$ -- 15
-change.case$ -- 15
+* -- 512
+:= -- 1606
+add.period$ -- 33
+call.type$ -- 16
+change.case$ -- 16
 chr.to.int$ -- 150
-cite$ -- 17
-duplicate$ -- 755
-empty$ -- 792
+cite$ -- 19
+duplicate$ -- 786
+empty$ -- 825
 format.name$ -- 64
-if$ -- 2252
+if$ -- 2315
 int.to.chr$ -- 0
-int.to.str$ -- 15
-missing$ -- 144
-newline$ -- 70
+int.to.str$ -- 16
+missing$ -- 148
+newline$ -- 73
 num.names$ -- 13
-pop$ -- 333
+pop$ -- 346
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 752
+skip$ -- 776
 stack$ -- 0
-substring$ -- 381
-swap$ -- 589
+substring$ -- 382
+swap$ -- 602
 text.length$ -- 17
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 15
-warning$ -- 2
+type$ -- 16
+warning$ -- 3
 while$ -- 33
-width$ -- 17
-write$ -- 161
-(There were 3 warnings)
+width$ -- 18
+write$ -- 168
+(There were 4 warnings)

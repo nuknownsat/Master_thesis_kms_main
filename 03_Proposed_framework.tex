@@ -40,7 +40,7 @@ where $a \in (0,1)$ is the L3 forgetting factor, defined as $a = \left(\frac{1}{
 % C = B_m \log_2(1+{\zeta}),
 % \label{eq:capacity}
 % \end{equation}
-% where the $B_m$ is the uplink bandwidth of GW \( m \) and $\zeta$ is the SNR calculated as follows:
+% where the $B_m$ is the uplink bandwidth of GW \( m \) and $\zeta' is the SNR calculated as follows:
 % \begin{equation}
 % {\zeta} = {EIRP_{m}}+\frac{G_{n}}{T}-k-{PL_{m,n}}-B_m,
 % \label{eq:snr}
@@ -63,37 +63,50 @@ We define the following cost and reward components for each satellite $n$ at tim
 \begin{itemize}
     \item \textbf{FLSO Cost:} A cost $C_{FS}$ is incurred if the satellite switches its serving GW, penalizing instability.
     \begin{equation}
-    FS_{n}(t) = \begin{cases} C_{FS} & \text{if } m_t^{(n)} \neq m_{t-1}^{(n)} \\ 0 & \text{otherwise} \end{cases}
+    FS_{n}(t) = \begin{cases} C_{FS} & \text{if } m_t^{(n)} \neq m_{t-1}^{(n)}, \\ 0 & \text{otherwise}. \end{cases}
     \label{eq:flso_cost}
     \end{equation}
-    
-    \item \textbf{Load Imbalance Cost:} A cost is incurred for connecting to a congested GW. We use a convex function (i.e., quadratic) of the normalized load $\lambda_m(t)$ to strongly penalize highly congested GWs. This cost is central to our problem.
+
+    \item \textbf{UFLSO Cost:} A cost $C_{UFS}$ is incurred for an UFLSO, which occurs if the satellite switches to another GW within a MTS, denoted $\tau_{min}$. Let $\tau_{stay}(t)$ is the time elapsed since the last FLSO.
     \begin{equation}
-    L_{n}(t) = (\lambda_{m_t^{(n)}}(t))^2
+    UFS_{n}(t) = \begin{cases} C_{UFS} & \text{if } m_t^{(n)} \neq m_{t-1}^{(n)} \text{ and } \tau_{stay}(t) < \tau_{min}, \\ 0 & \text{otherwise}. \end{cases}
+    \label{eq:uflso_cost}
+    \end{equation}
+    
+    \item \textbf{ToS Reward:} A reward is gained for maintaining a connection with the same GW, proportional to the duration of the connection.
+    \begin{equation}
+    ToS_{n}(t) = \tau_{stay}(t).
+    \label{eq:tos_reward}
+    \end{equation}
+
+    \item \textbf{Load Imbalance Cost:} A cost is incurred for connecting to a congested GW, proportional to the number of satellites already connected. This cost is central to our problem.
+    \begin{equation}
+    L_{n}(t) = \lvert \mathcal{L}_{m_t^{(n)}}(t) \rvert.
     \label{eq:load_cost}
     \end{equation}
     
     \item \textbf{Link Quality Reward:} A reward is gained based on the L3-filtered RSRP from the selected GW.
     \begin{equation}
-    R_{n}(t) = \widetilde{R}_{m_t^{(n)},n}(t)
+    R_{n}(t) = \widetilde{R}_{m,n}(t).
     \label{eq:rsrp_reward}
     \end{equation}
 \end{itemize}
 
-The global optimization problem \textbf{P1} is to find the policy $\pi$ that minimizes the total expected cumulative cost (and maximizes rewards) for all $N$ satellites over the time horizon $T$.
+The global optimization problem \textbf{P1} is to find the policy $\pi$ that minimizes the total expected cumulative cost and maximizes rewards for all $N$ satellites over the time horizon $T$.
 
 \begin{align}
-& \textbf{P1:}\quad \operatorname*{\min}_{\pi} \mathbb{E}\left[ \sum_{t=0}^{T} \sum_{n=1}^{N} \gamma^t \Big( w_{FS} FS_{n}(t) + w_{L} L_{n}(t) - w_{R} R_{n}(t) \Big) \right]\\
+& \textbf{P1:}\quad \operatorname*{\min}_{\pi} \mathbb{E} \sum_{t=0}^{T} \sum_{n=1}^{N} \sum_{m=1}^{M} \gamma^t \left[ w_{S} \Big( FS_{m,n}(t) + UFS_{m,n}(t) - ToS_{m,n}(t) \Big) \right. \notag \\
+& \hspace{10em} \left. + w_{L} L_{m,n}(t) - w_{R} R_{m,n}(t) \right],\\
 & \quad \text{s.t.} \nonumber \\
 & \quad \textbf{C1 :}\quad \theta_{m,n}(t) \geq \theta_{\text {min}}, \quad \forall{n}, \forall{m} \in \mathcal{G}_t^{(n)}, \forall{t},\\
 & \quad \textbf{C2 :}\quad \widetilde R_{m,n}(t) \geq R_{\text {min}}, \quad \forall{n}, \forall{m} \in \mathcal{G}_t^{(n)}, \forall{t},\\
 & \quad \textbf{C3 :}\quad m_t^{(n)} \in \mathcal{G}_t^{(n)}, \quad \forall{n}, \forall{t}.
 \end{align}
 
-In \textbf{P1}, $w_{FS}$, $w_{L}$, and $w_{R}$ are the weighting factors that balance the trade-off between switching stability, load balancing, and link quality. $\gamma \in [0, 1]$ is the discount factor for future costs.
+In \textbf{P1}, $w_{S}$, $w_{L}$, and $w_{R}$ are the weighting factors that balance the trade-off between switching stability, load balancing, and link quality. $\gamma \in [0, 1]$ is the discount factor for future costs.
 
 The constraints define the set of available GWs, $\mathcal{G}_t^{(n)}$, for satellite $n$ at time $t$.
-Constraint \textbf{C1} ensures the elevation angle $\theta_{m,n}(t)$ to an available GW $m$ exceeds the minimum threshold $\theta_{\min}$, guaranteeing a reliable line-of-sight.
+Constraint \textbf{C1} ensures the elevation angle $\theta_{m,n}(t)$ to an available GW $m$ exceeds the minimum threshold $\theta_{\min}$, guaranteeing a reliable LoS.
 Constraint \textbf{C2} ensures the filtered RSRP $\widetilde{R}_{m,n}(t)$ from an available GW exceeds the minimum required signal quality $R_{\min}$.
 Constraint \textbf{C3} mandates that each satellite $n$ must select a GW $m_t^{(n)}$ from the set of currently available GWs $\mathcal{G}_t^{(n)}$ that satisfy C1 and C2.
 
@@ -106,23 +119,32 @@ This problem is characterized by high-dimensional state spaces and complex, time
 \subsection{MDP modeling}
 \quad The LEO satellite's state \(s_t\) evolves over time and actions \(a_t\) impact future reward \(r_t\) with discount factor \(\gamma\) \cite{intro_RL}. This framework enables the LEO satellite to learn an optimal FLSO policy through reinforcement learning, effectively balancing link quality against network load. The state space \(s_t\) of the MDP is calculated as follows:
 \begin{align}
-s_t &= \left\{ l_n(t), m_{t-1}, \vec{\widetilde{R}}_n(t), \vec{\lambda}(t) \right\}.
+s_t &= \left\{ l_n(t), m_{t-1}, \widetilde{R}_n(t), \lvert\mathcal{L}(t)\rvert \right\}.
 \end{align}
-The state is defined as a tuple comprising the LEO satellite's ECEF coordinates \(l_n(t)\), the ID of the previously connected GW \( m_{t-1} \), the vector of L3-filtered RSRPs from all visible GWs $\vec{\widetilde{R}}_n(t) = [\widetilde{R}_{1,n}(t), \dots, \widetilde{R}_{M,n}(t)]$, and the vector of normalized loads for all GWs $\vec{\lambda}(t) = [\lambda_1(t), \dots, \lambda_M(t)]$. This state provides the agent with full visibility of the network's quality and congestion status.
+
+The state is defined as a tuple comprising the LEO satellite's ECEF coordinates \(l_n(t)\), the ID of the previously connected GW \( m_{t-1} \), the L3-filtered RSRP from connected GW $\widetilde{R}_n(t)$ and the load from connected GW $\lvert\mathcal{L}(t)\rvert$.
 
 The action space \( {a_t} \) involves the LEO satellite $n$ selecting the optimal GW $m \in \mathcal{G}$ at each step. In line with constraints \textbf{C1-C3}, the action space is the set of available GWs that meet the minimum elevation and RSRP thresholds:
 \begin{align}
 {a_t} &= \{ m_{t} | m_{t} \in \mathcal{G}_{t}^{(n)} \}.
 \end{align}
+
 The action \(a_t\) is the selection of the next GW, $m_t$, from the set of available GWs \( \mathcal{G}_{t}^{(n)} \).
 
-The immediate reward \(r_{t}\) is formulated to directly optimize the objective function defined in \textbf{P1}. It penalizes FLSO costs and high-load connections while rewarding high-quality RSRP links. It is calculated as follows:
+The immediate reward \(r_{t}\) is formulated to directly optimize the objective function defined in \textbf{P1}. It penalizes FLSO costs and high-load connections while rewarding high-quality RSRP links and connection stability. It is calculated as follows:
 \begin{align}
-r_t &= w_{R} R_{n}(t) - w_{FS} FS_{n}(t) - w_{L} L_{n}(t),
+r_t &= w_{R} R_{n}(t) + w_{S} ToS_{n}(t) - w_{S} \Big( FS_{n}(t) + UFS_{n}(t) \Big) - w_{L} L_{n}(t),
 \end{align}
-where $FS_n(t)$, $L_n(t)$, and $R_n(t)$ are the costs and rewards defined in Eq. \eqref{eq:flso_cost}, \eqref{eq:load_cost}, and \eqref{eq:rsrp_reward}, and $w_{FS}, w_{L}, w_{R}$ are the corresponding weights from \textbf{P1}.
+where the cost and reward components are defined in Eq. \eqref{eq:flso_cost} through \eqref{eq:rsrp_reward}, and the weights are the corresponding weights from \textbf{P1}.
 
 Discount factor $\gamma$ is a value between 0 and 1, which represents the rate at which future rewards are discounted when considering them at the current step.
+
+\subsection{Proposed dueling DDQN algorithm}
+%복잡도 측면에서 얼마나 걸리는지 설명, GeForce RTX 3080 Ti GPU에서 수 밀리초 내에 행동을 출력할 수 있다.
+\label{Proposed Dueling DDQN Algorithm}
+\quad In this paper, we employ a reinforcement learning algorithm to enable LEO satellites to operate in an dynamic environment. As depicted in Fig.\ref{Fig:system_model2}, the architecture of the proposed dueling DDQN algorithm, incorporating a \(\epsilon\)-greedy policy, is designed to optimize FLSO in LEO satellite networks. The LEO satellite receives feedback to execute actions that sustain both a prolonged ToS and an elevated RSRP, while minimizing the frequency of FLSO and, critically, gateway congestion. We enhance the traditional DQN framework by incorporating DDQN, PER, and dueling DQN to improve stability, learning efficiency, and robustness against noise in LEO satellite communication systems.
+
+The DQN algorithm \cite{mnih2013playing} approximates the Q-function \( Q(s_t, a_t; \theta) \), which maps a state \( s_t \) and action \( a_t \) to an expected cumulative reward, using a DNN parameterized by \( \theta \). Two DNNs are utilized: an online network for action selection and a target network for value estimation. The Q-function is trained to minimize the following loss function and loss function is calculated as follows:
 
 \begin{figure}[t]
       \centering
@@ -132,18 +154,27 @@ Discount factor $\gamma$ is a value between 0 and 1, which represents the rate a
       }{%
           \fbox{dueling\_dqn\_archi.png not found}%
       }
-      \caption{The architecture of the proposed dueling DQN for FLSO optimization in LEO satellite networks.}
+      \caption{The architecture of the proposed dueling DDQN for FLSO optimization in LEO satellite networks.}
       \label{Fig:system_model2}
  \end{figure}
 
-\subsection{Proposed dueling DDQN algorithm}
-%복잡도 측면에서 얼마나 걸리는지 설명, GeForce RTX 3080 Ti GPU에서 수 밀리초 내에 행동을 출력할 수 있다.
-\label{Proposed Dueling DDQN Algorithm}
-\quad In this paper, we employ a reinforcement learning algorithm to enable LEO satellites to operate in an dynamic environment. As depicted in Fig. 2, the architecture of the proposed dueling DDQN algorithm, incorporating a \(\epsilon\)-greedy policy, is designed to optimize FLSO in LEO satellite networks. The LEO satellite receives feedback to execute actions that sustain both a prolonged ToS and an elevated RSRP, while minimizing the frequency of FLSO and, critically, gateway congestion. We enhance the traditional DQN framework by incorporating DDQN, PER, and dueling DQN to improve stability, learning efficiency, and robustness against noise in LEO satellite communication systems.
+To improve robustness against random noise, such as channel shadow fading, we utilize a dueling DQN \cite{wang2016dueling}. The dueling DQN architecture enhances the traditional DQN by splitting the Q-function into two separate streams: the state-value function \( V(s; \theta) \) and the advantage function \( A(s, a; \theta) \). The Q-function is then calculated as follows:
+\begin{align}
+& Q(s, a; \theta) = V(s; \theta) + \left( A(s, a; \theta) - \frac{1}{|A|} \sum_{a'} A(s, a'; \theta) \right),
+\label{eq:dueling_q}
+\end{align}
+where \( V(s; \theta) \) represents the value of the state \( s \), \( A(s, a; \theta) \) represents the advantage of taking action \( a \) in state \( s \), and \( |A| \) is the number of possible actions. This decomposition allows the network to better distinguish the value of a state from the advantage of each action, improving robustness against noise and enhancing learning efficiency in complex LEO satellite environments.
 
-The DQN algorithm \cite{mnih2013playing} approximates the Q-function \( Q(s_t, a_t; \theta) \), which maps a state \( s_t \) and action \( a_t \) to an expected cumulative reward, using a DNN parameterized by \( \theta \). Two DNNs are utilized: an online network for action selection and a target network for value estimation. The Q-function is trained to minimize the following loss function and loss function is calculated as follows:
+To further enhance the learning efficiency, we incorporate PER as proposed in \cite{schaul2015prioritized}. PER prioritizes experiences with higher TD errors, where the TD error \(\delta_i\) for transition \(i\) is defined as the difference between the target and current Q-values. The priority is calculated as follows:
+\begin{equation}
+p_i = |\delta_i| + \epsilon_p,
+\label{eq:priority}
+\end{equation}
+where \( \delta_i = r_i + \gamma Q(s_{i+1}, a_{i+1}; \theta^-) - Q(s_i, a_i; \theta) \) is the TD error, and \( \epsilon_p \) ensures non-zero priorities. PER uses \( \alpha \in [0, 1] \) to control sampling probability \(p_i^\alpha \) and \( \beta \in [0, 1] \) to adjust importance sampling weights \((\mathcal D \cdot P(i))^{-\beta} \), where \( \mathcal D \) is replay buffer limit and \(P(i)\) is the probability of sampling transition \(i\). This approach accelerates learning by focusing on significant transitions, which is beneficial in LEO satellite networks with dynamic and noisy conditions.
 
-\begin{algorithm}
+By combining dueling DQN with DDQN and PER, our approach effectively addresses overestimation bias, accelerates learning, and mitigates the effects of random noise, leading to improved network performance with effective GW load balancing, elevated RSRP, and reduced FLSO frequency. The detailed process of the training is described in Algorithm \ref{alg:2}.
+
+\begin{algorithm}[p]
 \begin{algorithmic}[1]
 \caption{Dueling DDQN-based Algorithm for \textbf{FLSO Load Balancing}}\label{alg:2}
     \State \textbf{Initialization:} Random weights $\theta$, replay memory $\mathcal R$ with capacity $\mathcal D$, minibatch size $\mathcal Z$, total episodes $\mathcal E$, prioritization parameter $\alpha$, importance sampling parameter $\beta$, exploration rate $\epsilon$, Polyak averaging parameter $\tau$
@@ -169,19 +200,3 @@ The DQN algorithm \cite{mnih2013playing} approximates the Q-function \( Q(s_t, a
     \EndFor
 \end{algorithmic}
 \end{algorithm}
-
-To improve robustness against random noise, such as channel shadow fading, we utilize a dueling DQN \cite{wang2016dueling}. The dueling DQN architecture enhances the traditional DQN by splitting the Q-function into two separate streams: the state-value function \( V(s; \theta) \) and the advantage function \( A(s, a; \theta) \). The Q-function is then calculated as follows:
-\begin{align}
-& Q(s, a; \theta) = V(s; \theta) + \left( A(s, a; \theta) - \frac{1}{|A|} \sum_{a'} A(s, a'; \theta) \right),
-\label{eq:dueling_q}
-\end{align}
-where \( V(s; \theta) \) represents the value of the state \( s \), \( A(s, a; \theta) \) represents the advantage of taking action \( a \) in state \( s \), and \( |A| \) is the number of possible actions. This decomposition allows the network to better distinguish the value of a state from the advantage of each action, improving robustness against noise and enhancing learning efficiency in complex LEO satellite environments.
-
-To further enhance the learning efficiency, we incorporate PER as proposed in \cite{schaul2015prioritized}. PER prioritizes experiences with higher TD errors, where the TD error \(\delta_i\) for transition \(i\) is defined as the difference between the target and current Q-values. The priority is calculated as follows:
-\begin{equation}
-p_i = |\delta_i| + \epsilon_p,
-\label{eq:priority}
-\end{equation}
-where \( \delta_i = r_i + \gamma Q(s_{i+1}, a_{i+1}; \theta^-) - Q(s_i, a_i; \theta) \) is the TD error, and \( \epsilon_p \) ensures non-zero priorities. PER uses \( \alpha \in [0, 1] \) to control sampling probability \(p_i^\alpha \) and \( \beta \in [0, 1] \) to adjust importance sampling weights \((\mathcal D \cdot P(i))^{-\beta} \), where \( \mathcal D \) is replay buffer limit and \(P(i)\) is the probability of sampling transition \(i\). This approach accelerates learning by focusing on significant transitions, which is beneficial in LEO satellite networks with dynamic and noisy conditions.
-
-By combining dueling DQN with DDQN and PER, our approach effectively addresses overestimation bias, accelerates learning, and mitigates the effects of random noise, leading to improved network performance with effective GW load balancing, elevated RSRP, and reduced FLSO frequency. The detailed process of the training is described in Algorithm 1.

@@ -35,6 +35,9 @@ M.~Tayyab, X.~Gelabert, and R.~J{\"a}ntti, ``A survey on handover management: Fr
 \bibitem{rel_38821}
 ``{Solutions for NR to support non-terrestrial networks(NTN) (Release 16)},'' \emph{3GPP TR 38.821 V16.2.0}, 2023.
 
+\bibitem{rel_38331}
+``{NR; Radio Resource Control (RRC); Protocol specification (Release 18)},'' \emph{3GPP TS 38.331 V18.3.0}, 2024.
+
 \bibitem{roth2022sdn}
 M.~M.~H. Roth, H.~Brandt, and H.~Bischl, ``Distributed {SDN}-based load-balanced routing for low earth orbit satellite constellation networks,'' \emph{arXiv preprint arXiv:2209.05984}, 2022.
 

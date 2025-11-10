@@ -1,143 +1,168 @@
 \chapter[Performance evaluation]{Performance evaluation}
 
 \section{Simulation setup}
-\quad In this section, we evaluate the performance of the proposed algorithm alongside DQN-based FLSO, distance-based and signal-based FLSO algorithms through extensive simulations. The simulation environment considers the actual deployment of gateways and satellites; specifically, it is based on operational SpaceX Starlink gateway sites in the United States and models the partially approved Gen2 satellite constellation by the FCC. The orbit of the agent satellite is propagated using TLE data for Starlink satellite No. 1008, retrieved on December 5, 2024. As the satellite passes over the GWs, it periodically measures the RSRP. 
-GW load for baseline characterization is obtained by running the distance-based selection over the deployed constellation snapshot and counting attached satellites at each time step. % 게이트웨이 부하는 배치된 성좌 스냅샷에서 거리 기반 선택 알고리즘을 수행하며 시간별 GW에 연결된 위성 수를 집계하여 산출.
-Consequently, as illustrated in the following figure, we visualize the normalized number of satellites attached per gateway under random satellite placements. % 결과적으로 다음의 그림과 같이 위성의 랜덤 배치에 따라 게이트웨이별 연결된 위성을 노말라이제이션한 결과 그림과 같다.
+\quad In this section, we evaluate the performance of the proposed algorithm alongside DQN-based, distance-based, and signal-based FLSO algorithms through extensive simulations. The simulation environment considers the actual deployment of GWs and satellites; specifically, it is based on operational SpaceX Starlink GW sites in the United States and models the partially approved Gen2 satellite constellation by the FCC []. The orbit of the agent satellite is propagated using TLE data for Starlink satellite No.~1008, retrieved on December 5, 2024. As the satellite passes over the GWs, it periodically measures the RSRP.
+% 본 섹션에서는 제안된 알고리즘의 성능을 DQN 기반, 거리 기반, 신호 기반 FLSO 알고리즘과 함께 광범위한 시뮬레이션을 통해 평가합니다. 시뮬레이션 환경은 실제 GW 및 위성 배치를 고려합니다. 구체적으로, 미국 내 운영 중인 SpaceX Starlink GW 사이트를 기반으로 하며 FCC로부터 부분 승인된 2세대 위성군을 모델링합니다. 에이전트 위성의 궤도는 2024년 12월 5일에 수신된 Starlink 위성 No. 1008의 TLE 데이터를 사용하여 전파됩니다. 위성이 GW 상공을 지날 때 주기적으로 RSRP를 측정합니다.
+
+GW load for baseline characterization is obtained by running the distance-based selection over the deployed constellation snapshot and counting attached satellites at each time step. Consequently, as illustrated in Fig.~\ref{fig:0.complexity}, we visualize the normalized number of satellites attached per gateway under random satellite placements, which highlights the inherent spatial skewness and motivates load-aware FLSO design.
+% 기준선 특성화를 위한 GW 부하는 배치된 위성군 스냅샷에 대해 거리 기반 선택을 실행하고 각 타임스텝에서 연결된 위성 수를 계산하여 얻습니다. 결과적으로 그림~\ref{fig:0.complexity}에서 볼 수 있듯이, 무작위 위성 배치 하에서 게이트웨이당 연결된 위성의 정규화된 수를 시각화하여 내재된 공간적 편향을 강조하고 부하 인지 FLSO 설계의 동기를 부여합니다.
 
 \begin{sidewaysfigure}[p]
     \centering
     \includegraphics[width=\linewidth]{figure/0.complexity table.png}
-    \caption{Satellite-GW association complexity comparison.}
+    \caption{Satellite--GW association complexity comparison (normalized satellites per GW).}
     \label{fig:0.complexity}
 \end{sidewaysfigure}
 
-The simulation parameters are summarized in Table~\ref{tab:sim_params}. The simulation was performed in Python, iterating 1,000 times to analyze LEO satellite behavior and performance. The discount factor is set to 0.99 to further reward the future. The benchmark algorithms are summarized as follows:
+The simulation parameters are summarized in Table~\ref{tab:sim_params}. All algorithms share the same physical-layer and mobility assumptions to ensure a fair comparison. The simulations are implemented in Python, with 1,000 independent episodes to capture the statistical behavior of LEO satellite mobility and gateway association.
+% 시뮬레이션 파라미터는 표~\ref{tab:sim_params}에 요약되어 있습니다. 모든 알고리즘은 공정한 비교를 위해 동일한 물리 계층 및 이동성 가정을 공유합니다. 시뮬레이션은 Python으로 구현되었으며, LEO 위성 이동성 및 게이트웨이 연관의 통계적 행동을 포착하기 위해 1,000개의 독립적인 에피소드로 구성됩니다.
 
 \begin{table}[p]
-% \vspace{0.09 in}
 \centering
-\small
 \caption{Simulation parameters}
-    \label{tab:sim_params}
-    \begin{tabular}{l l}   % Two columns (left-aligned for both)
-        \hline
-        \textbf{Environment Parameter} & \textbf{Value} \\ 
-        \hline
-        Constellation type & Walker-delta \\ 
-        LEO satellite altitude $h$ & 530 [km] \\    
-        Inclination $i$ & $43^\circ$ \\ 
-        Number of LEO satellite \(N\) & 3360 \\  
-        Orbit planes $P$ & 28 \\
-        Satellites per plane $S$ & 120 \\
-        Phasing factor $F$ & 9 \\
-        Number of GW \(M\) & 46 \\  
-        Carrier frequency $f_m$ &28 [GHz]\\
-        Bandwidth $B_m$ & $480$ [MHz] \\
-        GW Tx power $P_{m}$ & 47 [dBm] \\
-        GW Tx antenna gain $G_{m}$ & 49.5 [dBi] \\
-        LEO satellite Rx antenna gain $G_{n}$ & 38.5 [dBi] \\
-        Ambient temperature $T_0$ & 150 [K] \\
-        Antenna temperature $T_a$ & 290 [K] \\
-        Noise figure $N_f$ & 3 [dB] \\
-        Atmospheric attenuation $AT_{m,n}$ & 0.02 [dB/km] \\
-        Boltzmann constant $k$ & $1.379 \times 10^{-23}$ [J/K] \\
-        Number of Resource Block $q_{RB}$ & 6     \\
-        Minimum elevation angle $\theta_{\min}$ & 25 [$^\circ$]\\
-        Minimum RSRP of GW $R_{\min}$ & -110 [dBm] \\
-        \hline
-        \textbf{FLSO Parameter} & \textbf{Value} \\ 
-        \hline
-        Period of measurement \(T_m\) & 200 [ms] \\
-        Minimum time-of-stay & 1 [s] \\
-        L3 filter forgetting factor \(a\) & $(\tfrac{1}{2})^{{K}/4}$ \\
-        L3 filter coefficient K & 4 \\
-        Distance thresholds $\Delta d_{\mathrm{th}}$ & 0, 10, 20, 30, 40, 50 [km] \\
-        A3 event \(offset\) & 0, 2, 4, 6, 8 [dB] \\
-        \hline
-        \textbf{Reinforcement Learning Parameter} & \textbf{Value} \\ 
-        \hline
-        Learning rate & 0.0001 \\
-        Discount factor $\gamma$ & 0.99 \\
-        Replay buffer limit \(\mathcal D\) & $10^5$ \\
-        Batch size  \(\mathcal Z\)& 512 \\
-        Total step per episode & 4,700 \\
-        % Update \(\theta\) per \# step & 5 \\
-        Polyak tau \(\tau\) & 0.01 \\
-        PER $\alpha$ & 0.6 \\
-        PER $\beta$ Start & 0.4 \\
-        % PER $\beta$ Frames & $10^7$ \\
-        % Epsilon & 1.0 $\sim$ 0.01  \\
-        \hline
-    \end{tabular}
+\label{tab:sim_params}
+\begin{tabular}{l l}
+\hline
+\textbf{Environment Parameter} & \textbf{Value} \\
+\hline
+Constellation type & Walker-delta \\
+LEO satellite altitude $h$ & 530 [km] \\
+Inclination $i$ & $43^\circ$ \\
+Number of LEO satellites $N$ & 3360 \\
+Orbit planes $P$ & 28 \\
+Satellites per plane $S$ & 120 \\
+Phasing factor $F$ & 9 \\
+Number of GWs $M$ & 46 \\
+Carrier frequency $f_m$ & 28 [GHz] \\
+Bandwidth $B_m$ & 480 [MHz] \\
+GW Tx power $P_m$ & 47 [dBm] \\
+GW Tx antenna gain $G_m$ & 49.5 [dBi] \\
+LEO satellite Rx antenna gain $G_n$ & 38.5 [dBi] \\
+Ambient temperature $T_0$ & 150 [K] \\
+Antenna temperature $T_a$ & 290 [K] \\
+Noise figure $N_f$ & 3 [dB] \\
+Atmospheric attenuation $AT_{m,n}$ & 0.02 [dB/km] \\
+Boltzmann constant $k$ & $1.379 \times 10^{-23}$ [J/K] \\
+Number of resource blocks $q_{\mathrm{RB}}$ & 6 \\
+Minimum elevation angle $\theta_{\min}$ & $25^\circ$ \\
+Minimum GW RSRP $R_{\min}$ & $-110$ [dBm] \\
+\hline
+\textbf{FLSO Parameter} & \textbf{Value} \\
+\hline
+Measurement period $T_m$ & 200 [ms] \\
+Minimum time-of-stay & 1 [s] \\
+L3 filter forgetting factor $a$ & $(\tfrac{1}{2})^{K/4}$ \\
+L3 filter coefficient $K$ & 4 \\
+Distance thresholds $\Delta d_{\mathrm{th}}$ & 0, 10, 20, 30, 40, 50 [km] \\
+A3 event offset & 0, 2, 4, 6, 8 [dB] \\
+\hline
+\textbf{Reinforcement Learning Parameter} & \textbf{Value} \\
+\hline
+Learning rate & 0.0001 \\
+Discount factor $\gamma$ & 0.99 \\
+Replay buffer limit $\mathcal{D}$ & $10^5$ \\
+Batch size $\mathcal{Z}$ & 512 \\
+Total steps per episode & 4,700 \\
+Polyak coefficient $\tau$ & 0.01 \\
+PER exponent $\alpha$ & 0.6 \\
+PER initial $\beta$ & 0.4 \\
+\hline
+\end{tabular}
 \end{table}
 
+The compared FLSO schemes are defined as follows.
+% 비교된 FLSO 방식은 다음과 같이 정의됩니다.
+
 \begin{itemize}
-\item DQN-based FLSO: It is trained using the identical state, action, and reward as defined for the dueling DQN. Both algorithms are initially trained the subsequent simulations are conducted using the learned Q-networks. Learning proceeds via temporal difference updates with experience replay and periodic target network synchronization without dueling network.
-
-\item Distance-based FLSO: This algorithm selects the GW based on the minimum distance between the LEO satellite and GWs. A FLSO event is triggered when the distance to a target GW is shorter than that to the serving GW by a predefined threshold, denoted by \( \Delta d_{\mathrm{th}} \).
-
-\item Signal-Based FLSO: It is implemented by adapting the conventional HO mechanism. Specifically, we employ the widely used A3 event-based FLSO algorithm as a baseline. In this algorithm, a FLSO event is triggered when the difference between the RSRP of the serving GW and that of target GWs exceeds a predefined threshold, denoted by \( offset \).
+    \item \textbf{DQN-based FLSO}: The DQN baseline is trained using the same state, action, and reward definitions as the proposed dueling DQN agent, but with a conventional single-stream Q-network (no dueling architecture). Learning uses temporal-difference updates with experience replay and a target network. After training, the learned Q-network is frozen and evaluated without further exploration.
+    % DQN 기반 FLSO: DQN 기준 모델은 제안된 듀얼링 DQN 에이전트와 동일한 상태, 행동, 보상 정의를 사용하여 훈련되지만, 일반적인 단일 스트림 Q-네트워크(듀얼링 아키텍처 없음)를 사용합니다. 학습은 경험 리플레이와 타겟 네트워크를 이용한 시간차 업데이트를 사용합니다. 훈련 후, 학습된 Q-네트워크는 고정되어 더 이상의 탐색 없이 평가됩니다.
+    
+    \item \textbf{Distance-based FLSO}: This heuristic selects the GW with the minimum geometric distance to the satellite. A FLSO event is triggered when the distance to a target GW becomes shorter than that to the serving GW by at least a predefined gap $\Delta d_{\mathrm{th}}$. This rule can be interpreted as a special case of the 3GPP dual-threshold distance-based framework (Events D1/D2 in TS~38.331~\cite{rel_38331}), where the thresholds and hysteresis are chosen such that the entering condition reduces to a distance-gap constraint between serving and candidate gateways. It thus provides a standard-aligned, but purely geometry-driven, feeder-link selection baseline.
+    % 거리 기반 FLSO: 이 휴리스틱은 위성에 가장 가까운 기하학적 거리를 가진 GW를 선택합니다. FLSO 이벤트는 대상 GW까지의 거리가 서빙 GW까지의 거리보다 미리 정의된 간격 $\Delta d_{\mathrm{th}}$ 이상으로 짧아질 때 트리거됩니다. 이 규칙은 3GPP 이중 임계값 거리 기반 프레임워크(TS 38.331의 이벤트 D1/D2)의 특별한 경우로 해석될 수 있으며, 여기서 임계값과 히스테리시스는 진입 조건이 서빙 게이트웨이와 후보 게이트웨이 간의 거리-간격 제약으로 축소되도록 선택됩니다. 따라서 이는 표준에 부합하지만 순전히 기하학적으로 구동되는 피더 링크 선택 기준선을 제공합니다.
+    
+    \item \textbf{Signal-based FLSO}: This scheme adapts the conventional A3 event-based HO rule to feeder-link selection. A FLSO event is triggered when the RSRP of a target GW exceeds that of the serving GW by more than a configured offset. Different offsets realize different hysteresis levels. While this approach is compatible with existing NR measurement procedures, it relies solely on instantaneous or filtered signal strength and does not exploit geometric predictability or GW load information.
+    % 신호 기반 FLSO: 이 방식은 기존의 A3 이벤트 기반 HO 규칙을 피더 링크 선택에 적용합니다. FLSO 이벤트는 대상 GW의 RSRP가 서빙 GW의 RSRP를 구성된 오프셋보다 초과할 때 트리거됩니다. 다른 오프셋은 다른 히스테리시스 수준을 실현합니다. 이 접근 방식은 기존 NR 측정 절차와 호환되지만, 순간적이거나 필터링된 신호 강도에만 의존하며 기하학적 예측 가능성이나 GW 부하 정보를 활용하지 않습니다.
+    
+    \item \textbf{Proposed FLSO}: The proposed dueling DQN-based policy builds upon the D2-type distance-based concept by incorporating ephemeris-aware geometry, L3-filtered RSRP, gateway load indicators, and switching penalties jointly into the state and reward. In contrast to the distance- and signal-only baselines, it learns a gateway selection strategy that is simultaneously distance-aware, link-quality-aware, and load-aware, while remaining consistent with the standardized measurement abstractions.
+    % 제안된 FLSO: 제안된 듀얼링 DQN 기반 정책은 천체력 인지 기하학, L3 필터링된 RSRP, 게이트웨이 부하 지표 및 스위칭 페널티를 상태와 보상에 공동으로 통합하여 D2 유형 거리 기반 개념을 기반으로 합니다. 거리 및 신호 전용 기준선과 대조적으로, 표준화된 측정 추상화와 일관성을 유지하면서 거리, 링크 품질 및 부하를 동시에 인지하는 게이트웨이 선택 전략을 학습합니다.
 \end{itemize}
-  
 
 
 
 \section{Key Performance Indicators}
-\quad We evaluate five key performance indicators that together capture feeder-link switching stability, link quality, and gateway load balancing. Unless otherwise noted, all metrics are computed per episode and averaged over time and satellites.
-FLSO measures how many times, on average, each satellite changes its serving gateway during an episode. It reflects the overall switching activity of the FLSO policy. A smaller value indicates a more stable association with fewer disruptions and reduced control overhead.
-UFLSO refines this by counting switchovers that are followed by a very short dwell time, shorter than a predefined minimum time-of-stay (set to 1 s in our configuration). Such events correspond to ping–pong or impulsive decisions that do not yield lasting performance gains. This KPI quantifies how many switches are effectively wasteful, and a desirable policy minimizes both the total number of switchovers and the fraction that are unnecessary.
-ToS denotes how long a satellite continuously remains connected to the same gateway between two consecutive switchovers. We report the average dwell time over all satellites and all stays. Larger ToS values indicate that the policy maintains more persistent feeder-link associations, which reduces signaling overhead and limits service interruptions while still allowing handovers when they are genuinely beneficial.
-RSRP evaluates the long-term quality of the selected feeder links. At each time step, we observe the L3-filtered RSRP of the gateway actually serving each satellite, using the standardized IIR-based filtering parameters defined in Table~\ref{tab:sim_params}. We then average this serving-link RSRP across all satellites and time. Higher values mean that satellites are more consistently attached to gateways providing strong received power, indicating that the policy improves link quality rather than achieving stability at the expense of performance.
-GW load characterizes how evenly the feeder-link load is distributed across gateways. For each gateway, we monitor how many satellites are attached over time, summarize this as its average load, and also track the maximum load observed across all gateways and time. Lower peak load and a tighter spread of average loads across gateways indicate more balanced utilization of feeder-link resources and a reduced risk of gateway congestion or bottlenecks.
+\quad We evaluate five key performance indicators that together capture FLSO stability, link quality, and GW load balancing. Unless otherwise noted, all metrics are computed per episode and averaged over time and satellites.
+
+FLSO measures how many times, on average, each satellite changes its serving GW during an episode. It reflects the overall switching activity of the FLSO policy; smaller values indicate a more stable association with fewer disruptions and reduced control overhead.
+
+UFLSO refines this by counting switchovers that are followed by a very short dwell time, shorter than a predefined minimum time-of-stay. Such events correspond to ping-pong or impulsive decisions that do not yield lasting performance gains. This KPI quantifies how many switches are effectively wasteful; a desirable policy minimizes both the total number of switchovers and the fraction that are unnecessary.
+
+ToS denotes how long a satellite continuously remains connected to the same GW between two consecutive switchovers. We report the average dwell time over all satellites and all stays. Larger ToS values indicate that the policy maintains more persistent feeder-link associations, reducing signaling overhead and limiting service interruptions while still allowing beneficial handovers.
+
+RSRP evaluates the long-term quality of the selected feeder links. At each time step, we observe the L3-filtered RSRP of the GW actually serving each satellite, using the standardized IIR-based parameters in Table~\ref{tab:sim_params}. We then average this serving-link RSRP across all satellites and time. Higher values mean that satellites are more consistently attached to gateways providing strong received power, showing that stability is not obtained at the cost of degraded link quality.
+
+GW load characterizes how evenly the feeder-link load is distributed across gateways. For each GW, we monitor how many satellites are attached over time, summarize this as its average load, and track the maximum load observed across all GWs and time. Lower peak load and a tighter spread of average loads indicate more balanced utilization of feeder-link resources and a reduced risk of persistent GW bottlenecks.
+
+
 
 \section{Results and Discussion}
-\quad Fig.~\ref{fig:1.flso} compares the average number of FLSO for the proposed FLSO scheme against the DQN baseline, distance-based, and signal-based heuristics. The proposed method achieves a substantially lower switching frequency than the DQN baseline, reducing the average FLSO count by roughly one quarter while also exhibiting a smaller variability across episodes. This indicates that simply applying a conventional value-based agent without explicit load-aware design leads to unstable gateway selection, whereas the proposed formulation yields more consistent decisions.
+\quad Fig.~\ref{fig:reward} illustrates the normalized episodic reward during training for the proposed FLSO agent and the DQN baseline. Both agents rapidly improve in the early stage and exceed a normalized reward of approximately 0.9 within several thousand episodes, indicating successful learning of feasible FLSO policies under the considered environment. However, the proposed agent converges slightly faster and attains a consistently higher asymptotic reward. The zoomed view highlights that the proposed scheme exhibits significantly lower variance and avoids the deep reward drops frequently observed with the DQN. This behavior confirms that the architectural and objective design of the proposed agent stabilizes value estimation and produces a more reliable policy, while the baseline DQN remains sensitive to non-stationarity and occasionally explores suboptimal switching patterns even in late training.
 
-For the distance-based heuristic, the FLSO count is highly sensitive to the distance threshold. Small thresholds (0--20 km) result in persistently higher switching rates than the proposed method, as satellites aggressively move to marginally closer gateways. Increasing the threshold (30--50 km) alleviates this effect and brings the FLSO count close to that of the proposed scheme, but only at the cost of relying on a hand-tuned parameter that does not account for gateway load or link quality beyond geometry.
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figure/reward.png}
+    \caption{Average reward over episodes for the proposed and DQN-based FLSO.}
+    \label{fig:reward}
+\end{figure}
 
-The signal-based A3-type scheme exhibits the most pronounced trade-off. Low offsets (0 and 2 dB) trigger excessive switchovers, saturating the FLSO metric and clearly demonstrating the ping–pong tendency of purely RSRP-driven decisions. Larger offsets (4--8 dB) progressively suppress switchovers and can attain fewer FLSOs than the proposed method at the highest offset; however, such aggressive hysteresis inevitably forces satellites to remain attached to suboptimal gateways for extended periods, which, as shown in other KPIs, degrades link quality and load balancing performance. Overall, the results confirm that the proposed FLSO policy provides a favorable balance between minimizing unnecessary switchovers and avoiding overly conservative behavior that harms backhaul efficiency.
+Fig.~\ref{fig:1.flso} compares the average number of FLSOs for the proposed FLSO scheme against the DQN baseline, distance-based, and signal-based heuristics. The proposed method achieves a substantially lower switching frequency than the DQN baseline, reducing the average FLSO count by roughly one quarter while also exhibiting smaller variability across episodes. This shows that a conventional value-based agent without explicit load- and stability-aware design leads to unstable gateway selection, whereas the proposed formulation yields more consistent decisions.
+% 그림~\ref{fig:1.flso}는 제안된 FLSO 방식의 평균 FLSO 수를 DQN 기준선, 거리 기반 및 신호 기반 휴리스틱과 비교합니다. 제안된 방법은 DQN 기준선보다 상당히 낮은 스위칭 주파수를 달성하여 평균 FLSO 수를 약 1/4로 줄이면서 에피소드 간의 변동성도 더 작게 나타냅니다. 이는 명시적인 부하 및 안정성 인지 설계가 없는 기존의 가치 기반 에이전트가 불안정한 게이트웨이 선택을 초래하는 반면, 제안된 공식은 더 일관된 결정을 내린다는 것을 보여줍니다.
+
+For the distance-based heuristic, the FLSO count is highly sensitive to the distance gap $\Delta d_{\mathrm{th}}$. Small thresholds (0--20 km) result in persistently higher switching rates than the proposed method, as satellites aggressively move to marginally closer gateways despite limited gain. Increasing the threshold (30--50 km) alleviates this effect and brings the FLSO count closer to that of the proposed scheme, but only at the cost of relying on a hand-tuned parameter that remains oblivious to gateway load and temporal link quality beyond geometry.
+% 거리 기반 휴리스틱의 경우, FLSO 수는 거리 간격 $\Delta d_{\mathrm{th}}$에 매우 민감합니다. 작은 임계값(0-20km)은 제한된 이득에도 불구하고 위성이 약간 더 가까운 게이트웨이로 공격적으로 이동함에 따라 제안된 방법보다 지속적으로 높은 스위칭 비율을 초래합니다. 임계값을 높이면(30-50km) 이 효과가 완화되어 FLSO 수가 제안된 방식에 가까워지지만, 이는 기하학을 넘어서는 게이트웨이 부하 및 시간적 링크 품질에 무지한 수동 조정 파라미터에 의존하는 대가를 치릅니다.
+
+The signal-based A3-type scheme exhibits the most pronounced trade-off. Low offsets (0 and 2 dB) trigger excessive switchovers, saturating the FLSO metric and clearly demonstrating the ping-pong tendency of purely RSRP-driven decisions. Larger offsets (4--8 dB) progressively suppress switchovers and can yield fewer FLSOs than the proposed method at the highest offset; however, such aggressive hysteresis forces satellites to remain attached to suboptimal gateways for extended periods, which, as confirmed by other KPIs, degrades link quality and load-balancing performance. Overall, the results confirm that the proposed FLSO policy provides a favorable balance between minimizing unnecessary switchovers and avoiding overly conservative behavior that harms backhaul efficiency.
+% 신호 기반 A3 유형 방식은 가장 두드러진 트레이드오프를 보입니다. 낮은 오프셋(0 및 2dB)은 과도한 스위치오버를 유발하여 FLSO 메트릭을 포화시키고 순전히 RSRP 기반 결정의 핑퐁 경향을 명확하게 보여줍니다. 더 큰 오프셋(4-8dB)은 점진적으로 스위치오버를 억제하고 가장 높은 오프셋에서 제안된 방법보다 적은 FLSO를 산출할 수 있습니다. 그러나 이러한 공격적인 히스테리시스는 위성이 장기간 동안 차선의 게이트웨이에 연결되도록 강제하며, 이는 다른 KPI에서 확인된 바와 같이 링크 품질 및 부하 분산 성능을 저하시킵니다. 전반적으로, 결과는 제안된 FLSO 정책이 불필요한 스위치오버를 최소화하고 백홀 효율성을 해치는 지나치게 보수적인 행동을 피하는 사이에서 유리한 균형을 제공함을 확인시켜 줍니다.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=\linewidth]{figure/1.flso.png}
-    \caption{Average FLSO [dB]}
+    \caption{Number of FLSOs for the proposed, DQN-based, distance-based, and signal-based FLSO.}
     \label{fig:1.flso}
 \end{figure}
 
-Fig.~\ref{fig:2.ufso} evaluates the number of unnecessary feeder-link switchovers (UFLSO). The proposed scheme and all distance-based variants effectively suppress UFLSO events, indicating that their FLSOs are mostly persistent and justified. The DQN baseline exhibits a small but non-negligible number of unnecessary switches, reflecting instability in its learned policy. The signal-based scheme with low offsets is clearly problematic: it generates a large number of short-lived switchovers, which directly manifests the ping-pong behavior implied by its high FLSO count. Increasing the offset mitigates UFLSO but only by making the policy overly sticky. Overall, the proposed method uniquely combines low FLSO and near-zero UFLSO, achieving stable adaptations without ad hoc parameter choices.
+Fig.~\ref{fig:2.ufso} evaluates the number of UFLSO. The proposed scheme and all distance-based variants effectively suppress UFLSO events, indicating that their switchovers are mostly persistent and justified. The DQN baseline exhibits a small but non-negligible number of unnecessary switches, reflecting residual instability of the learned policy. The signal-based scheme with low offsets is clearly problematic: it generates a large number of short-lived switchovers, directly manifesting the ping-pong behavior implied by its high FLSO count. Increasing the offset mitigates UFLSO only by making the policy overly sticky. The proposed method uniquely combines low FLSO and near-zero UFLSO, achieving stable adaptations without ad hoc tuning.
+% 그림~\ref{fig:2.ufso}는 불필요한 피더 링크 스위치오버(UFLSO)의 수를 평가합니다. 제안된 방식과 모든 거리 기반 변형은 UFLSO 이벤트를 효과적으로 억제하여, 그들의 스위치오버가 대부분 지속적이고 정당화됨을 나타냅니다. DQN 기준선은 작지만 무시할 수 없는 수의 불필요한 스위치를 보여, 학습된 정책의 잔여 불안정성을 반영합니다. 낮은 오프셋을 가진 신호 기반 방식은 명백히 문제가 있습니다. 이는 많은 수의 단기 스위치오버를 생성하여 높은 FLSO 수에 의해 암시된 핑퐁 동작을 직접적으로 나타냅니다. 오프셋을 높이면 정책이 지나치게 고착화되어 UFLSO를 완화할 뿐입니다. 제안된 방법은 낮은 FLSO와 거의 0에 가까운 UFLSO를 독특하게 결합하여 임시방편적인 조정 없이 안정적인 적응을 달성합니다.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=\linewidth]{figure/2.ufso.png}
-    \caption{Average UFSo [dB]}
+    \caption{Number of UFLSOs for the proposed, DQN-based, distance-based, and signal-based FLSO.}
     \label{fig:2.ufso}
 \end{figure}
 
-Fig.~\ref{fig:3.tos} compares the average ToS. Excluding the aggressively reactive signal-based cases (0-2 dB), all schemes yield relatively long ToS due to the minimum dwell-time constraint. Nonetheless, the proposed method consistently attains the longest or near-longest ToS with tight episode-wise variation, confirming that its switchovers are both infrequent and durable. The DQN baseline and distance-based heuristics provide slightly shorter ToS or larger spread, indicating residual oscillations or sensitivity to the chosen distance thresholds. Low-offset signal-based schemes suffer from significantly reduced ToS, aligned with their high UFLSO, while large offsets recover long ToS at the cost of degraded RSRP and load balancing. These trends reinforce that the proposed policy realizes stable gateway associations without sacrificing responsiveness.
+Fig.~\ref{fig:3.tos} compares the average ToS. Excluding the aggressively reactive signal-based cases (0--2 dB), all schemes yield relatively long ToS due to the minimum dwell-time constraint. Nonetheless, the proposed method consistently attains the longest or near-longest ToS with tight episode-wise variation, confirming that its switchovers are both infrequent and durable. The DQN baseline and distance-based heuristics provide slightly shorter ToS or a larger spread, indicating remaining oscillations or sensitivity to fixed distance thresholds. Low-offset signal-based schemes suffer from significantly reduced ToS, aligned with their high UFLSO, while large offsets recover long ToS at the cost of degraded RSRP and load balancing. These trends reinforce that the proposed policy realizes stable gateway associations without sacrificing responsiveness.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=\linewidth]{figure/3.tos.png}
-    \caption{Average ToS [s]}
+    \caption{Average ToS for the proposed, DQN-based, distance-based, and signal-based FLSO.}
     \label{fig:3.tos}
 \end{figure}
 
-Fig.~\ref{fig:4.rsrp} shows the distribution of the average serving-link RSRP. The proposed scheme achieves RSRP levels comparable to, or slightly higher than, those of the DQN and optimized distance-based baselines, while maintaining a significantly lower FLSO count. In contrast, the signal-based scheme with small A3 offsets (0–2 dB) attains marginally higher RSRP at the expense of extremely frequent switchovers, which is undesirable in practice. As the offset increases (4–8 dB), the signal-based scheme becomes overly conservative: satellites remain attached to outdated gateways, and the average RSRP degrades sharply. These results confirm that the proposed method operates close to the Pareto frontier between link-quality maximization and switching overhead, whereas heuristic hysteresis tuning either overreacts or underreacts to channel variations.
+Fig.~\ref{fig:4.rsrp} shows the distribution of the average serving-link RSRP. The proposed scheme achieves RSRP levels comparable to, or slightly higher than, those of the DQN and tuned distance-based baselines, while maintaining a significantly lower FLSO count. In contrast, the signal-based scheme with small A3 offsets (0--2 dB) attains marginally higher RSRP only at the expense of extremely frequent switchovers, which is impractical. As the offset increases (4--8 dB), the signal-based scheme becomes overly conservative: satellites remain attached to outdated gateways, and the average RSRP degrades sharply. These results indicate that the proposed method operates close to the Pareto frontier between link-quality maximization and switching overhead, whereas heuristic hysteresis tuning either overreacts or underreacts to channel variations.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=\linewidth]{figure/4.rsrp.png}
-    \caption{Average RSRP [dBm]}
+    \caption{Average RSRP for the proposed, DQN-based, distance-based, and signal-based FLSO.}
     \label{fig:4.rsrp}
 \end{figure}
 
-Fig.~\ref{fig:5.complexity} investigates gateway load in terms of the average number of attached satellites per GW. While the global mean is fixed by the constellation size, the spread of these distributions reveals the effectiveness of load balancing. The proposed method exhibits the tightest box and shortest whiskers, indicating that satellites are distributed across gateways in a highly uniform manner and that no gateway persistently attracts a disproportionate share of the load. The DQN baseline shows a wider spread, implying less regularized gateway selection. Distance-based methods gradually worsen the load distribution as the distance threshold increases: larger thresholds promote “sticky” associations to geographically nearby gateways, thereby amplifying spatial skewness. Signal-based schemes display substantial variability across offsets; low offsets lead to volatile associations, while high offsets lock satellites to a subset of gateways, in both cases degrading load fairness. Taken together with the RSRP and (U)FLSO results, these observations demonstrate that the proposed FLSO framework jointly optimizes switching stability, feeder-link quality, and gateway load balancing in a way that heuristic and standard DRL baselines cannot match.
+Fig.~\ref{fig:5.complexity} investigates gateway load in terms of the average number of attached satellites per GW. While the global mean is fixed by the constellation size, the spread of these distributions reveals the effectiveness of load balancing. The proposed method exhibits the tightest box and shortest whiskers, indicating that satellites are distributed across gateways in a highly uniform manner and that no gateway persistently attracts a disproportionate share of the load. The DQN baseline shows a wider spread, implying less regularized gateway selection. Distance-based methods gradually worsen the load distribution as $\Delta d_{\mathrm{th}}$ increases: larger thresholds promote overly sticky associations to nearby gateways and amplify spatial skewness. Signal-based schemes display substantial variability across offsets; low offsets lead to volatile associations, whereas high offsets lock satellites to a subset of gateways. Taken together with the RSRP and (U)FLSO results, these observations demonstrate that the proposed FLSO framework---built to be consistent with standardized distance-based events yet augmented with load-awareness---jointly optimizes switching stability, feeder-link quality, and gateway load balancing in a way that heuristic and standard DRL baselines cannot match.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=\linewidth]{figure/5.complexity.png}
-    \caption{Average Complexity [dB]}
+    \caption{Average GW load for the proposed, DQN-based, distance-based, and signal-based FLSO.}
     \label{fig:5.complexity}
 \end{figure}
-
