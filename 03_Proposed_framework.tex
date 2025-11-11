@@ -1,4 +1,4 @@
-\chapter[Proposed reinforcement learning-based FLSO algorithm]{Proposed reinforcement learning-based FLSO algorithm}
+\chapter[Proposed RL-based FLSO algorithm]{Proposed RL-based FLSO algorithm}
 
 \section{System model}
 \quad This thesis considers a large-scale LEO satellite constellation deployed across $P$ orbital planes, represented by the set $\mathcal{P} = \left\{p \mid p = 1, \dots, P\right\}$. The constellation consists of $N$ LEO satellites in total, distributed across these planes, with $N_p$ satellites in plane $p$. We write the overall satellite index set as $\mathcal{S} = \{ s_{p,i} \mid p = 1, \dots, P;\ i = 1, \dots, N_p \}$, and its cardinality as $\lvert\mathcal{S}\rvert = \sum_{p=1}^{P} N_p$. For simplicity in the following equations, we denote a single satellite by its global index $n \in \{1, \dots, N\}$. The LEO satellite $n$ connects to ground GWs via feeder link, where the set of GWs is denoted as $\mathcal{G} = \left\{m \mid m = 1, 2, \dots, M\right\}$. The coordinates of each LEO satellite $n$ in the ECEF coordinate system at a given time slot $t$, where $t \in \{0, 1, \dots, T\}$, are given by $l_n(t) = (x_n(t), y_n(t), z_n(t))$.
@@ -17,20 +17,20 @@ The LEO satellite \( n \) evaluates the RSRP from signals transmitted by the GW 
 R_{m,n} = EIRP_{m} + G_{n} - PL_{m,n} - 10 \log_{10}(q_{RB}),
 \label{eq:rsrp}
 \end{equation}
-where \( EIRP_{m} \) is the EIRP of the GW \( m \), defined as \( EIRP_{m} = P_{m} + G_{m} \), with \( P_{m} \) being the transmit power and \( G_{m} \) the transmit antenna gain of the GW $m$ towards the LEO satellite \( n \). \( G_{n} \) represents the receive antenna gain of the LEO satellite \( n \). The term \( 10 \log_{10}(q_{RB}) \) is used to normalize the RSRP measurement, accounting for a single resource block out of the total resource blocks \( q_{RB} \) allocated to the link. $PL_{m,n}$ is the large-scale path loss between the GW \( m \) and the LEO satellite \( n \) (adapted from 3GPP documentation \cite{3gppchanel}). The model is calculated as follows:
+where \( EIRP_{m} \) is the EIRP of the GW \( m \), defined as \( EIRP_{m} = P_{m} + G_{m} \), with \( P_{m} \) being the transmit power and \( G_{m} \) the transmit antenna gain of the GW $m$ towards the LEO satellite \( n \). \( G_{n} \) represents the receive antenna gain of the LEO satellite \( n \). The term \( 10 \log_{10}(q_{RB}) \) is used to normalize the RSRP measurement, accounting for a single resource block out of the total resource blocks \( q_{RB} \) allocated to the link. $PL_{m,n}$ is the large-scale path loss between the GW \( m \) and the LEO satellite \( n \), and this expression is adapted from 3GPP documentation \cite{3gppchanel}. The model is calculated as follows:
 \begin{align}
 &PL_{m,n} = P_{{LOS,{m,n}}} \big( FSPL_{m,n}(d_{m,n}, f_m) + SF_{m,n} \big)\notag\\
 &\quad + P_{{NLOS,{m,n}}} \big( FSPL_{m,n}(d_{m,n}, f_m) + SF_{m,n} + CL_{m,n}  \big) + AT_{m,n},
 \end{align}
-$P_{{LOS,{m,n}}}$ and $P_{{NLOS,{m,n}}}$ denote the probabilities that the LEO satellite \( n \) to GW \( m \) is in a LOS and NLOS condition, respectively. $FSPL_{m,n}(d_{m,n}, f_m)$ denotes the FSPL as a function of the distance $d_{m,n}$ between the LEO satellite \( n \) and the GW \( m \) and the frequency $f_m$ of the GW \( m \) uplink feeder link frequency. $SF_{m,n}$ represents the shadow fading, which accounts for the signal attenuation caused by obstacles such as buildings, trees, or terrain variations in the propagation path. $CL_{m,n}$ denotes the clutter loss, reflecting additional signal degradation due to environmental clutter. $AT_{m,n}$ captures atmospheric attenuation along the feeder link slant path (e.g., gaseous absorption due to dry air and water vapor), which can be obtained from standard ITU-R models for the considered band. Specifically, the $FSPL_{m,n}$ is calculated as follows:
+$P_{{LOS,{m,n}}}$ and $P_{{NLOS,{m,n}}}$ denote the probabilities that the LEO satellite \( n \) to GW \( m \) is in a LOS and NLOS condition, respectively. $FSPL_{m,n}(d_{m,n}, f_m)$ denotes the FSPL as a function of the distance $d_{m,n}$ between the LEO satellite \( n \) and the GW \( m \) and the frequency $f_m$ of the GW \( m \) uplink feeder link frequency. $SF_{m,n}$ represents the shadow fading, which accounts for the signal attenuation caused by obstacles such as buildings, trees, or terrain variations in the propagation path. $CL_{m,n}$ denotes the clutter loss, reflecting additional signal degradation due to environmental clutter. $AT_{m,n}$ captures atmospheric attenuation along the feeder link slant path, including gaseous absorption due to dry air and water vapor, and it can be obtained from standard ITU-R models for the considered band~\cite{FCC22-91}. Specifically, the $FSPL_{m,n}$ is calculated as follows:
 % 한글 주석: 경로손실 식에 대기 감쇄 AT_{m,n}를 추가하여 LOS/NLOS 모두에 반영합니다. (기체 흡수 등, ITU-R 모델 기반 계산 가능)
 \begin{equation}
-FSPL_{m,n} = 32.45 + 20log_{10}(f_m) + 20log_{10}(d_{m,n}).
+FSPL_{m,n} = 32.45 + 20\log_{10}(f_m) + 20\log_{10}(d_{m,n}).
 \end{equation}
 
 At each measurement instant $t$, the LEO satellite \( n \) samples the RSRP from GW \( m \) and all neighboring GWs within instantaneous visibility region, yielding the raw RSRP $R_{m,n}(t)$. To mitigate the effects of shadow fading and measurement noise, these raw RSRP $R_{m,n}(t)$ samples are processed at the RRC layer using a L3 IIR filter \cite{3gppl3}. Denoting the filtered RSRP by $\widetilde{R}_{m,n}(t)$, the update equation is calculated as follows:
 \begin{equation}
-  \widetilde{R}_{m,n}(t) = a{R}_{m,n}(t) + (1 - a)\widetilde{R}_{m,n}(t),
+  \widetilde{R}_{m,n}(t) = a{R}_{m,n}(t) + (1 - a)\widetilde{R}_{m,n}(t-1),
   \label{eq:L3filter_new}
 \end{equation}
 where $a \in (0,1)$ is the L3 forgetting factor, defined as $a = \left(\frac{1}{2}\right)^{K/4}$, and $K$ is the filter coefficient. The initial condition is set as $\widetilde{R}_{m,n}(0) = R_{m,n}(0)$. Finally, the LEO satellite compiles a measurement report containing the L3-filtered RSRP $\widetilde{R}_{m,n}(t)$ of the serving and neighboring GWs and transmits this report back to the serving GW \( m \) over the feeder link.
@@ -63,31 +63,31 @@ We define the following cost and reward components for each satellite $n$ at tim
 \begin{itemize}
     \item \textbf{FLSO Cost:} A cost $C_{FS}$ is incurred if the satellite switches its serving GW, penalizing instability.
     \begin{equation}
-    FS_{n}(t) = \begin{cases} C_{FS} & \text{if } m_t^{(n)} \neq m_{t-1}^{(n)}, \\ 0 & \text{otherwise}. \end{cases}
+    FS_{m,n}(t) = \begin{cases} C_{FS} & \text{if } m_t^{(n)} \neq m_{t-1}^{(n)}, \\ 0 & \text{otherwise}. \end{cases}
     \label{eq:flso_cost}
     \end{equation}
 
     \item \textbf{UFLSO Cost:} A cost $C_{UFS}$ is incurred for an UFLSO, which occurs if the satellite switches to another GW within a MTS, denoted $\tau_{min}$. Let $\tau_{stay}(t)$ is the time elapsed since the last FLSO.
     \begin{equation}
-    UFS_{n}(t) = \begin{cases} C_{UFS} & \text{if } m_t^{(n)} \neq m_{t-1}^{(n)} \text{ and } \tau_{stay}(t) < \tau_{min}, \\ 0 & \text{otherwise}. \end{cases}
+    UFS_{m,n}(t) = \begin{cases} C_{UFS} & \text{if } m_t^{(n)} \neq m_{t-1}^{(n)} \text{ and } \tau_{stay}(t) < \tau_{min}, \\ 0 & \text{otherwise}. \end{cases}
     \label{eq:uflso_cost}
     \end{equation}
     
     \item \textbf{ToS Reward:} A reward is gained for maintaining a connection with the same GW, proportional to the duration of the connection.
     \begin{equation}
-    ToS_{n}(t) = \tau_{stay}(t).
+    ToS_{m,n}(t) = \tau_{stay}(t).
     \label{eq:tos_reward}
     \end{equation}
 
     \item \textbf{Load Imbalance Cost:} A cost is incurred for connecting to a congested GW, proportional to the number of satellites already connected. This cost is central to our problem.
     \begin{equation}
-    L_{n}(t) = \lvert \mathcal{L}_{m_t^{(n)}}(t) \rvert.
+    L_{m,n}(t) = \lvert \mathcal{L}_{m_t^{(n)}}(t) \rvert.
     \label{eq:load_cost}
     \end{equation}
     
     \item \textbf{Link Quality Reward:} A reward is gained based on the L3-filtered RSRP from the selected GW.
     \begin{equation}
-    R_{n}(t) = \widetilde{R}_{m,n}(t).
+    R_{m,n}(t) = \widetilde{R}_{m,n}(t).
     \label{eq:rsrp_reward}
     \end{equation}
 \end{itemize}
@@ -110,19 +110,18 @@ Constraint \textbf{C1} ensures the elevation angle $\theta_{m,n}(t)$ to an avail
 Constraint \textbf{C2} ensures the filtered RSRP $\widetilde{R}_{m,n}(t)$ from an available GW exceeds the minimum required signal quality $R_{\min}$.
 Constraint \textbf{C3} mandates that each satellite $n$ must select a GW $m_t^{(n)}$ from the set of currently available GWs $\mathcal{G}_t^{(n)}$ that satisfy C1 and C2.
 
-This problem is characterized by high-dimensional state spaces and complex, time-varying dynamics, making it NP-hard. We therefore model this problem as a MDP to find an optimal FLSO policy using reinforcement learning techniques.
+This problem is characterized by high-dimensional state spaces and complex, time-varying dynamics, making it NP-hard~\cite{singlemachine}. We therefore model this problem as a MDP to find an optimal FLSO policy using RL techniques.
 
 \section{Proposed algorithm}
 \quad To address the problem \textbf{P1}, we transform it into a dynamic programming framework to derive an optimal FLSO policy. We model the FLSO optimization problem as an MDP due to its ability to handle sequential decision-making in dynamic environments.
 
 
 \subsection{MDP modeling}
-\quad The LEO satellite's state \(s_t\) evolves over time and actions \(a_t\) impact future reward \(r_t\) with discount factor \(\gamma\) \cite{intro_RL}. This framework enables the LEO satellite to learn an optimal FLSO policy through reinforcement learning, effectively balancing link quality against network load. The state space \(s_t\) of the MDP is calculated as follows:
+\quad The LEO satellite's state $s_t$ evolves over time and actions $a_t$ impact the future reward $r_t$ with discount factor $\gamma$~\cite{intro_RL}. This MDP formulation enables the agent to jointly account for geometric visibility, link quality, and GW load. At each step $t$, the state of satellite $n$ is defined as
 \begin{align}
-s_t &= \left\{ l_n(t), m_{t-1}, \widetilde{R}_n(t), \lvert\mathcal{L}(t)\rvert \right\}.
+    s_t = \big\{ l_n(t),\, m_{t}^{(n)},\, \widetilde{R}_{m_{t}^{(n)},n}(t),\, c_{m_{t}^{(n)}}(t) \big\},
 \end{align}
-
-The state is defined as a tuple comprising the LEO satellite's ECEF coordinates \(l_n(t)\), the ID of the previously connected GW \( m_{t-1} \), the L3-filtered RSRP from connected GW $\widetilde{R}_n(t)$ and the load from connected GW $\lvert\mathcal{L}(t)\rvert$.
+where $l_n(t)$ denotes the ECEF position of satellite $n$, $m_{t}^{(n)}$ is the index of the serving GW selected at the previous step, $\widetilde{R}_{m_{t}^{(n)},n}(t)$ is the L3-filtered RSRP from that serving GW, and $c_{m_{t}^{(n)}}(t) \in [0,1]$ is the normalized backhaul complexity of the serving GW. The complexity term $c_m(t)$ is obtained by mapping the instantaneous or pre-estimated number of attached satellites at GW $m$ to a dimensionless score in $[0,1]$ via min-max normalization across all GWs, so that higher values indicate more congested GWs. This compact representation provides the DRL agent with a load-aware yet scale-invariant signal, allowing it to avoid persistently overloaded GWs while optimizing FLSO decisions.
 
 The action space \( {a_t} \) involves the LEO satellite $n$ selecting the optimal GW $m \in \mathcal{G}$ at each step. In line with constraints \textbf{C1-C3}, the action space is the set of available GWs that meet the minimum elevation and RSRP thresholds:
 \begin{align}
@@ -133,7 +132,7 @@ The action \(a_t\) is the selection of the next GW, $m_t$, from the set of avail
 
 The immediate reward \(r_{t}\) is formulated to directly optimize the objective function defined in \textbf{P1}. It penalizes FLSO costs and high-load connections while rewarding high-quality RSRP links and connection stability. It is calculated as follows:
 \begin{align}
-r_t &= w_{R} R_{n}(t) + w_{S} ToS_{n}(t) - w_{S} \Big( FS_{n}(t) + UFS_{n}(t) \Big) - w_{L} L_{n}(t),
+r_t &= w_{R} R_{n}(t) - w_{S} \Big( FS_{n}(t) + UFS_{n}(t) - ToS_{n}(t) \Big) - w_{L} L_{n}(t),
 \end{align}
 where the cost and reward components are defined in Eq. \eqref{eq:flso_cost} through \eqref{eq:rsrp_reward}, and the weights are the corresponding weights from \textbf{P1}.
 
@@ -142,9 +141,20 @@ Discount factor $\gamma$ is a value between 0 and 1, which represents the rate a
 \subsection{Proposed dueling DDQN algorithm}
 %복잡도 측면에서 얼마나 걸리는지 설명, GeForce RTX 3080 Ti GPU에서 수 밀리초 내에 행동을 출력할 수 있다.
 \label{Proposed Dueling DDQN Algorithm}
-\quad In this paper, we employ a reinforcement learning algorithm to enable LEO satellites to operate in an dynamic environment. As depicted in Fig.\ref{Fig:system_model2}, the architecture of the proposed dueling DDQN algorithm, incorporating a \(\epsilon\)-greedy policy, is designed to optimize FLSO in LEO satellite networks. The LEO satellite receives feedback to execute actions that sustain both a prolonged ToS and an elevated RSRP, while minimizing the frequency of FLSO and, critically, gateway congestion. We enhance the traditional DQN framework by incorporating DDQN, PER, and dueling DQN to improve stability, learning efficiency, and robustness against noise in LEO satellite communication systems.
+\quad In this paper, we employ a RL algorithm to enable LEO satellites to operate in an dynamic environment. As depicted in Fig.\ref{Fig:system_model2}, the architecture of the proposed dueling DDQN algorithm, incorporating a \(\epsilon\)-greedy policy, is designed to optimize FLSO in LEO satellite networks. The LEO satellite receives feedback to execute actions that sustain both a prolonged ToS and an elevated RSRP, while minimizing the frequency of FLSO and, critically, GW congestion. We enhance the traditional DQN framework by incorporating DDQN, PER, and dueling DQN to improve stability, learning efficiency, and robustness against noise in LEO satellite communication systems.
 
 The DQN algorithm \cite{mnih2013playing} approximates the Q-function \( Q(s_t, a_t; \theta) \), which maps a state \( s_t \) and action \( a_t \) to an expected cumulative reward, using a DNN parameterized by \( \theta \). Two DNNs are utilized: an online network for action selection and a target network for value estimation. The Q-function is trained to minimize the following loss function and loss function is calculated as follows:
+
+\begin{equation}
+L(\theta) = \mathbb{E} \left[ \left( y^{DDQN}_t - Q(s_t, a_t; \theta) \right)^2 \right],
+\label{eq:loss}
+\end{equation}
+where the \(y^{DDQN}_t\) is the target and calculated as follows:
+\begin{equation}
+y^{DDQN}_t = r_t + \gamma \max_a Q(s_{t+1}, \arg\max_{a'} Q(s_{t+1}, a'; \theta); \theta^-),
+\label{eq:ddqn_target}
+\end{equation}
+where \( \theta^- \) represents the parameter of the target network. The target network parameter are updated as \( \theta^- \leftarrow \tau \cdot \theta + (1 - \tau) \cdot \theta^- \), ensuring slow and stable updates to mitigate the moving target problem in the dynamic LEO satellite environment \cite{hazan2019revisiting}.
 
 \begin{figure}[t]
       \centering

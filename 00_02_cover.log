@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  4 NOV 2025 13:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  11 NOV 2025 21:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -611,12 +611,12 @@ File: l3backend-pdftex.def 2025-06-09 L3 backend support: PDF output (pdfTeX)
 LaTeX Warning: Unused global option(s):
     [b5j].
 
-No file 00_02_cover.aux.
+(./00_02_cover.aux)
 \openout1 = `00_02_cover.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/txmi/m/it on input line 43.
 LaTeX Font Info:    Trying to load font information for OML+txmi on input line 43.
-(c:/texlive/2025/texmf-dist/tex/latex/txfonts/omltxmi.fd
+ (c:/texlive/2025/texmf-dist/tex/latex/txfonts/omltxmi.fd
 File: omltxmi.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    ... okay on input line 43.
@@ -712,6 +712,11 @@ Package hyperref Info: Link coloring OFF on input line 43.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
+
+Overfull \hbox (8.68382pt too wide) in paragraph at lines 44--44
+ [] 
+ []
+
 LaTeX Font Info:    Trying to load font information for U+txmia on input line 44.
 (c:/texlive/2025/texmf-dist/tex/latex/txfonts/utxmia.fd
 File: utxmia.fd 2000/12/15 v3.1
@@ -737,6 +742,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 44--44
 [1
 
 {c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc}]
+Overfull \hbox (8.68382pt too wide) in paragraph at lines 45--45
+ [] 
+ []
+
 
 c:/Users/winner/Dropbox/winner/개인폴더/김민식/15.졸업준비/Master_thesis_kms_main/00_02_cover.tex:45: LaTeX Error: There's no line here to end.
 
@@ -813,15 +822,15 @@ L3 programming layer <2025-07-20>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 14881 strings out of 467801
- 229756 string characters out of 5436090
- 656340 words of memory out of 5000000
- 43292 multiletter control sequences out of 15000+600000
+ 14884 strings out of 467801
+ 229816 string characters out of 5436090
+ 656331 words of memory out of 5000000
+ 43293 multiletter control sequences out of 15000+600000
  658043 words of font info for 123 fonts, out of 8000000 for 9000
  1145 hyphenation exceptions out of 8191
  90i,9n,93p,595b,469s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on 00_02_cover.pdf (3 pages, 19384 bytes).
+Output written on 00_02_cover.pdf (3 pages, 19365 bytes).
 PDF statistics:
  27 PDF objects out of 1000 (max. 8388607)
  19 compressed objects within 1 object stream

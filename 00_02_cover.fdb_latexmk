@@ -1,8 +1,8 @@
 # Fdb version 4
-["pdflatex"] 1762232145.37641 "c:/Users/winner/Dropbox/winner/개인폴더/김민식/15.졸업준비/Master_thesis_kms_main/00_02_cover.tex" "00_02_cover.pdf" "00_02_cover" 1762232146.64476 2
-  "00_02_cover.aux" 1762232146 193 0deb6f907074a7845bcf2175a7b7711a "pdflatex"
-  "00_02_cover.tex" 1762232139 1336 8eecebce0e022591ab24c39aa79530b6 ""
-  "c:/Users/winner/Dropbox/winner/개인폴더/김민식/15.졸업준비/Master_thesis_kms_main/00_02_cover.tex" 1762232139 1336 8eecebce0e022591ab24c39aa79530b6 ""
+["pdflatex"] 1762863462.16893 "c:/Users/winner/Dropbox/winner/개인폴더/김민식/15.졸업준비/Master_thesis_kms_main/00_02_cover.tex" "00_02_cover.pdf" "00_02_cover" 1762863463.37032 2
+  "00_02_cover.aux" 1762863463 193 0deb6f907074a7845bcf2175a7b7711a "pdflatex"
+  "00_02_cover.tex" 1762232295 1335 d5aec7b57e39bc464355b73486269d98 ""
+  "c:/Users/winner/Dropbox/winner/개인폴더/김민식/15.졸업준비/Master_thesis_kms_main/00_02_cover.tex" 1762232295 1335 d5aec7b57e39bc464355b73486269d98 ""
   "c:/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1754360213 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "c:/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1754360594 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmr12.tfm" 1754359703 1288 655e228510b4c2a1abe905c368440826 ""
@@ -105,7 +105,10 @@
   "c:/texlive/2025/texmf-dist/tex/latex/url/url.sty" 1754363862 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "c:/texlive/2025/texmf-dist/tex/latex/xcolor/xcolor.sty" 1754364005 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "c:/texlive/2025/texmf-dist/tex/plain/kotex-plain/kotexutf-core.tex" 1754361308 22796 cdbc6dbba903a5287c558339ae446988 ""
+  "c:/texlive/2025/texmf-dist/web2c/texmf.cnf" 1754358860 42213 4e2ca030e8e2640502016e9e45868dcb ""
   "c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1754364190 5574045 c1864b6d576eca8ff04839113c3d8c41 ""
+  "c:/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1754364335 3605799 98278cc6cc8de0d216c1875605257849 ""
+  "c:/texlive/2025/texmf.cnf" 1754364167 713 e69b156964470283e0530f5060668171 ""
   "classfile/cover_ajou-ucs-lsh.cls" 1754382804 50304 852b9245729e5c7fd57ecd8a3f3caa39 ""
   (generated)
   "00_02_cover.aux"

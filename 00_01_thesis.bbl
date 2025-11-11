@@ -24,19 +24,16 @@
 L.~Lei, E.~Lagunas, S.~Chatzinotas, and B.~Ottersten, ``Broadband {LEO} satellite communications: Architectures and key technologies,'' \emph{IEEE Wireless Communications}, vol.~26, no.~2, pp. 122--129, 2019.
 
 \bibitem{3gppfeeder}
-{3GPP}, ``Study on {NR} to support non-terrestrial networks ({NTN}),'' 3rd Generation Partnership Project (3GPP), Tech. Rep. TR 38.821, Mar. 2023.
+``{Technical Specification Group Radio Access Network; Study on NR to Support Non-Terrestrial Networks (NTN); Version 16.4.0},'' 3GPP standard TR 38.821, Mar. 2023.
 
 \bibitem{ho_latency}
 M.~Tayyab, X.~Gelabert, and R.~J{\"a}ntti, ``A survey on handover management: From {LTE} to {NR},'' \emph{IEEE Access}, vol.~7, pp. 118\,907--118\,930, 2019.
 
 \bibitem{rel_38413}
-``{Technical Specification Group Radio Access Network (Release 19)},'' \emph{3GPP TS 38.413 V19.0.0}, 2025.
-
-\bibitem{rel_38821}
-``{Solutions for NR to support non-terrestrial networks(NTN) (Release 16)},'' \emph{3GPP TR 38.821 V16.2.0}, 2023.
+``{Technical Specification Group Radio Access Network; NR; NG-RAN; NG Application Protocol (NGAP); Version 19.0.0},'' 3GPP Standard TS 38.413, 2025.
 
 \bibitem{rel_38331}
-``{NR; Radio Resource Control (RRC); Protocol specification (Release 18)},'' \emph{3GPP TS 38.331 V18.3.0}, 2024.
+``{Technical Specification Group Radio Access Network; NR; Radio Resource Control (RRC); Protocol Specification; Version 18.3.0},'' 3GPP Standard TS 38.331, 2024.
 
 \bibitem{roth2022sdn}
 M.~M.~H. Roth, H.~Brandt, and H.~Bischl, ``Distributed {SDN}-based load-balanced routing for low earth orbit satellite constellation networks,'' \emph{arXiv preprint arXiv:2209.05984}, 2022.
@@ -50,16 +47,25 @@ S.~Liu, J.~Liu, and B.~Xia, ``Adaptive timescale load balancing routing algorith
 \bibitem{wang2016dueling}
 Z.~Wang, T.~Schaul, M.~Hessel, H.~Van~Hasselt, M.~Lanctot, and N.~De~Freitas, ``Dueling network architectures for deep reinforcement learning,'' in \emph{Proc. Int. Conf. on Machine Learning (ICML)}.\hskip 1em plus 0.5em minus 0.4em\relax PMLR, 2016, pp. 1995--2003.
 
+\bibitem{drl_handover}
+J.-H. Lee, C.~Park, S.~Park, and A.~F. Molisch, ``Handover protocol learning for leo satellite networks: Access delay and collision minimization,'' \emph{IEEE Transactions on Wireless Communications}, vol.~23, no.~7, pp. 7624--7637, 2024.
+
 \bibitem{s23125448}
 \BIBentryALTinterwordspacing
 Y.~Zhou, J.~Liu, R.~Zhang, M.~Ouyang, and T.~Huang, ``A novel feeder link handover strategy for backhaul in leo satellite networks,'' \emph{Sensors}, vol.~23, no.~12, 2023. [Online]. Available: \url{https://www.mdpi.com/1424-8220/23/12/5448}
 \BIBentrySTDinterwordspacing
 
 \bibitem{3gppchanel}
-{3GPP}, ``Study on new radio ({NR}) to support non-terrestrial networks ({NTN}),'' 3rd Generation Partnership Project (3GPP), Tech. Rep. TR 38.811, Sep. 2020.
+``{Technical Specification Group Radio Access Network; Study on New Radio (NR) to Support Non-Terrestrial Networks (NTN); Version 15.4.0},'' 3GPP standard TR 38.811, Sep. 2020.
+
+\bibitem{FCC22-91}
+{FCC}, ``Space exploration holdings, llc -- request for orbital deployment and operating authority for the spacex gen2 ngso satellite system,'' Federal Communications Commission, Washington, DC, USA, Tech. Rep., Nov. 2022.
 
 \bibitem{3gppl3}
-------, ``Radio access network; rrc; utran; signaling (release 18),'' 3rd Generation Partnership Project (3GPP), Sophia Antipolis, France, Tech. Spec. TS 25.331, Mar. 2024.
+``{Technical Specification Group Radio Access Network; Radio Resource Control (RRC); UTRAN; Signalling; Version 18.0.0},'' 3GPP Standard TS 25.331, Mar. 2024.
+
+\bibitem{singlemachine}
+M.~Al-Romema and M.~A.~Makarem, ``Enhancing evolutionary solver efficiency for {NP}-hard single machine scheduling problems,'' \emph{Int. J. Sci. Res. (IJSR)}, vol.~12, no.~11, pp. 2015--2025, Nov. 2023.
 
 \bibitem{intro_RL}
 V.~Mnih, K.~Kavukcuoglu, D.~Silver, A.~A. Rusu, J.~Veness, M.~G. Bellemare, A.~Graves, M.~Riedmiller, A.~K. Fidjeland, G.~Ostrovski \emph{et~al.}, ``Human-level control through deep reinforcement learning,'' \emph{Nature}, vol. 518, no. 7540, pp. 529--533, 2015.
@@ -67,7 +73,13 @@ V.~Mnih, K.~Kavukcuoglu, D.~Silver, A.~A. Rusu, J.~Veness, M.~G. Bellemare, A.~G
 \bibitem{mnih2013playing}
 V.~Mnih, K.~Kavukcuoglu, D.~Silver, A.~Graves, I.~Antonoglou, D.~Wierstra, and M.~Riedmiller, ``Playing {Atari} with deep reinforcement learning,'' \emph{arXiv}, 2013.
 
+\bibitem{hazan2019revisiting}
+E.~Hazan and S.~Kakade, ``Revisiting the polyak step size,'' \emph{arXiv}, 2019.
+
 \bibitem{schaul2015prioritized}
 T.~Schaul, J.~Quan, I.~Antonoglou, and D.~Silver, ``Prioritized experience replay,'' \emph{arXiv}, 2015.
+
+\bibitem{FCC2020}
+{FCC}, ``Application for earth station authorizations,'' Federal Communications Commission, Washington, DC, USA, Tech. Rep. SES-LIC-INTR2020-03068, Oct. 2020.
 
 \end{thebibliography}
