@@ -58,8 +58,8 @@ Y.~Zhou, J.~Liu, R.~Zhang, M.~Ouyang, and T.~Huang, ``A novel feeder link handov
 \bibitem{3gppchanel}
 ``{Technical Specification Group Radio Access Network; Study on New Radio (NR) to Support Non-Terrestrial Networks (NTN); Version 15.4.0},'' 3GPP standard TR 38.811, Sep. 2020.
 
-\bibitem{FCC22-91}
-{FCC}, ``Space exploration holdings, llc -- request for orbital deployment and operating authority for the spacex gen2 ngso satellite system,'' Federal Communications Commission, Washington, DC, USA, Tech. Rep., Nov. 2022.
+\bibitem{ITU-R-P.676-13}
+{ITU-R}, ``{Recommendation ITU-R P.676-13}: Attenuation by atmospheric gases and related effects,'' International Telecommunication Union, Geneva, Switzerland, Tech. Rep., Aug. 2022.
 
 \bibitem{3gppl3}
 ``{Technical Specification Group Radio Access Network; Radio Resource Control (RRC); UTRAN; Signalling; Version 18.0.0},'' 3GPP Standard TS 25.331, Mar. 2024.
@@ -80,6 +80,9 @@ E.~Hazan and S.~Kakade, ``Revisiting the polyak step size,'' \emph{arXiv}, 2019.
 T.~Schaul, J.~Quan, I.~Antonoglou, and D.~Silver, ``Prioritized experience replay,'' \emph{arXiv}, 2015.
 
 \bibitem{FCC2020}
-{FCC}, ``Application for earth station authorizations,'' Federal Communications Commission, Washington, DC, USA, Tech. Rep. SES-LIC-INTR2020-03068, Oct. 2020.
+FCC, ``Application for earth station authorizations,'' Federal Communications Commission, Washington, DC, USA, Tech. Rep. SES-LIC-INTR2020-03068, Oct. 2020.
+
+\bibitem{FCC22-91}
+{FCC}, ``Space exploration holdings, llc -- request for orbital deployment and operating authority for the spacex gen2 ngso satellite system,'' Federal Communications Commission, Washington, DC, USA, Tech. Rep., Nov. 2022.
 
 \end{thebibliography}

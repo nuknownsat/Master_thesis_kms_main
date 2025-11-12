@@ -22,7 +22,7 @@ where \( EIRP_{m} \) is the EIRP of the GW \( m \), defined as \( EIRP_{m} = P_{
 &PL_{m,n} = P_{{LOS,{m,n}}} \big( FSPL_{m,n}(d_{m,n}, f_m) + SF_{m,n} \big)\notag\\
 &\quad + P_{{NLOS,{m,n}}} \big( FSPL_{m,n}(d_{m,n}, f_m) + SF_{m,n} + CL_{m,n}  \big) + AT_{m,n},
 \end{align}
-$P_{{LOS,{m,n}}}$ and $P_{{NLOS,{m,n}}}$ denote the probabilities that the LEO satellite \( n \) to GW \( m \) is in a LOS and NLOS condition, respectively. $FSPL_{m,n}(d_{m,n}, f_m)$ denotes the FSPL as a function of the distance $d_{m,n}$ between the LEO satellite \( n \) and the GW \( m \) and the frequency $f_m$ of the GW \( m \) uplink feeder link frequency. $SF_{m,n}$ represents the shadow fading, which accounts for the signal attenuation caused by obstacles such as buildings, trees, or terrain variations in the propagation path. $CL_{m,n}$ denotes the clutter loss, reflecting additional signal degradation due to environmental clutter. $AT_{m,n}$ captures atmospheric attenuation along the feeder link slant path, including gaseous absorption due to dry air and water vapor, and it can be obtained from standard ITU-R models for the considered band~\cite{FCC22-91}. Specifically, the $FSPL_{m,n}$ is calculated as follows:
+$P_{{LOS,{m,n}}}$ and $P_{{NLOS,{m,n}}}$ denote the probabilities that the LEO satellite \( n \) to GW \( m \) is in a LOS and NLOS condition, respectively. $FSPL_{m,n}(d_{m,n}, f_m)$ denotes the FSPL as a function of the distance $d_{m,n}$ between the LEO satellite \( n \) and the GW \( m \) and the frequency $f_m$ of the GW \( m \) uplink feeder link frequency. $SF_{m,n}$ represents the shadow fading, which accounts for the signal attenuation caused by obstacles such as buildings, trees, or terrain variations in the propagation path. $CL_{m,n}$ denotes the clutter loss, reflecting additional signal degradation due to environmental clutter. $AT_{m,n}$ captures atmospheric attenuation along the feeder link slant path, including gaseous absorption due to dry air and water vapor, and it can be obtained from standard ITU-R models for the considered band~\cite{ITU-R-P.676-13}. Specifically, the $FSPL_{m,n}$ is calculated as follows:
 % 한글 주석: 경로손실 식에 대기 감쇄 AT_{m,n}를 추가하여 LOS/NLOS 모두에 반영합니다. (기체 흡수 등, ITU-R 모델 기반 계산 가능)
 \begin{equation}
 FSPL_{m,n} = 32.45 + 20\log_{10}(f_m) + 20\log_{10}(d_{m,n}).
@@ -56,7 +56,7 @@ where $a \in (0,1)$ is the L3 forgetting factor, defined as $a = \left(\frac{1}{
 \section{Problem formulation}
 \quad In this section, we address the optimization problem for the LEO satellite constellation. The objective is to find an optimal FLSO policy $\pi$ that dynamically assigns each satellite $n \in \mathcal{S}$ to a GW $m \in \mathcal{G}$ at each time slot $t$.
 
-The primary goal is to minimize the overall network load imbalance while simultaneously maximizing the collective link quality RSRP and minimizing the instability caused by frequent FLSOs. We define $m_t^{(n)}$ as the GW selected by satellite $n$ at time $t$. This problem can be formulated as a multi-objective optimization problem.
+The primary goal is to minimize the overall network load imbalance while simultaneously maximizing the collective link quality RSRP and minimizing the instability caused by frequent FLSOs. We define $m_t^{(n)}$ as the GW selected by satellite $n$ at time $t$. This problem can be formulated as a multi objective optimization problem.
 
 We define the following cost and reward components for each satellite $n$ at time $t$:
 
@@ -79,11 +79,7 @@ We define the following cost and reward components for each satellite $n$ at tim
     \label{eq:tos_reward}
     \end{equation}
 
-    \item \textbf{Load Imbalance Cost:} A cost is incurred for connecting to a congested GW, proportional to the number of satellites already connected. This cost is central to our problem.
-    \begin{equation}
-    L_{m,n}(t) = \lvert \mathcal{L}_{m_t^{(n)}}(t) \rvert.
-    \label{eq:load_cost}
-    \end{equation}
+    \item \textbf{Load Imbalance Cost:} A cost $\lvert \mathcal{L}_m(t) \rvert$ is incurred for connecting to a congested GW, proportional to the number of satellites already connected.
     
     \item \textbf{Link Quality Reward:} A reward is gained based on the L3-filtered RSRP from the selected GW.
     \begin{equation}
@@ -96,7 +92,7 @@ The global optimization problem \textbf{P1} is to find the policy $\pi$ that min
 
 \begin{align}
 & \textbf{P1:}\quad \operatorname*{\min}_{\pi} \mathbb{E} \sum_{t=0}^{T} \sum_{n=1}^{N} \sum_{m=1}^{M} \gamma^t \left[ w_{S} \Big( FS_{m,n}(t) + UFS_{m,n}(t) - ToS_{m,n}(t) \Big) \right. \notag \\
-& \hspace{10em} \left. + w_{L} L_{m,n}(t) - w_{R} R_{m,n}(t) \right],\\
+& \hspace{10em} \left. + w_{L} \lvert \mathcal{L}_m(t) \rvert - w_{R} R_{m,n}(t) \right],\\
 & \quad \text{s.t.} \nonumber \\
 & \quad \textbf{C1 :}\quad \theta_{m,n}(t) \geq \theta_{\text {min}}, \quad \forall{n}, \forall{m} \in \mathcal{G}_t^{(n)}, \forall{t},\\
 & \quad \textbf{C2 :}\quad \widetilde R_{m,n}(t) \geq R_{\text {min}}, \quad \forall{n}, \forall{m} \in \mathcal{G}_t^{(n)}, \forall{t},\\
@@ -119,9 +115,9 @@ This problem is characterized by high-dimensional state spaces and complex, time
 \subsection{MDP modeling}
 \quad The LEO satellite's state $s_t$ evolves over time and actions $a_t$ impact the future reward $r_t$ with discount factor $\gamma$~\cite{intro_RL}. This MDP formulation enables the agent to jointly account for geometric visibility, link quality, and GW load. At each step $t$, the state of satellite $n$ is defined as
 \begin{align}
-    s_t = \big\{ l_n(t),\, m_{t}^{(n)},\, \widetilde{R}_{m_{t}^{(n)},n}(t),\, c_{m_{t}^{(n)}}(t) \big\},
+    s_t = \big\{ l_n(t),\, m_{t},\, \widetilde{R}_{m,n}(t),\, c_{m}(t) \big\},
 \end{align}
-where $l_n(t)$ denotes the ECEF position of satellite $n$, $m_{t}^{(n)}$ is the index of the serving GW selected at the previous step, $\widetilde{R}_{m_{t}^{(n)},n}(t)$ is the L3-filtered RSRP from that serving GW, and $c_{m_{t}^{(n)}}(t) \in [0,1]$ is the normalized backhaul complexity of the serving GW. The complexity term $c_m(t)$ is obtained by mapping the instantaneous or pre-estimated number of attached satellites at GW $m$ to a dimensionless score in $[0,1]$ via min-max normalization across all GWs, so that higher values indicate more congested GWs. This compact representation provides the DRL agent with a load-aware yet scale-invariant signal, allowing it to avoid persistently overloaded GWs while optimizing FLSO decisions.
+where $l_n(t)$ denotes the ECEF position of satellite $n$, $m_{t}$ is the index of the serving GW selected at the current step, $\widetilde{R}_{m,n}(t)$ is the L3-filtered RSRP from that serving GW, and $c_{m}(t) \in [0,1]$ is the normalized backhaul complexity of the serving GW. The complexity term $c_m(t)$ is obtained by mapping the instantaneous or pre-estimated number of attached satellites at GW $m$ to a dimensionless score in $[0,1]$ via min-max normalization across all GWs, so that higher values indicate more congested GWs. This compact representation provides the DRL agent with a load-aware yet scale-invariant signal, allowing it to avoid persistently overloaded GWs while optimizing FLSO decisions.
 
 The action space \( {a_t} \) involves the LEO satellite $n$ selecting the optimal GW $m \in \mathcal{G}$ at each step. In line with constraints \textbf{C1-C3}, the action space is the set of available GWs that meet the minimum elevation and RSRP thresholds:
 \begin{align}
@@ -130,9 +126,9 @@ The action space \( {a_t} \) involves the LEO satellite $n$ selecting the optima
 
 The action \(a_t\) is the selection of the next GW, $m_t$, from the set of available GWs \( \mathcal{G}_{t}^{(n)} \).
 
-The immediate reward \(r_{t}\) is formulated to directly optimize the objective function defined in \textbf{P1}. It penalizes FLSO costs and high-load connections while rewarding high-quality RSRP links and connection stability. It is calculated as follows:
+The immediate reward \(r_{t}\) is formulated to directly optimize the objective function defined in \textbf{P1}. It penalizes FLSO costs and high load connections while rewarding high quality RSRP links and connection stability. It is calculated as follows:
 \begin{align}
-r_t &= w_{R} R_{n}(t) - w_{S} \Big( FS_{n}(t) + UFS_{n}(t) - ToS_{n}(t) \Big) - w_{L} L_{n}(t),
+r_t &= w_{R} R_{m,n}(t) - w_{S} \Big( FS_{m,n}(t) + UFS_{m,n}(t) - ToS_{m,n}(t) \Big) - w_{L} c_{m}(t),
 \end{align}
 where the cost and reward components are defined in Eq. \eqref{eq:flso_cost} through \eqref{eq:rsrp_reward}, and the weights are the corresponding weights from \textbf{P1}.
 
@@ -156,7 +152,7 @@ y^{DDQN}_t = r_t + \gamma \max_a Q(s_{t+1}, \arg\max_{a'} Q(s_{t+1}, a'; \theta)
 \end{equation}
 where \( \theta^- \) represents the parameter of the target network. The target network parameter are updated as \( \theta^- \leftarrow \tau \cdot \theta + (1 - \tau) \cdot \theta^- \), ensuring slow and stable updates to mitigate the moving target problem in the dynamic LEO satellite environment \cite{hazan2019revisiting}.
 
-\begin{figure}[t]
+\begin{sidewaysfigure}[p]
       \centering
       % If the image is missing, show a placeholder box instead of failing the build
       \IfFileExists{figure/dueling_dqn_archi.png}{%
@@ -166,7 +162,7 @@ where \( \theta^- \) represents the parameter of the target network. The target 
       }
       \caption{The architecture of the proposed dueling DDQN for FLSO optimization in LEO satellite networks.}
       \label{Fig:system_model2}
- \end{figure}
+ \end{sidewaysfigure}
 
 To improve robustness against random noise, such as channel shadow fading, we utilize a dueling DQN \cite{wang2016dueling}. The dueling DQN architecture enhances the traditional DQN by splitting the Q-function into two separate streams: the state-value function \( V(s; \theta) \) and the advantage function \( A(s, a; \theta) \). The Q-function is then calculated as follows:
 \begin{align}
