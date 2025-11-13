@@ -4,18 +4,17 @@
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Feeder link architectures for transparent satellite}}{5}{figure.caption.5}%
 \contentsline {figure}{\numberline {2.2}{\ignorespaces Feeder link architectures for regenerative satellite}}{6}{figure.caption.6}%
 \contentsline {figure}{\numberline {2.3}{\ignorespaces Packet loss during FLSO process}}{7}{figure.caption.7}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Load balancing in LEO satellite networks}}{11}{figure.caption.9}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces DRL framework}}{13}{figure.caption.10}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces DRL framework}}{12}{figure.caption.9}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Network scenario of a LEO satellite performing FLSO while across Starlink GWs in the United States.}}{16}{figure.caption.11}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces The architecture of the proposed dueling DDQN for FLSO optimization in LEO satellite networks.}}{25}{figure.caption.12}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Network scenario of a LEO satellite performing FLSO while across Starlink GWs in the United States.}}{16}{figure.caption.10}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces The architecture of the proposed dueling DDQN for FLSO optimization in LEO satellite networks.}}{25}{figure.caption.11}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Satellite--GW association complexity comparison (normalized satellites per GW).}}{29}{figure.caption.13}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Average reward over episodes for the proposed and DQN-based FLSO.}}{35}{figure.caption.15}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Average number of FLSO for the proposed, DQN-based, distance-based, and signal-based FLSO.}}{36}{figure.caption.16}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Average number of UFLSO for the proposed, DQN-based, distance-based, and signal-based FLSO.}}{38}{figure.caption.17}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Average ToS for the proposed, DQN-based, distance-based, and signal-based FLSO.}}{39}{figure.caption.18}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Average RSRP for the proposed, DQN-based, distance-based, and signal-based FLSO.}}{40}{figure.caption.19}%
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Average satellites per GW for the proposed, DQN-based, distance-based, and signal-based FLSO.}}{42}{figure.caption.20}%
-\contentsline {figure}{\numberline {4.8}{\ignorespaces CDF of average satellites per GW for the proposed, DQN-based, distance-based, and signal-based FLSO.}}{44}{figure.caption.21}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Satellite--GW association complexity comparison (normalized satellites per GW).}}{29}{figure.caption.12}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Average reward over episodes for the proposed and DQN-based FLSO.}}{35}{figure.caption.14}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Average number of FLSO for the proposed, DQN-based, distance-based, and signal-based FLSO.}}{36}{figure.caption.15}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Average number of UFLSO for the proposed, DQN-based, distance-based, and signal-based FLSO.}}{38}{figure.caption.16}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Average ToS for the proposed, DQN-based, distance-based, and signal-based FLSO.}}{39}{figure.caption.17}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Average RSRP for the proposed, DQN-based, distance-based, and signal-based FLSO.}}{40}{figure.caption.18}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Average satellites per GW for the proposed, DQN-based, distance-based, and signal-based FLSO.}}{42}{figure.caption.19}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces CDF of average satellites per GW for the proposed, DQN-based, distance-based, and signal-based FLSO.}}{44}{figure.caption.20}%
 \addvspace {10\p@ }
