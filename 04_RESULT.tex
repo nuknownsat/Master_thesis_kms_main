@@ -53,7 +53,7 @@ MTS & 1 [s] \\
 L3 filter forgetting factor $a$ & $(\tfrac{1}{2})^{K/4}$ \\
 L3 filter coefficient $K$ & 4 \\
 Distance thresholds $\Delta d_{\mathrm{th}}$ & 0, 30 [km] \\
-A3 event $offset$ & 2, 4 [dB] \\
+A3 event $\Delta R_{\text{offset}}$ & 2, 4 [dB] \\
 \hline
 \textbf{RL Parameter} & \textbf{Value} \\
 \hline
@@ -73,17 +73,25 @@ The compared FLSO schemes are defined as follows.
 % 비교된 FLSO 방식은 다음과 같이 정의됩니다.
 
 \begin{itemize}
-    \item \textbf{Signal-based FLSO}: This scheme adapts the conventional A3 event-based HO rule to feeder link selection. A FLSO event is triggered when the RSRP of a target GW exceeds that of the serving GW by more than a configured offset, so different offsets realize different hysteresis levels. In our evaluation, we consider two representative configurations: an offset of $2~\text{dB}$, which we denote \textit{Set~1}, and $4~\text{dB}$, which we denote \textit{Set~2}, corresponding to moderately and strongly conservative trigger conditions, respectively. While this approach is compatible with existing new radio (NR) measurement procedures, it relies solely on instantaneous or filtered signal strength and does not exploit geometric predictability or GW load information.
+    \item \textbf{Signal-based FLSO}: This scheme adapts the conventional A3 event-based HO rule to feeder link selection. A FLSO event is triggered when the RSRP of a target GW exceeds that of the serving GW by more than a configured offset. Formally, a switchover from the serving GW $m_{\text{serv}}$ to a target GW $m_{\text{target}}$ occurs at time $t$ if
+    \begin{equation}
+    \widetilde{R}_{m_{\text{target}},n}(t) > \widetilde{R}_{m_{\text{serv}},n}(t) + \Delta R_{\text{offset}},
+    \end{equation}
+    where $\widetilde{R}_{m,n}(t)$ is the L3-filtered RSRP from GW $m$ to satellite $n$, and $\Delta R_{\text{offset}}$ is the hysteresis margin in dB. Different offsets realize different hysteresis levels. In our evaluation, we consider two representative configurations: an offset of $\Delta R_{\text{offset}} = 2~\text{dB}$, which we denote \textit{Set~1}, and $\Delta R_{\text{offset}} = 4~\text{dB}$, which we denote \textit{Set~2}, corresponding to moderately and strongly conservative trigger conditions, respectively. While this approach is compatible with existing new radio (NR) measurement procedures, it relies solely on instantaneous or filtered signal strength and does not exploit geometric predictability or GW load information.
     % 신호 기반 FLSO: 이 방식은 기존의 A3 이벤트 기반 HO 규칙을 피더 링크 선택에 적용합니다. FLSO 이벤트는 대상 GW의 RSRP가 서빙 GW의 RSRP를 구성된 오프셋보다 초과할 때 트리거됩니다. 다른 오프셋은 다른 히스테리시스 수준을 실현합니다. 이 접근 방식은 기존 NR 측정 절차와 호환되지만, 순간적이거나 필터링된 신호 강도에만 의존하며 기하학적 예측 가능성이나 GW 부하 정보를 활용하지 않습니다.
     
-    \item \textbf{Distance-based FLSO}: This heuristic selects the GW with the minimum geometric distance to the satellite. A FLSO event is triggered when the distance to a target GW becomes shorter than that to the serving GW by at least a configured gap $\Delta d_{\mathrm{th}}$, which can be interpreted as a special case of the dual threshold distance-based framework (Events D1/D2 in~\cite{rel_38331}) with thresholds and hysteresis chosen to reduce to a simple distance-gap rule. In our evaluation, we consider two representative configurations: $\Delta d_{\mathrm{th}} = 0~\text{km}$, denoted \textit{Set~3}, corresponding to an aggressive closest GW selection, and $\Delta d_{\mathrm{th}} = 30~\text{km}$, denoted \textit{Set~4}, enforcing a more conservative gap to suppress frequent switchovers. This provides a standard aligned yet purely geometry-driven feeder link selection baseline.
+    \item \textbf{Distance-based FLSO}: This heuristic selects the GW with the minimum geometric distance to the satellite. A FLSO event is triggered when the distance to a target GW becomes shorter than that to the serving GW by at least a configured gap $\Delta d_{\mathrm{th}}$. Formally, a switchover from the serving GW $m_{\text{serv}}$ to a target GW $m_{\text{target}}$ occurs at time $t$ if
+    \begin{equation}
+    d_{m_{\text{target}},n}(t) < d_{m_{\text{serv}},n}(t) - \Delta d_{\mathrm{th}},
+    \end{equation}
+    where $d_{m,n}(t)$ is the Euclidean distance between GW $m$ and satellite $n$ at time $t$, and $\Delta d_{\mathrm{th}} \geq 0$ is the hysteresis gap in km. This can be interpreted as a special case of the dual threshold distance-based framework (Events D1/D2 in~\cite{rel_38331}) with thresholds and hysteresis chosen to reduce to a simple distance-gap rule. In our evaluation, we consider two representative configurations: $\Delta d_{\mathrm{th}} = 0~\text{km}$, denoted \textit{Set~3}, corresponding to an aggressive closest GW selection, and $\Delta d_{\mathrm{th}} = 30~\text{km}$, denoted \textit{Set~4}, enforcing a more conservative gap to suppress frequent switchovers. This provides a standard aligned yet purely geometry-driven feeder link selection baseline.
     % 거리 기반 FLSO: 이 휴리스틱은 위성에 가장 가까운 기하학적 거리를 가진 GW를 선택합니다. FLSO 이벤트는 대상 GW까지의 거리가 서빙 GW까지의 거리보다 미리 정의된 간격 $\Delta d_{\mathrm{th}}$ 이상으로 짧아질 때 트리거됩니다. 이 규칙은 3GPP 이중 임계값 거리 기반 프레임워크(TS 38.331의 이벤트 D1/D2)의 특별한 경우로 해석될 수 있으며, 여기서 임계값과 히스테리시스는 진입 조건이 서빙 게이트웨이와 후보 게이트웨이 간의 거리-간격 제약으로 축소되도록 선택됩니다. 따라서 이는 표준에 부합하지만 순전히 기하학적으로 구동되는 피더 링크 선택 기준선을 제공합니다.
     
     
     \item \textbf{DQN-based FLSO}: The DQN baseline is trained using the same state, action, and reward definitions as the proposed dueling DQN agent, but with a conventional single stream Q-network. Learning uses TD updates with experience replay and a target network. After training, the learned Q-network is frozen and evaluated without further exploration.
     % DQN 기반 FLSO: DQN 기준 모델은 제안된 듀얼링 DQN 에이전트와 동일한 상태, 행동, 보상 정의를 사용하여 훈련되지만, 일반적인 단일 스트림 Q-네트워크(듀얼링 아키텍처 없음)를 사용합니다. 학습은 경험 리플레이와 타겟 네트워크를 이용한 시간차 업데이트를 사용합니다. 훈련 후, 학습된 Q-네트워크는 고정되어 더 이상의 탐색 없이 평가됩니다.
 
-    \item \textbf{Proposed FLSO}: We cast GW selection for FLSO as an MDP and learn a dueling DDQN policy. The state stacks ephemeris-aware geometry, L3-filtered RSRP, and GW load indicators, while the reward balances link quality and load equalization with explicit switching penalties. The resulting policy is jointly distance-aware, link-quality-aware, and load-aware without hand-tuned thresholds, effectively suppressing UFLSOs and equalizing feeder link load across GWs, all while remaining compatible with standardized measurement abstractions.
+    % \item \textbf{Proposed FLSO}: We cast GW selection for FLSO as an MDP and learn a dueling DDQN policy. The state stacks ephemeris-aware geometry, L3-filtered RSRP, and GW load indicators, while the reward balances link quality and load equalization with explicit switching penalties. The resulting policy is jointly distance-aware, link-quality-aware, and load-aware without hand-tuned thresholds, effectively suppressing UFLSOs and equalizing feeder link load across GWs, all while remaining compatible with standardized measurement abstractions.
     % \item \textbf{Proposed FLSO (dueling-DDQN)}: FLSO를 위한 GW 선택 문제를 MDP로 정식화하고 dueling DDQN 정책을 학습한다. 상태는 천체력(ephemeris)을 고려한 기하 정보, L3 필터링된 RSRP, 그리고 GW 부하 지표를 결합하며, 보상은 명시적 스위칭 패널티와 함께 링크 품질과 부하 균등화를 균형 있게 반영한다. 그 결과, 수동 임계값 조정 없이 거리·링크 품질·부하를 동시에 고려하는 정책을 학습하여 UFLSO를 효과적으로 억제하고 GW 전반의 피더 링크 부하를 균등화하며, 표준화된 측정 추상화와의 호환성을 유지한다.
 
 \end{itemize}

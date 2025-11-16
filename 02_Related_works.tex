@@ -8,24 +8,24 @@ However with LEO satellites, the satellite GW association itself becomes time va
 % 하지만 LEO 위성에서는 위성-게이트웨이 연계가 시간에 따라 변하고 NG 인터페이스가 위성 이동을 추적해야 합니다.
 As a result, 3GPP has begun to define explicit NG interface mobility and FLSO procedures for NTN, extending beyond conventional UE HO mechanisms to support this new form of dynamic connectivity \cite{rel_38413}.
 % 따라서 3GPP는 기존의 UE 핸드오버 메커니즘을 넘어 이 새로운 형태의 동적 연결성을 지원하기 위해 NTN용 NG 인터페이스 이동성과 FLSO 절차를 명확히 정의하기 시작했습니다.
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=1\linewidth]{figure/fig_sat_flso_trans.png}
-    \caption{Feeder link architectures for transparent satellite}
-    \label{fig:flso_arch_trans}
-\end{figure}
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[width=1\linewidth]{figure/fig_sat_flso_trans.png}
+%     \caption{Feeder link architectures for transparent satellite}
+%     \label{fig:flso_arch_trans}
+% \end{figure}
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=1\linewidth]{figure/fig_sat_flso_reg.png}
-    \caption{Feeder link architectures for regenerative satellite}
-    \label{fig:flso_arch_reg}
-\end{figure}
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[width=1\linewidth]{figure/fig_sat_flso_reg.png}
+%     \caption{Feeder link architectures for regenerative satellite}
+%     \label{fig:flso_arch_reg}
+% \end{figure}
 In this context, the satellite payload architecture directly determines how this new mobility management translates into UE HO.
 % 아키텍처는 HO 절차에 직접적인 영향을 줍니다.
-As shown in Fig. \ref{fig:flso_arch_trans}, for transparent satellites, the gNB is located at the ground GW and UEs are served via the service link. When an FLSO changes the serving GW and the associated gNB, this backhaul level mobility is exposed to the access side, and a corresponding UE HO is triggered.
+For transparent satellites, the gNB is located at the ground GW and UEs are served via the service link. When an FLSO changes the serving GW and the associated gNB, this backhaul level mobility is exposed to the access side, and a corresponding UE HO is triggered.
 
-In contrast, as shown in Fig. \ref{fig:flso_arch_reg}, a regenerative satellite has an on-board gNB. In this case, the UE remains anchored to the same gNB even if the feeder link is switched between different GWs, so an FLSO does not inherently require a UE HO. Instead, the impact of mobility is confined to the backhaul domain. Two practical FLSO execution modes are considered: hard FLSO, where the existing feeder link is released before the new one is established, and soft FLSO, where the new feeder link is established prior to releasing the old one.
+In contrast, a regenerative satellite has an on-board gNB. In this case, the UE remains anchored to the same gNB even if the feeder link is switched between different GWs, so an FLSO does not inherently require a UE HO. Instead, the impact of mobility is confined to the backhaul domain. Two practical FLSO execution modes are considered: hard FLSO, where the existing feeder link is released before the new one is established, and soft FLSO, where the new feeder link is established prior to releasing the old one.
 % 또한 그림 \ref{fig:flso_arch_trans} 에서 보듯이, 아키텍처는 HO 절차에 직접적인 영향을 줍니다.
 % 투명(transparent) 위성은 gNB가 지상 GW에 위치해 서비스 링크로 UE와 통신하므로,
 % GW마다 연동된 gNB가 다를 경우 FLSO가 UE HO를 유발합니다.
@@ -145,18 +145,18 @@ As reviewed in Section 2.1, conventional FLSO strategies tend to rely solely on 
 
 \section[RL for LEO Mobility Management]{RL for LEO Mobility Management}
 \label{sec:rl_mobility}
-\quad As shown in Fig. \ref{fig:drl_mdp}, agent learns control policies through interaction with an environment: at each decision step the agent observes a state, selects an action, receives a scalar reward, and transitions to the next state \cite{wang2016dueling}. The objective is to learn a policy that maximizes the discounted long-term return. 
+\quad The agent learns control policies through interaction with an environment: at each decision step the agent observes a state, selects an action, receives a scalar reward, and transitions to the next state \cite{wang2016dueling}. The objective is to learn a policy that maximizes the discounted long-term return. 
 % DRL은 환경과의 상호작용을 통해 정책을 학습합니다. 매 결정 시점마다 에이전트는 상태를 관측하고 행동을 선택하며 보상을 받은 뒤 다음 상태로 전이합니다.
 % 목표는 할인된 장기 누적 보상을 극대화하는 정책을 학습하는 것입니다. 본 문제를 MDP로 모델링하며,
 % 상태는 의사결정에 관련된 신호를 집약하고, 행동 집합은 가능한 선택지를 열거합니다.
 % 보상은 과업 목표, 운영 제약, 트레이드오프를 인코딩하며, 할인율은 유효 계획 지평을 결정합니다.
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=1\linewidth]{figure/fig_drl_MDP.png}
-    \caption{DRL framework}
-    \label{fig:drl_mdp}
-\end{figure}
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[width=1\linewidth]{figure/fig_drl_MDP.png}
+%     \caption{DRL framework}
+%     \label{fig:drl_mdp}
+% \end{figure}
 
 Value-based approaches approximate the action--value function \(Q(s,a)\). A deep Q-network (DQN) predicts \(Q(s,a)\) and selects the action with the highest predicted value. To improve stability and accuracy, common enhancements include DDQN, which decouples action selection and evaluation, dueling architecture, which separates value and advantage streams, prioritized replay, which samples transitions with large temporal difference (TD) errors more often, and Polyak averaging for smooth target updates. Function approximators are kept lightweight yet expressive---typically multi-layer perceptrons with normalization and nonlinear activations---and feasibility is enforced by action masking so that invalid actions are eliminated before scoring. Parameters are updated via backpropagation using Adam or AdamW. Exploration in value-based agents follows an \(\epsilon\)-greedy schedule, whereas policy-based methods rely on entropy regularization that is gradually annealed.
 Experience replay breaks temporal correlations and increases sample reuse, and the Huber (smooth-\(L_1\)) loss is preferred for TD regression due to its robustness to outliers and non-stationary targets.

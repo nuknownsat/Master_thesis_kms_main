@@ -35,10 +35,11 @@
 % Enable color links and figures in PDF
 \PassOptionsToPackage{colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=red,filecolor=magenta}{hyperref}
 
-\usepackage{algorithmicx}
 \usepackage{algorithm}
+\usepackage[noEnd=false]{algpseudocodex}% Enhanced version with vertical lines
+%\usepackage{algorithmicx}
 %\usepackage{algorithmic}
-\usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
+%\usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
 %\usepackage{algcompatible}
 \usepackage{cases}
 \usepackage{rotating}
@@ -176,7 +177,7 @@
 % Adobe reader에서 집어넣었다.
 \includepdf[pages={1}]{KMS_Theses_cover.pdf}
 \includepdf[pages={2}]{KMS_Theses_cover.pdf}
-\includepdf[pages={3}]{KMS_Theses_cover.pdf}
+%\includepdf[pages={3}]{KMS_Theses_cover.pdf}
 
 
 % \includepdf[pages={1}]{Jongtae_Thesis_cover_demo-null.pdf}

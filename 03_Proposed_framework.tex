@@ -181,26 +181,31 @@ where \( \delta_i = r_i + \gamma Q(s_{i+1}, a_{i+1}; \theta^-) - Q(s_i, a_i; \th
 By combining dueling DQN with DDQN and PER, our approach effectively addresses overestimation bias, accelerates learning, and mitigates the effects of random noise, leading to improved network performance with effective GW load balancing, elevated RSRP, and reduced FLSO frequency. The detailed process of the training is described in Algorithm \ref{alg:2}.
 
 \begin{algorithm}[p]
-\begin{algorithmic}[1]
 \caption{Dueling DDQN-based Algorithm for \textbf{FLSO Load Balancing}}\label{alg:2}
+\begin{algorithmic}[1]
     \State \textbf{Initialization:} Random weights $\theta$, replay memory $\mathcal R$ with capacity $\mathcal D$, minibatch size $\mathcal Z$, total episodes $\mathcal E$, prioritization parameter $\alpha$, importance sampling parameter $\beta$, exploration rate $\epsilon$, Polyak averaging parameter $\tau$
     \State \textbf{Input:} State, action, discount factor
     \State \textbf{Output:} Optimal FLSO decision
     \For{$Episode = 1$ to $\mathcal E$}
         \State Initialize the integrated environment
-    \For{$t=0$ to $T$}
+        \For{$t=0$ to $T$}
             \State $a_t = \begin{cases}
             \arg\max_{a'} Q(s_t, a'; \theta) & \text{with } 1 - \epsilon \\
-	    	\text{random action} & \text{with } \epsilon
+            \text{random action} & \text{with } \epsilon
             \end{cases}$
             \State Execute action $a_t$ (select GW $m_t$), observe reward $r_t$ and next state $s_{t+1}$
             \State Store sample $(s_t, a_t, r_t, s_{t+1})$ into $\mathcal R$
-            \If{$\mathcal R > {\mathcal D}$}
+            \If{$|\mathcal R| > \mathcal Z$} \Comment{Start training after buffer fills to batch size}
                 \For{$i=1$ to $\mathcal Z$}
-                    \State Sample $(s_i, a_i, r_i, s_{i+1})$ from $\mathcal R$ with probability $p_i^\alpha$
-                    \State Calculate target network
+                    \State Sample $(s_i, a_i, r_i, s_{i+1})$ from $\mathcal R$ with probability $P(i) = p_i^\alpha / \sum_k p_k^\alpha$
+                    \State Calculate DDQN target: $y_i \leftarrow r_i + \gamma Q(s_{i+1}, \arg \max_{a'} Q(s_{i+1}, a'; \theta); \theta^{-})$
+                    \State Calculate TD-error: $\delta_i \leftarrow y_i - Q(s_i, a_i; \theta)$
+                    \State Update sample priority in $\mathcal R$: $p_i \leftarrow |\delta_i| + \epsilon_p$
+                    \State Calculate IS weight: $w_i \leftarrow ((\mathcal D \cdot P(i))^{-\beta}) / \max_j(w_j)$ \Comment{Normalize weight}
                 \EndFor
-                \State $\theta^- \leftarrow \tau \cdot \theta + (1 - \tau) \cdot \theta^-$
+                \State Calculate weighted loss: $L \leftarrow \frac{1}{\mathcal Z} \sum_{i=1}^{\mathcal Z} w_i \cdot \mathcal{L}(\delta_i)$ \Comment{e.g., Huber Loss}
+                \State Update online network $\theta$ via gradient descent: $\theta \leftarrow \theta - \eta \nabla_\theta L$
+                \State Update target network $\theta^-$ (Polyak averaging): $\theta^- \leftarrow \tau \cdot \theta + (1 - \tau) \cdot \theta^-$
             \EndIf
         \EndFor
     \EndFor
