@@ -7,8 +7,8 @@
 \contentsline {figure}{\numberline {3.2}{\ignorespaces The architecture of the proposed dueling DDQN for FLSO optimization in LEO satellite networks.}}{23}{figure.caption.8}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Satellite--GW association complexity comparison (normalized satellites per GW).}}{27}{figure.caption.9}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Average reward over episodes for the proposed and DQN-based FLSO.}}{34}{figure.caption.11}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Average number of FLSO for the proposed, DQN-based, distance-based, and signal-based FLSO.}}{35}{figure.caption.12}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Average reward over episodes for the proposed and DQN-based FLSO.}}{33}{figure.caption.11}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Average number of FLSO for the proposed, DQN-based, distance-based, and signal-based FLSO.}}{34}{figure.caption.12}%
 \contentsline {figure}{\numberline {4.4}{\ignorespaces Average number of UFLSO for the proposed, DQN-based, distance-based, and signal-based FLSO.}}{36}{figure.caption.13}%
 \contentsline {figure}{\numberline {4.5}{\ignorespaces Average ToS for the proposed, DQN-based, distance-based, and signal-based FLSO.}}{37}{figure.caption.14}%
 \contentsline {figure}{\numberline {4.6}{\ignorespaces Average RSRP for the proposed, DQN-based, distance-based, and signal-based FLSO.}}{38}{figure.caption.15}%

@@ -121,15 +121,17 @@ GW load characterizes how evenly the feeder link load is distributed across GWs.
 
 \section{Results and Discussion}
 
-\quad Fig.~\ref{fig:reward} illustrates the normalized episodic reward during training for the proposed FLSO agent and the DQN baseline. Both agents quickly surpass a normalized reward of 0.9, confirming that they learn feasible FLSO policies; however, the proposed agent converges faster, attains a higher steady state reward, and exhibits clearly reduced variance without the deep reward drops observed for DQN. This behavior is consistent with its architecture: the dueling structure stabilizes value estimation by separating state value and action advantage, the DDQN update mitigates overestimation induced oscillations, and prioritized replay with Polyak averaged targets smooths learning against non-stationary LEO geometry and GW load. In contrast, the baseline DQN, relying on max based targets and uniform replay, is more prone to transiently overvaluing aggressive switching or overloaded GWs, which translates into bursts of UFLSOs, shortened ToS, and load imbalancing actions that appear as intermittent reward collapses. Thus, the reward evolution directly reflects that the proposed agent internalizes the multi objective design stability, link quality, and GW load awareness more reliably than the conventional DQN.
-% 그림~\ref{fig:reward}는 제안된 FLSO 에이전트와 기준 DQN 에이전트의 학습 과정에서 정규화된 에피소드 보상을 보여준다. 두 에이전트 모두 빠르게 0.9 이상의 정규화 보상에 도달하여 유효한 FLSO 정책을 학습했음을 확인할 수 있으나, 제안된 dueling DDQN 에이전트는 더 빠른 수렴, 더 높은 정상상태 보상, 그리고 DQN에서 나타나는 급격한 보상 하락 없이 낮은 분산을 보인다. 이는 dueling 구조를 통한 상태/행동 가치 분리, DDQN 기반 과대추정 완화, 우선순위 리플레이 및 Polyak 평균 타깃에 의한 비정상 LEO 기하·GW 부하 환경에서의 안정화 효과와 일치한다. 반면, 기준 DQN은 max 기반 타깃과 균등 샘플링으로 인해 공격적 스위칭이나 과부하 GW를 일시적으로 과대평가하기 쉬우며, 이는 UFLSO 증가, 짧은 ToS, 부하 불균형으로 이어져 간헐적 보상 붕괴로 나타난다. 따라서 보상 곡선은 제안된 에이전트가 기존 DQN보다 안정성, 링크 품질, GW 부하 인지를 통합한 다목적 FLSO 정책을 더 신뢰성 있게 학습했음을 직접적으로 보여준다.
-
 \begin{figure}[t]
     \centering
     \includegraphics[width=\linewidth]{figure/reward.png}
     \caption{Average reward over episodes for the proposed and DQN-based FLSO.}
     \label{fig:reward}
 \end{figure}
+
+\quad Fig.~\ref{fig:reward} illustrates the normalized episodic reward during training for the proposed FLSO agent and the DQN baseline. Both agents quickly surpass a normalized reward of 0.9, confirming that they learn feasible FLSO policies; however, the proposed agent converges faster, attains a higher steady state reward, and exhibits clearly reduced variance without the deep reward drops observed for DQN. This behavior is consistent with its architecture: the dueling structure stabilizes value estimation by separating state value and action advantage, the DDQN update mitigates overestimation induced oscillations, and prioritized replay with Polyak averaged targets smooths learning against non-stationary LEO geometry and GW load. In contrast, the baseline DQN, relying on max based targets and uniform replay, is more prone to transiently overvaluing aggressive switching or overloaded GWs, which translates into bursts of UFLSOs, shortened ToS, and load imbalancing actions that appear as intermittent reward collapses. Thus, the reward evolution directly reflects that the proposed agent internalizes the multi objective design stability, link quality, and GW load awareness more reliably than the conventional DQN.
+% 그림~\ref{fig:reward}는 제안된 FLSO 에이전트와 기준 DQN 에이전트의 학습 과정에서 정규화된 에피소드 보상을 보여준다. 두 에이전트 모두 빠르게 0.9 이상의 정규화 보상에 도달하여 유효한 FLSO 정책을 학습했음을 확인할 수 있으나, 제안된 dueling DDQN 에이전트는 더 빠른 수렴, 더 높은 정상상태 보상, 그리고 DQN에서 나타나는 급격한 보상 하락 없이 낮은 분산을 보인다. 이는 dueling 구조를 통한 상태/행동 가치 분리, DDQN 기반 과대추정 완화, 우선순위 리플레이 및 Polyak 평균 타깃에 의한 비정상 LEO 기하·GW 부하 환경에서의 안정화 효과와 일치한다. 반면, 기준 DQN은 max 기반 타깃과 균등 샘플링으로 인해 공격적 스위칭이나 과부하 GW를 일시적으로 과대평가하기 쉬우며, 이는 UFLSO 증가, 짧은 ToS, 부하 불균형으로 이어져 간헐적 보상 붕괴로 나타난다. 따라서 보상 곡선은 제안된 에이전트가 기존 DQN보다 안정성, 링크 품질, GW 부하 인지를 통합한 다목적 FLSO 정책을 더 신뢰성 있게 학습했음을 직접적으로 보여준다.
+
+
 
 \begin{figure}[t]
     \centering
