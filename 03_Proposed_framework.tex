@@ -91,8 +91,8 @@ We define the following cost and reward components for each satellite $n$ at tim
 The global optimization problem \textbf{P1} is to find the policy $\pi$ that minimizes the total expected cumulative cost and maximizes rewards for all $N$ satellites over the time horizon $T$.
 
 \begin{align}
-& \textbf{P1:}\quad \operatorname*{\min}_{\pi} \mathbb{E} \sum_{t=0}^{T} \sum_{n=1}^{N} \sum_{m=1}^{M} \gamma^t \left[ w_{S} \Big( FS_{m,n}(t) + UFS_{m,n}(t) - ToS_{m,n}(t) \Big) \right. \notag \\
-& \hspace{10em} \left. + w_{L} \lvert \mathcal{L}_m(t) \rvert - w_{R} R_{m,n}(t) \right],\\
+& \textbf{P1:}\quad \operatorname*{\min}_{\pi} \mathbb{E} \sum_{t=0}^{T} \sum_{n=1}^{N} \sum_{m=1}^{M} \gamma^t \left[ w_{S} \Big( FS_{m,n}(t) + UFS_{m,n}(t) \Big) \right. \notag \\
+& \hspace{10em} \left. - w_{T} ToS_{m,n}(t) + w_{L} \lvert \mathcal{L}_m(t) \rvert - w_{R} R_{m,n}(t) \right],\\
 & \quad \text{s.t.} \nonumber \\
 & \quad \textbf{C1 :}\quad \theta_{m,n}(t) \geq \theta_{\text {min}}, \quad \forall{n}, \forall{m} \in \mathcal{G}_t^{n}, \forall{t},\\
 & \quad \textbf{C2 :}\quad \widetilde R_{m,n}(t) \geq R_{\text {min}}, \quad \forall{n}, \forall{m} \in \mathcal{G}_t^{n}, \forall{t},\\
