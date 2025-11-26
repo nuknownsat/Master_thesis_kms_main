@@ -1,9 +1,9 @@
 \chapter[Proposed RL-based FLSO algorithm]{Proposed RL-based FLSO algorithm}
 
 \section{System model}
-\quad This thesis considers a large-scale LEO satellite constellation deployed across $P$ orbital planes, represented by the set $\mathcal{P} = \left\{p \mid p = 1, \dots, P\right\}$. The constellation consists of $N$ LEO satellites in total, distributed across these planes, with $N_p$ satellites in plane $p$. We write the overall satellite index set as $\mathcal{S} = \{ s_{p,i} \mid p = 1, \dots, P;\ i = 1, \dots, N_p \}$, and its cardinality as $\lvert\mathcal{S}\rvert = \sum_{p=1}^{P} N_p$. For simplicity in the following equations, we denote a single satellite by its global index $n \in \{1, \dots, N\}$. The LEO satellite $n$ connects to ground GWs via feeder link, where the set of GWs is denoted as $\mathcal{G} = \left\{m \mid m = 1, 2, \dots, M\right\}$. The coordinates of each LEO satellite $n$ in the Earth-centered, Earth-fixed (ECEF) coordinate system at a given time slot $t$, where $t \in \{0, 1, \dots, T\}$, are given by $l_n(t) = (x_n(t), y_n(t), z_n(t))$.
+\quad This thesis considers a large-scale LEO satellite constellation deployed across $P$ orbital planes, represented by the set $\mathcal{P} = \left\{p \mid p = 1, \dots, P\right\}$. The constellation consists of $N$ LEO satellites in total, distributed across these planes, with $N_p$ satellites in plane $p$. The overall satellite index set is denoted as $\mathcal{S} = \{ s_{p,i} \mid p = 1, \dots, P;\ i = 1, \dots, N_p \}$, and its cardinality as $\lvert\mathcal{S}\rvert = \sum_{p=1}^{P} N_p$. For simplicity in the following equations, a single satellite is denoted by its global index $n \in \{1, \dots, N\}$. The LEO satellite $n$ connects to ground GWs via feeder link, where the set of GWs is denoted as $\mathcal{G} = \left\{m \mid m = 1, 2, \dots, M\right\}$. The coordinates of each LEO satellite $n$ in the Earth-centered, Earth-fixed (ECEF) coordinate system at a given time slot $t$, where $t \in \{0, 1, \dots, T\}$, are given by $l_n(t) = (x_n(t), y_n(t), z_n(t))$.
 
-The primary challenge addressed in this thesis is GW load balancing. We define the load of a GW \( m \) at time \( t \), denoted as $\mathcal{L}_m(t)$, as the set of satellites $n \in \mathcal{S}$ currently connected to it. The instantaneous load is $\lvert \mathcal{L}_m(t) \rvert$.
+The primary challenge addressed in this thesis is GW load balancing. The load of a GW \( m \) at time \( t \), denoted as $\mathcal{L}_m(t)$, is defined as the set of satellites $n \in \mathcal{S}$ currently connected to it. The instantaneous load is $\lvert \mathcal{L}_m(t) \rvert$.
 
 \begin{sidewaysfigure}[p]
 \centering
@@ -54,11 +54,11 @@ where $a \in (0,1)$ is the L3 forgetting factor, defined as $a = \left(\frac{1}{
 
 
 \section{Problem formulation}
-\quad In this section, we address the optimization problem for the LEO satellite constellation. The objective is to find an optimal FLSO policy $\pi$ that dynamically assigns each satellite $n \in \mathcal{S}$ to a GW $m \in \mathcal{G}$ at each time slot $t$.
+\quad This section addresses the optimization problem for the LEO satellite constellation. The objective is to find an optimal FLSO policy $\pi$ that dynamically assigns each satellite $n \in \mathcal{S}$ to a GW $m \in \mathcal{G}$ at each time slot $t$.
 
-The primary goal is to minimize the overall network load imbalance while simultaneously maximizing the collective link quality RSRP and minimizing the instability caused by frequent FLSOs. We define $m_t^{n}$ as the GW selected by satellite $n$ at time $t$. This problem can be formulated as a multi objective optimization problem.
+The primary goal is to minimize the overall network load imbalance while simultaneously maximizing the collective link quality RSRP and minimizing the instability caused by frequent FLSOs. Let $m_t^{n}$ denote the GW selected by satellite $n$ at time $t$. This problem can be formulated as a multi-objective optimization problem.
 
-We define the following cost and reward components for each satellite $n$ at time $t$:
+The following cost and reward components are defined for each satellite $n$ at time $t$:
 
 \begin{itemize}
     \item \textbf{FLSO Cost:} A cost $C_{FS}$ is incurred if the satellite switches its serving GW, penalizing instability.
@@ -91,25 +91,26 @@ We define the following cost and reward components for each satellite $n$ at tim
 The global optimization problem \textbf{P1} is to find the policy $\pi$ that minimizes the total expected cumulative cost and maximizes rewards for all $N$ satellites over the time horizon $T$.
 
 \begin{align}
-& \textbf{P1:}\quad \operatorname*{\min}_{\pi} \mathbb{E} \sum_{t=0}^{T} \sum_{n=1}^{N} \sum_{m=1}^{M} \gamma^t \left[ w_{S} \Big( FS_{m,n}(t) + UFS_{m,n}(t) \Big) \right. \notag \\
-& \hspace{10em} \left. - w_{T} ToS_{m,n}(t) + w_{L} \lvert \mathcal{L}_m(t) \rvert - w_{R} R_{m,n}(t) \right],\\
+& \textbf{P1:}\quad \operatorname*{\min}_{\pi} \mathbb{E} \sum_{t=0}^{T} \sum_{n=1}^{N} \sum_{m=1}^{M} \Big( FS_{m,n}(t) + UFS_{m,n}(t) - ToS_{m,n}(t)\notag \\
+& \hspace{15em} - R_{m,n}(t) + \lvert \mathcal{L}_m(t) \rvert \Big),\\
 & \quad \text{s.t.} \nonumber \\
 & \quad \textbf{C1 :}\quad \theta_{m,n}(t) \geq \theta_{\text {min}}, \quad \forall{n}, \forall{m} \in \mathcal{G}_t^{n}, \forall{t},\\
 & \quad \textbf{C2 :}\quad \widetilde R_{m,n}(t) \geq R_{\text {min}}, \quad \forall{n}, \forall{m} \in \mathcal{G}_t^{n}, \forall{t},\\
 & \quad \textbf{C3 :}\quad m_t^{n} \in \mathcal{G}_t^{n}, \quad \forall{n}, \forall{t}.
 \end{align}
 
-In \textbf{P1}, $w_{S}$, $w_{L}$, and $w_{R}$ are the weighting factors that balance the trade-off between switching stability, load balancing, and link quality. $\gamma \in [0, 1]$ is the discount factor for future costs.
+% In \textbf{P1}, $w_{S}$, $w_{L}$, and $w_{R}$ are the weighting factors that balance the trade-off between switching stability, load balancing, and link quality. $\gamma \in [0, 1]$ is the discount factor for future costs.
+In \textbf{P1}, the objective function jointly considers switching stability, connection duration, link quality, and GW load to achieve balanced and robust network operation.
 
 The constraints define the set of available GWs, $\mathcal{G}_t^{n}$, for satellite $n$ at time $t$.
 Constraint \textbf{C1} ensures the elevation angle $\theta_{m,n}(t)$ to an available GW $m$ exceeds the minimum threshold $\theta_{\min}$, guaranteeing a reliable LoS.
 Constraint \textbf{C2} ensures the filtered RSRP $\widetilde{R}_{m,n}(t)$ from an available GW exceeds the minimum required signal quality $R_{\min}$.
 Constraint \textbf{C3} mandates that each satellite $n$ must select a GW $m_t^{n}$ from the set of currently available GWs $\mathcal{G}_t^{n}$ that satisfy C1 and C2.
 
-This problem is characterized by high-dimensional state spaces and complex, time-varying dynamics, making it non-deterministic polynomial-time hard (NP-hard)~\cite{singlemachine}. We therefore model this problem as a Markov decision process (MDP) to find an optimal FLSO policy using RL techniques.
+This problem is characterized by high-dimensional state spaces and complex, time-varying dynamics, making it non-deterministic polynomial-time hard (NP-hard)~\cite{singlemachine}. This thesis therefore models the problem as a Markov decision process (MDP) to find an optimal FLSO policy using RL techniques.
 
 \section{Proposed method}
-\quad To address the problem \textbf{P1}, we transform it into a dynamic programming framework to derive an optimal FLSO policy. We model the FLSO optimization problem as an MDP due to its ability to handle sequential decision-making in dynamic environments.
+\quad To address the problem \textbf{P1}, the problem is transformed into a dynamic programming framework to derive an optimal FLSO policy. The FLSO optimization problem is modeled as an MDP due to its ability to handle sequential decision-making in dynamic environments.
 
 
 \subsection{MDP modeling}
@@ -128,7 +129,7 @@ The action \(a_t\) is the selection of the next GW, $m_t$, from the set of avail
 
 The immediate reward \(r_{t}\) is formulated to directly optimize the objective function defined in \textbf{P1}. It penalizes FLSO costs and high load connections while rewarding high quality RSRP links and connection stability. It is calculated as follows:
 \begin{align}
-r_t &= w_{R} R_{m,n}(t) - w_{S} \Big( FS_{m,n}(t) + UFS_{m,n}(t) - ToS_{m,n}(t) \Big) - w_{L} c_{m}(t),
+r_t &= w_{R} R_{m,n}(t) - w_{S} \Big( FS_{m,n}(t) + UFS_{m,n}(t) \Big) - w_{T} ToS_{m,n}(t) - w_{L} c_{m}(t),
 \end{align}
 where the cost and reward components are defined in Eq. \eqref{eq:flso_cost} through \eqref{eq:rsrp_reward}, and the weights are the corresponding weights from \textbf{P1}.
 
@@ -137,7 +138,7 @@ Discount factor $\gamma$ is a value between 0 and 1, which represents the rate a
 \subsection{Proposed dueling DDQN algorithm}
 %복잡도 측면에서 얼마나 걸리는지 설명, GeForce RTX 3080 Ti GPU에서 수 밀리초 내에 행동을 출력할 수 있다.
 \label{Proposed Dueling DDQN Algorithm}
-\quad In this paper, we employ a RL algorithm to enable LEO satellites to operate in an dynamic environment. As depicted in Fig.\ref{Fig:system_model2}, the architecture of the proposed dueling DDQN algorithm, incorporating a \(\epsilon\)-greedy policy, is designed to optimize FLSO in LEO satellite networks. The LEO satellite receives feedback to execute actions that sustain both a prolonged ToS and an elevated RSRP, while minimizing the frequency of FLSO and, critically, GW congestion. We enhance the traditional DQN framework by incorporating DDQN, prioritized experience replay (PER), and dueling DQN to improve stability, learning efficiency, and robustness against noise in LEO satellite communication systems.
+\quad This thesis employs a RL algorithm to enable LEO satellites to operate in an dynamic environment. As depicted in Fig.\ref{Fig:system_model2}, the architecture of the proposed dueling DDQN algorithm, incorporating a \(\epsilon\)-greedy policy, is designed to optimize FLSO in LEO satellite networks. The LEO satellite receives feedback to execute actions that sustain both a prolonged ToS and an elevated RSRP, while minimizing the frequency of FLSO and, critically, GW congestion. This thesis enhancs the traditional DQN framework by incorporating DDQN, prioritized experience replay (PER), and dueling DQN to improve stability, learning efficiency, and robustness against noise in LEO satellite communication systems.
 
 The DQN algorithm \cite{mnih2013playing} approximates the Q-function \( Q(s_t, a_t; \theta) \), which maps a state \( s_t \) and action \( a_t \) to an expected cumulative reward, using a deep neural network (DNN) parameterized by \( \theta \). Two DNNs are utilized: an online network for action selection and a target network for value estimation. The Q-function is trained to minimize the following loss function and loss function is calculated as follows:
 
@@ -164,50 +165,113 @@ where \( \theta^- \) represents the parameter of the target network. The target 
       \label{Fig:system_model2}
  \end{sidewaysfigure}
 
-To improve robustness against random noise, such as channel shadow fading, we utilize a dueling DQN \cite{wang2016dueling}. The dueling DQN architecture enhances the traditional DQN by splitting the Q-function into two separate streams: the state-value function \( V(s; \theta) \) and the advantage function \( A(s, a; \theta) \). The Q-function is then calculated as follows:
+To improve robustness against random noise, such as channel shadow fading, this thesis utilizes a dueling DQN \cite{wang2016dueling}. The dueling DQN architecture enhances the traditional DQN by splitting the Q-function into two separate streams: the state-value function \( V(s; \theta) \) and the advantage function \( A(s, a; \theta) \). The Q-function is then calculated as follows:
 \begin{align}
 & Q(s, a; \theta) = V(s; \theta) + \left( A(s, a; \theta) - \frac{1}{|A|} \sum_{a'} A(s, a'; \theta) \right),
 \label{eq:dueling_q}
 \end{align}
 where \( V(s; \theta) \) represents the value of the state \( s \), \( A(s, a; \theta) \) represents the advantage of taking action \( a \) in state \( s \), and \( |A| \) is the number of possible actions. This decomposition allows the network to better distinguish the value of a state from the advantage of each action, improving robustness against noise and enhancing learning efficiency in complex LEO satellite environments.
 
-To further enhance the learning efficiency, we incorporate PER as proposed in \cite{schaul2015prioritized}. PER prioritizes experiences with higher TD errors, where the TD error \(\delta_i\) for transition \(i\) is defined as the difference between the target and current Q-values. The priority is calculated as follows:
+To further enhance the learning efficiency, this thesis incorporates PER as proposed in \cite{schaul2015prioritized}. PER prioritizes experiences with higher TD errors, where the TD error \(\delta_i\) for transition \(i\) is defined as the difference between the target and current Q-values. The priority is calculated as follows:
 \begin{equation}
 p_i = |\delta_i| + \epsilon_p,
 \label{eq:priority}
 \end{equation}
 where \( \delta_i = r_i + \gamma Q(s_{i+1}, a_{i+1}; \theta^-) - Q(s_i, a_i; \theta) \) is the TD error, and \( \epsilon_p \) ensures non-zero priorities. PER uses \( \alpha \in [0, 1] \) to control sampling probability \(p_i^\alpha \) and \( \beta \in [0, 1] \) to adjust importance sampling weights \((\mathcal D \cdot P(i))^{-\beta} \), where \( \mathcal D \) is replay buffer limit and \(P(i)\) is the probability of sampling transition \(i\). This approach accelerates learning by focusing on significant transitions, which is beneficial in LEO satellite networks with dynamic and noisy conditions.
 
-By combining dueling DQN with DDQN and PER, our approach effectively addresses overestimation bias, accelerates learning, and mitigates the effects of random noise, leading to improved network performance with effective GW load balancing, elevated RSRP, and reduced FLSO frequency. The detailed process of the training is described in Algorithm \ref{alg:2}.
+By combining dueling DQN with DDQN and PER, this approach effectively addresses overestimation bias, accelerates learning, and mitigates the effects of random noise, leading to improved network performance with effective GW load balancing, elevated RSRP, and reduced FLSO frequency. The detailed process of the training is described in Algorithm \ref{alg:2}.
 
-\begin{algorithm}[p]
-\caption{Dueling DDQN-based Algorithm for \textbf{FLSO Load Balancing}}\label{alg:2}
+% \begin{algorithm}[p]
+% \caption{Dueling DDQN-based Algorithm for \textbf{FLSO Load Balancing}}\label{alg:2}
+% \begin{algorithmic}[1]
+%     \State \textbf{Initialization:} Random weights $\theta$, replay memory $\mathcal R$ with capacity $\mathcal D$, minibatch size $\mathcal Z$, total episodes $\mathcal E$, prioritization parameter $\alpha$, importance sampling parameter $\beta$, exploration rate $\epsilon$, Polyak averaging parameter $\tau$
+%     \State \textbf{Input:} State, action, discount factor
+%     \State \textbf{Output:} Optimal FLSO decision
+%     \For{$Episode = 1$ to $\mathcal E$}
+%         \State Initialize the integrated environment
+%         \For{$t=0$ to $T$}
+%             \State $a_t = \begin{cases}
+%             \arg\max_{a'} Q(s_t, a'; \theta) & \text{with } 1 - \epsilon \\
+%             \text{random action} & \text{with } \epsilon
+%             \end{cases}$
+%             \State Execute action $a_t$, observe reward $r_t$ and next state $s_{t+1}$
+%             \State Store sample $(s_t, a_t, r_t, s_{t+1})$ into $\mathcal R$
+%             \If{$|\mathcal R| > \mathcal Z$} Start training after buffer fills to batch size
+%                 \For{$i=1$ to $\mathcal Z$}
+%                     \State Sample $(s_i, a_i, r_i, s_{i+1})$ from $\mathcal R$ with probability $P(i) = p_i^\alpha / \sum_k p_k^\alpha$
+%                     \State $y_i \leftarrow r_i + \gamma Q(s_{i+1}, \arg \max_{a'} Q(s_{i+1}, a'; \theta); \theta^{-})$ : Calculate DDQN target
+%                     \State $\delta_i \leftarrow y_i - Q(s_i, a_i; \theta)$ : Calculate TD-error
+%                     \State $p_i \leftarrow |\delta_i| + \epsilon_p$ : Update sample priority in $\mathcal R$
+%                     \State $w_i \leftarrow ((\mathcal D \cdot P(i))^{-\beta}) / \max_j(w_j)$ \Comment{Normalize weight} : Calculate importance sample weight
+%                 \EndFor
+%                 \State Calculate weighted loss: $L \leftarrow \frac{1}{\mathcal Z} \sum_{i=1}^{\mathcal Z} w_i \cdot \mathcal{L}(\delta_i)$ 
+%                 \State Update online network $\theta$ via gradient descent: $\theta \leftarrow \theta - \eta \nabla_\theta L$
+%                 \State Update target network $\theta^-$ (Polyak averaging): $\theta^- \leftarrow \tau \cdot \theta + (1 - \tau) \cdot \theta^-$
+%             \EndIf
+%         \EndFor
+%     \EndFor
+% \end{algorithmic}
+% \end{algorithm}
+
+\begin{algorithm}[t]
+\caption{Dueling DDQN-based FLSO Load Balancing}
+\label{alg:dueling-ddqn-flso}
 \begin{algorithmic}[1]
-    \State \textbf{Initialization:} Random weights $\theta$, replay memory $\mathcal R$ with capacity $\mathcal D$, minibatch size $\mathcal Z$, total episodes $\mathcal E$, prioritization parameter $\alpha$, importance sampling parameter $\beta$, exploration rate $\epsilon$, Polyak averaging parameter $\tau$
-    \State \textbf{Input:} State, action, discount factor
-    \State \textbf{Output:} Optimal FLSO decision
-    \For{$Episode = 1$ to $\mathcal E$}
-        \State Initialize the integrated environment
-        \For{$t=0$ to $T$}
-            \State $a_t = \begin{cases}
-            \arg\max_{a'} Q(s_t, a'; \theta) & \text{with } 1 - \epsilon \\
-            \text{random action} & \text{with } \epsilon
-            \end{cases}$
-            \State Execute action $a_t$ (select GW $m_t$), observe reward $r_t$ and next state $s_{t+1}$
-            \State Store sample $(s_t, a_t, r_t, s_{t+1})$ into $\mathcal R$
-            \If{$|\mathcal R| > \mathcal Z$} \Comment{Start training after buffer fills to batch size}
-                \For{$i=1$ to $\mathcal Z$}
-                    \State Sample $(s_i, a_i, r_i, s_{i+1})$ from $\mathcal R$ with probability $P(i) = p_i^\alpha / \sum_k p_k^\alpha$
-                    \State Calculate DDQN target: $y_i \leftarrow r_i + \gamma Q(s_{i+1}, \arg \max_{a'} Q(s_{i+1}, a'; \theta); \theta^{-})$
-                    \State Calculate TD-error: $\delta_i \leftarrow y_i - Q(s_i, a_i; \theta)$
-                    \State Update sample priority in $\mathcal R$: $p_i \leftarrow |\delta_i| + \epsilon_p$
-                    \State Calculate IS weight: $w_i \leftarrow ((\mathcal D \cdot P(i))^{-\beta}) / \max_j(w_j)$ \Comment{Normalize weight}
-                \EndFor
-                \State Calculate weighted loss: $L \leftarrow \frac{1}{\mathcal Z} \sum_{i=1}^{\mathcal Z} w_i \cdot \mathcal{L}(\delta_i)$ \Comment{e.g., Huber Loss}
-                \State Update online network $\theta$ via gradient descent: $\theta \leftarrow \theta - \eta \nabla_\theta L$
-                \State Update target network $\theta^-$ (Polyak averaging): $\theta^- \leftarrow \tau \cdot \theta + (1 - \tau) \cdot \theta^-$
-            \EndIf
-        \EndFor
+
+\Require
+Replay buffer capacity $\mathcal{D}$, batch size $\mathcal{Z}$, episodes $\mathcal{E}$, discount $\gamma$,
+PER parameters $(\alpha,\beta,\epsilon_p)$, exploration $\epsilon$, Polyak coefficient $\tau$, learning rate $\eta$
+
+\Ensure
+Optimal FLSO policy $\pi$ (GW selection)
+
+\State \textbf{Initialize:}
+online network parameters $\theta$ (random),
+target network $\theta^{-}\leftarrow \theta$,
+replay buffer $\mathcal{R}$ with capacity $\mathcal{D}$
+
+\For{$Episode = 1$ to $\mathcal{E}$}
+    \State Reset integrated LEO--GW environment
+    \For{$t = 0$ to $T$}
+        \State Observe state $s_t$
+
+        \State \textbf{Action selection (\,$\epsilon$\textbf{-greedy}):}
+        \State $a_t = \begin{cases}
+        \arg\max_{a'} Q(s_t, a'; \theta) & \text{with } 1 - \epsilon \\
+        \text{random action} & \text{with } \epsilon
+        \end{cases}$
+
+        \State Execute $a_t$, get reward $r_t$ and next state $s_{t+1}$
+        \State Store transition $(s_t,a_t,r_t,s_{t+1})$ into $\mathcal{R}$
+
+        \If{$|\mathcal{R}| \ge \mathcal{Z}$} 
+            \State \textbf{Sample minibatch using PER:}
+            \For{$i=1$ to $\mathcal{Z}$}
+                \State Sample $(s_i,a_i,r_i,s_{i+1}) \sim \mathcal{R}$ with
+                $P(i)=\dfrac{p_i^\alpha}{\sum_k p_k^\alpha}$
+
+                \State \textbf{DDQN target:}
+                \State $y_i \leftarrow r_i + \gamma\, Q(s_{i+1}, \arg\max_{a'} Q(s_{i+1},a';\theta);\theta^{-})$
+
+                \State \textbf{TD error and priority update:}
+                \State $\delta_i \leftarrow y_i - Q(s_i,a_i;\theta)$, $p_i \leftarrow |\delta_i| + \epsilon_p$
+
+                \State \textbf{Importance sampling weight:}
+                \State $w_i \leftarrow (\mathcal{D}\cdot P(i))^{-\beta}$
+            \EndFor
+            \State Normalize $\{w_i\}$ by $w_i \leftarrow w_i/\max_j w_j$
+
+            \State \textbf{Weighted Huber loss:}
+            \State $L \leftarrow \dfrac{1}{\mathcal{Z}}\sum_{i=1}^{\mathcal{Z}} w_i\,\mathcal{L}_{\text{Huber}}(\delta_i)$
+
+            \State \textbf{Update online network:}
+            \State $\theta \leftarrow \theta - \eta \nabla_\theta L$
+
+            \State \textbf{Polyak update of target network:}
+            \State $\theta^{-} \leftarrow \tau\,\theta + (1-\tau)\,\theta^{-}$
+        \EndIf
     \EndFor
+\EndFor
+
 \end{algorithmic}
 \end{algorithm}

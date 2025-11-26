@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  18 NOV 2025 21:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  26 NOV 2025 10:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1253,8 +1253,8 @@ Package pdftex.def Info: KMS_Theses_cover.pdf , page2 used on input line 179.
 pdfTeX warning (ext4): destination with the same identifier (name{page.i}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.15 
-      [1
+l.13 \quad
+           Through extensive simulations based on a realistic Starlink Gen2 ... [1
 
 
 ]
@@ -1408,14 +1408,20 @@ Package pdftex.def Info: figure/fig_system_model.png  used on input line 10.
 <figure/dueling_dqn_archi.png, id=382, 606.99573pt x 389.24622pt>
 File: figure/dueling_dqn_archi.png Graphic file (type png)
 <use figure/dueling_dqn_archi.png>
-Package pdftex.def Info: figure/dueling_dqn_archi.png  used on input line 162.
+Package pdftex.def Info: figure/dueling_dqn_archi.png  used on input line 163.
 (pdftex.def)             Requested size: 540.60236pt x 346.70125pt.
 
 
 [22]
 
 [23 <./figure/dueling_dqn_archi.png>]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 184.
+
+LaTeX Warning: Reference `alg:2' on page 24 undefined on input line 182.
+
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 217.
+
+LaTeX Warning: Float too large for page by 22.75581pt on input line 277.
+
 )
 
 [24]
@@ -1425,7 +1431,7 @@ Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on inp
 
  (./04_RESULT.tex
  4.
-<figure/0.complexity table.png, id=412, 1927.2pt x 989.25584pt>
+<figure/0.complexity table.png, id=411, 1927.2pt x 989.25584pt>
 File: figure/0.complexity table.png Graphic file (type png)
 <use figure/0.complexity table.png>
 Package pdftex.def Info: figure/0.complexity table.png  used on input line 11.
@@ -1452,64 +1458,64 @@ LaTeX Warning: Float too large for page by 37.00177pt on input line 70.
 [30]
 
 [31]
-<figure/reward.png, id=450, 624.62961pt x 542.025pt>
+<figure/reward.png, id=449, 624.62961pt x 542.025pt>
 File: figure/reward.png Graphic file (type png)
 <use figure/reward.png>
-Package pdftex.def Info: figure/reward.png  used on input line 126.
+Package pdftex.def Info: figure/reward.png  used on input line 125.
 (pdftex.def)             Requested size: 369.88582pt x 320.9664pt.
 
 
 [32]
 
 [33 <./figure/reward.png>]
-<figure/1.flso.png, id=461, 853.62915pt x 739.8039pt>
+<figure/1.flso.png, id=460, 853.62915pt x 739.8039pt>
 File: figure/1.flso.png Graphic file (type png)
 <use figure/1.flso.png>
-Package pdftex.def Info: figure/1.flso.png  used on input line 138.
+Package pdftex.def Info: figure/1.flso.png  used on input line 137.
 (pdftex.def)             Requested size: 369.88582pt x 320.55908pt.
 
 
 [34 <./figure/1.flso.png (PNG copy)>]
-<figure/2.ufso.png, id=467, 853.62915pt x 739.8039pt>
+<figure/2.ufso.png, id=466, 853.62915pt x 739.8039pt>
 File: figure/2.ufso.png Graphic file (type png)
 <use figure/2.ufso.png>
-Package pdftex.def Info: figure/2.ufso.png  used on input line 148.
+Package pdftex.def Info: figure/2.ufso.png  used on input line 147.
 (pdftex.def)             Requested size: 369.88582pt x 320.55908pt.
 
 
 [35]
-<figure/3.tos.png, id=473, 853.7496pt x 740.0448pt>
+<figure/3.tos.png, id=472, 853.7496pt x 740.0448pt>
 File: figure/3.tos.png Graphic file (type png)
 <use figure/3.tos.png>
-Package pdftex.def Info: figure/3.tos.png  used on input line 158.
+Package pdftex.def Info: figure/3.tos.png  used on input line 157.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
 
 [36 <./figure/2.ufso.png (PNG copy)>]
 
 [37 <./figure/3.tos.png (PNG copy)>]
-<figure/4.rsrp.png, id=484, 853.7496pt x 740.0448pt>
+<figure/4.rsrp.png, id=483, 853.7496pt x 740.0448pt>
 File: figure/4.rsrp.png Graphic file (type png)
 <use figure/4.rsrp.png>
-Package pdftex.def Info: figure/4.rsrp.png  used on input line 168.
+Package pdftex.def Info: figure/4.rsrp.png  used on input line 167.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
 
 [38 <./figure/4.rsrp.png (PNG copy)>]
-<figure/5.complexity.png, id=492, 853.7496pt x 740.0448pt>
+<figure/5.complexity.png, id=491, 853.7496pt x 740.0448pt>
 File: figure/5.complexity.png Graphic file (type png)
 <use figure/5.complexity.png>
-Package pdftex.def Info: figure/5.complexity.png  used on input line 180.
+Package pdftex.def Info: figure/5.complexity.png  used on input line 179.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
 
 [39]
 
 [40 <./figure/5.complexity.png (PNG copy)>]
-<figure/6.complexity_cdf.png, id=502, 853.7496pt x 740.0448pt>
+<figure/6.complexity_cdf.png, id=501, 853.7496pt x 740.0448pt>
 File: figure/6.complexity_cdf.png Graphic file (type png)
 <use figure/6.complexity_cdf.png>
-Package pdftex.def Info: figure/6.complexity_cdf.png  used on input line 190.
+Package pdftex.def Info: figure/6.complexity_cdf.png  used on input line 189.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
 
@@ -1550,24 +1556,28 @@ Package pdftex.def Info: figure/6.complexity_cdf.png  used on input line 190.
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-07-20>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `00_01_thesis.out' has not changed.
 (rerunfilecheck)             Checksum: 93F874FA70AC4608CDAFDD31F013DD2E;3758.
 Package rerunfilecheck Info: File `00_01_thesis.brf' has not changed.
 (rerunfilecheck)             Checksum: 81C11EEE85B1F931CFA565CECE079913;1633.
  ) 
 Here is how much of TeX's memory you used:
- 36765 strings out of 467801
- 720271 string characters out of 5436090
- 1367955 words of memory out of 5000000
- 64536 multiletter control sequences out of 15000+600000
+ 36766 strings out of 467801
+ 720294 string characters out of 5436090
+ 1370938 words of memory out of 5000000
+ 64537 multiletter control sequences out of 15000+600000
  639855 words of font info for 88 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  125i,17n,121p,2260b,774s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/euler/eusm10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on 00_01_thesis.pdf (60 pages, 14879303 bytes).
+Output written on 00_01_thesis.pdf (60 pages, 14880387 bytes).
 PDF statistics:
- 677 PDF objects out of 1000 (max. 8388607)
- 553 compressed objects within 6 object streams
+ 676 PDF objects out of 1000 (max. 8388607)
+ 552 compressed objects within 6 object streams
  142 named destinations out of 1000 (max. 500000)
  269 words of extra memory for PDF output out of 10000 (max. 10000000)
 
