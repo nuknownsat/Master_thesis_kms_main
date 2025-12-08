@@ -39,14 +39,14 @@ where $a \in (0,1)$ is the L3 forgetting factor, defined as $a = \left(\frac{1}{
 \section{Problem formulation}
 \quad This section addresses the optimization problem for the LEO satellite constellation. The objective is to find an optimal FLSO policy $\pi$ that dynamically assigns each satellite $n$ to a GW $m$ at each time slot $t$.
 
-The primary goal is to maximize the network-wide utility, which involves minimizing load imbalance and switching instability while maximizing link quality and connection duration. Unlike simple connection counting, we define the instantaneous traffic load of GW $m$ at time $t$, denoted as $L_m(t)$, as the aggregate traffic demand of all connected satellites:
+The primary goal is to maximize the network-wide utility, which involves minimizing load imbalance and switching instability while maximizing link quality and connection duration. Unlike simple connection counting, this thesis defines the instantaneous traffic load of GW $m$ at time $t$, denoted as $L_m(t)$, as the aggregate traffic demand of all connected satellites:
 \begin{equation}
 L_m(t) = \sum_{n \in \mathcal{S}_m(t)} \psi_n(t),
 \label{eq:gw_load_traffic}
 \end{equation}
 where $\mathcal{S}_m(t)$ denotes the set of connected satellites served by GW $m$ at time $t$ and $\psi_n(t)$ is the dynamic traffic demand of satellite $n$.
 
-To align with the MARL framework, we formulate the problem as a maximization of cumulative rewards. The following reward and penalty components are defined:
+To align with the MARL framework, this thesis formulates the problem as a maximization of cumulative rewards. The following reward and penalty components are defined:
 
 
 \begin{itemize}
@@ -123,10 +123,10 @@ The reward function $r_{m,t}$ is engineered to guide the agent towards maximizin
 
 where, $R_{m,t}$ denotes the average normalized RSRP of satellites connected to GW $m$. $T_{m,t}$ is the average normalized ToS promoting connection stability. $C_{m,t}$ denotes the average traffic throughput served by GW $m$. $J(t)$ is Jain's fairness index defined above. $\mathbb{I}(FLSO_{m,t})$ is an indicator function equal to 1 when an FLSO occurs at GW $m$ at time $t$. $L_{m,t}$ denotes the total traffic load of GW $m$ the squared term imposes a quadratic penalty on load concentration. The weights $w_r, w_t, w_c, w_F, w_s, w_l$ control the relative importance of these objectives, and the discount factor $\gamma\in[0,1]$ determines the emphasis placed on future rewards.
 
-\subsection{Proposed Multi Agent dueling DDQN algorithm}
+\subsection{Proposed Multi-Agent dueling DDQN algorithm}
 %복잡도 측면에서 얼마나 걸리는지 설명, GeForce RTX 3080 Ti GPU에서 수 밀리초 내에 행동을 출력할 수 있다.
-\label{Proposed Multi Agent Dueling DDQN Algorithm}
-\quad To solve the formulated MMDP, this thesis proposes a multi agent dueling DDQN algorithm. Unlike traditional single-agent approaches where satellites make independent FLSO decisions, our framework employs ground GWs as intelligent agents that learn to cooperatively manage traffic loads.
+\label{Proposed Multi-Agent Dueling DDQN Algorithm}
+\quad To solve the formulated MMDP, this thesis proposes a multi-agent dueling DDQN algorithm. Unlike traditional single-agent approaches where satellites make independent FLSO decisions, this thesis framework employs ground GWs as intelligent agents that learn to cooperatively manage traffic loads.
 
 We utilize a parameter sharing strategy where all homogeneous GW agents share a single Q-network parameterized by $\theta$. This approach significantly reduces the number of trainable parameters, accelerates convergence by aggregating experiences from all agents, and ensures scalability regardless of the number of GWs.
 

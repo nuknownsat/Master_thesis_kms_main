@@ -14,11 +14,10 @@
 \contentsline {section}{\numberline {3.2}Problem formulation}{16}{section.3.2}%
 \contentsline {section}{\numberline {3.3}Proposed method}{19}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}MMDP modeling}{19}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Proposed Multi Agent dueling DDQN algorithm}{21}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.2}Proposed Multi-Agent dueling DDQN algorithm}{21}{subsection.3.3.2}%
 \contentsline {chapter}{\numberline {4}Performance evaluation}{27}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Simulation setup}{27}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Key Performance Indicators}{31}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Results and Discussion}{34}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Summary}{45}{section.4.4}%
-\contentsline {chapter}{\numberline {5}Conclusion}{47}{chapter.5}%
-\contentsline {chapter}{References}{49}{chapter*.19}%
+\contentsline {chapter}{\numberline {5}Conclusion}{50}{chapter.5}%
+\contentsline {chapter}{References}{51}{chapter*.18}%

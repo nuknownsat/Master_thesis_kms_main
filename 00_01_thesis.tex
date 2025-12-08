@@ -68,6 +68,31 @@
 %\usepackage{caption}
 \usepackage[utf8]{inputenc} % use UTF8 encoding
 \usepackage{kotex} % use KoTeX package for Korean 
+% % in preamble
+% \usepackage{booktabs}
+% \usepackage{tikz}
+% \usetikzlibrary{calc}
+
+% % tiny inline bar: min / mean / max (for FLSO at 5000 steps)
+% % global range: [6.94 , 18.70] ≈ [min_all, max_all]
+% \newcommand{\flsobar}[3]{%
+%   \begin{tikzpicture}[baseline]
+%     \pgfmathsetmacro{\gmin}{6.94}
+%     \pgfmathsetmacro{\gmax}{18.70}
+%     \pgfmathsetmacro{\xmin}{(#1-\gmin)/(\gmax-\gmin)}
+%     \pgfmathsetmacro{\xmean}{(#2-\gmin)/(\gmax-\gmin)}
+%     \pgfmathsetmacro{\xmax}{(#3-\gmin)/(\gmax-\gmin)}
+%     % global baseline
+%     \draw[thin] (0,0) -- (1.8,0);
+%     % min–max segment
+%     \draw[semithick] (1.8*\xmin,0) -- (1.8*\xmax,0);
+%     % min and max ticks
+%     \draw[semithick] (1.8*\xmin,-0.06) -- (1.8*\xmin,0.06);
+%     \draw[semithick] (1.8*\xmax,-0.06) -- (1.8*\xmax,0.06);
+%     % mean tick (thicker)
+%     \draw[very thick] (1.8*\xmean,-0.08) -- (1.8*\xmean,0.08);
+%   \end{tikzpicture}%
+% }
 \newcommand{\BfPara}[1]{{\noindent\bf#1.}\xspace}
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  8 DEC 2025 19:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  8 DEC 2025 21:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1113,30 +1113,30 @@ Package: kolabels-utf 2015/03/20 v1.5 UTF-8 Hangul item labels
  (./00_01_thesis.aux (./00_x1_MacroFile1.aux) (./00_03_abstract.aux) (./00_04_abbreviation.aux) (./01_introduction.aux) (./02_Related_works.aux) (./03_Proposed_framework.aux) (./04_RESULT.aux) (./05_conclusion.aux))
 \openout1 = `00_01_thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 154.
-LaTeX Font Info:    ... okay on input line 154.
-LaTeX Font Info:    Checking defaults for LUC/nanummj/m/n on input line 154.
-LaTeX Font Info:    Trying to load font information for LUC+nanummj on input line 154.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 179.
+LaTeX Font Info:    ... okay on input line 179.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 179.
+LaTeX Font Info:    ... okay on input line 179.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 179.
+LaTeX Font Info:    ... okay on input line 179.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 179.
+LaTeX Font Info:    ... okay on input line 179.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 179.
+LaTeX Font Info:    ... okay on input line 179.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 179.
+LaTeX Font Info:    ... okay on input line 179.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 179.
+LaTeX Font Info:    ... okay on input line 179.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 179.
+LaTeX Font Info:    ... okay on input line 179.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 179.
+LaTeX Font Info:    ... okay on input line 179.
+LaTeX Font Info:    Checking defaults for LUC/nanummj/m/n on input line 179.
+LaTeX Font Info:    Trying to load font information for LUC+nanummj on input line 179.
  (c:/texlive/2025/texmf-dist/tex/latex/nanumtype1/lucnanummj.fd
 File: lucnanummj.fd 2013/02/12 v0.1 Nanum Myeongjo font definitions
 )
-LaTeX Font Info:    ... okay on input line 154.
+LaTeX Font Info:    ... okay on input line 179.
  (c:/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count477
@@ -1165,8 +1165,8 @@ Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 )
 Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package backref Info: ** backref set up for natbib ** on input line 154.
-Package hyperref Info: Link coloring OFF on input line 154.
+Package backref Info: ** backref set up for natbib ** on input line 179.
+Package hyperref Info: Link coloring OFF on input line 179.
  (./00_01_thesis.out) (./00_01_thesis.out)
 \@outlinefile=\write5
 \openout5 = `00_01_thesis.out'.
@@ -1180,33 +1180,33 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 \openout2 = `00_x1_MacroFile1.aux'.
 
  (./00_x1_MacroFile1.tex)
-<KMS_Theses_cover.pdf, id=99, 517.84065pt x 731.23592pt>
+<KMS_Theses_cover.pdf, id=95, 517.84065pt x 731.23592pt>
 File: KMS_Theses_cover.pdf Graphic file (type pdf)
 <use KMS_Theses_cover.pdf>
-Package pdftex.def Info: KMS_Theses_cover.pdf  used on input line 178.
+Package pdftex.def Info: KMS_Theses_cover.pdf  used on input line 203.
 (pdftex.def)             Requested size: 517.83939pt x 731.23413pt.
-<KMS_Theses_cover.pdf, id=101, page=1, 517.84065pt x 731.23592pt>
+<KMS_Theses_cover.pdf, id=97, page=1, 517.84065pt x 731.23592pt>
 File: KMS_Theses_cover.pdf Graphic file (type pdf)
 <use KMS_Theses_cover.pdf, page 1>
-Package pdftex.def Info: KMS_Theses_cover.pdf , page1 used on input line 178.
+Package pdftex.def Info: KMS_Theses_cover.pdf , page1 used on input line 203.
 (pdftex.def)             Requested size: 517.83939pt x 731.23413pt.
 File: KMS_Theses_cover.pdf Graphic file (type pdf)
 <use KMS_Theses_cover.pdf, page 1>
-Package pdftex.def Info: KMS_Theses_cover.pdf , page1 used on input line 178.
+Package pdftex.def Info: KMS_Theses_cover.pdf , page1 used on input line 203.
 (pdftex.def)             Requested size: 501.57788pt x 708.27148pt.
 File: KMS_Theses_cover.pdf Graphic file (type pdf)
 <use KMS_Theses_cover.pdf, page 1>
-Package pdftex.def Info: KMS_Theses_cover.pdf , page1 used on input line 178.
+Package pdftex.def Info: KMS_Theses_cover.pdf , page1 used on input line 203.
 (pdftex.def)             Requested size: 501.57788pt x 708.27148pt.
 File: KMS_Theses_cover.pdf Graphic file (type pdf)
 <use KMS_Theses_cover.pdf, page 1>
-Package pdftex.def Info: KMS_Theses_cover.pdf , page1 used on input line 178.
+Package pdftex.def Info: KMS_Theses_cover.pdf , page1 used on input line 203.
 (pdftex.def)             Requested size: 501.57788pt x 708.27148pt.
 
 
 File: KMS_Theses_cover.pdf Graphic file (type pdf)
 <use KMS_Theses_cover.pdf, page 1>
-Package pdftex.def Info: KMS_Theses_cover.pdf , page1 used on input line 178.
+Package pdftex.def Info: KMS_Theses_cover.pdf , page1 used on input line 203.
 (pdftex.def)             Requested size: 501.57788pt x 708.27148pt.
 [1
 
@@ -1217,61 +1217,61 @@ Package pdftex.def Info: KMS_Theses_cover.pdf , page1 used on input line 178.
  <./KMS_Theses_cover.pdf{c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}>]
 File: KMS_Theses_cover.pdf Graphic file (type pdf)
 <use KMS_Theses_cover.pdf>
-Package pdftex.def Info: KMS_Theses_cover.pdf  used on input line 179.
+Package pdftex.def Info: KMS_Theses_cover.pdf  used on input line 204.
 (pdftex.def)             Requested size: 517.83939pt x 731.23413pt.
-<KMS_Theses_cover.pdf, id=115, page=2, 517.84065pt x 731.23592pt>
+<KMS_Theses_cover.pdf, id=111, page=2, 517.84065pt x 731.23592pt>
 File: KMS_Theses_cover.pdf Graphic file (type pdf)
 <use KMS_Theses_cover.pdf, page 2>
-Package pdftex.def Info: KMS_Theses_cover.pdf , page2 used on input line 179.
+Package pdftex.def Info: KMS_Theses_cover.pdf , page2 used on input line 204.
 (pdftex.def)             Requested size: 517.83939pt x 731.23413pt.
 File: KMS_Theses_cover.pdf Graphic file (type pdf)
 <use KMS_Theses_cover.pdf, page 2>
-Package pdftex.def Info: KMS_Theses_cover.pdf , page2 used on input line 179.
+Package pdftex.def Info: KMS_Theses_cover.pdf , page2 used on input line 204.
 (pdftex.def)             Requested size: 501.57788pt x 708.27148pt.
 File: KMS_Theses_cover.pdf Graphic file (type pdf)
 <use KMS_Theses_cover.pdf, page 2>
-Package pdftex.def Info: KMS_Theses_cover.pdf , page2 used on input line 179.
+Package pdftex.def Info: KMS_Theses_cover.pdf , page2 used on input line 204.
 (pdftex.def)             Requested size: 501.57788pt x 708.27148pt.
 File: KMS_Theses_cover.pdf Graphic file (type pdf)
 <use KMS_Theses_cover.pdf, page 2>
-Package pdftex.def Info: KMS_Theses_cover.pdf , page2 used on input line 179.
+Package pdftex.def Info: KMS_Theses_cover.pdf , page2 used on input line 204.
 (pdftex.def)             Requested size: 501.57788pt x 708.27148pt.
 
 
 File: KMS_Theses_cover.pdf Graphic file (type pdf)
 <use KMS_Theses_cover.pdf, page 2>
-Package pdftex.def Info: KMS_Theses_cover.pdf , page2 used on input line 179.
+Package pdftex.def Info: KMS_Theses_cover.pdf , page2 used on input line 204.
 (pdftex.def)             Requested size: 501.57788pt x 708.27148pt.
 [2
 
  <./KMS_Theses_cover.pdf>]
-<professor_sign.pdf, id=120, 597.55246pt x 845.07724pt>
+<professor_sign.pdf, id=116, 597.55246pt x 845.07724pt>
 File: professor_sign.pdf Graphic file (type pdf)
 <use professor_sign.pdf>
-Package pdftex.def Info: professor_sign.pdf  used on input line 180.
+Package pdftex.def Info: professor_sign.pdf  used on input line 205.
 (pdftex.def)             Requested size: 597.551pt x 845.07518pt.
-<professor_sign.pdf, id=122, page=1, 597.55246pt x 845.07724pt>
+<professor_sign.pdf, id=118, page=1, 597.55246pt x 845.07724pt>
 File: professor_sign.pdf Graphic file (type pdf)
 <use professor_sign.pdf, page 1>
-Package pdftex.def Info: professor_sign.pdf , page1 used on input line 180.
+Package pdftex.def Info: professor_sign.pdf , page1 used on input line 205.
 (pdftex.def)             Requested size: 597.551pt x 845.07518pt.
 File: professor_sign.pdf Graphic file (type pdf)
 <use professor_sign.pdf, page 1>
-Package pdftex.def Info: professor_sign.pdf , page1 used on input line 180.
+Package pdftex.def Info: professor_sign.pdf , page1 used on input line 205.
 (pdftex.def)             Requested size: 501.22945pt x 708.85425pt.
 File: professor_sign.pdf Graphic file (type pdf)
 <use professor_sign.pdf, page 1>
-Package pdftex.def Info: professor_sign.pdf , page1 used on input line 180.
+Package pdftex.def Info: professor_sign.pdf , page1 used on input line 205.
 (pdftex.def)             Requested size: 501.22945pt x 708.85425pt.
 File: professor_sign.pdf Graphic file (type pdf)
 <use professor_sign.pdf, page 1>
-Package pdftex.def Info: professor_sign.pdf , page1 used on input line 180.
+Package pdftex.def Info: professor_sign.pdf , page1 used on input line 205.
 (pdftex.def)             Requested size: 501.22945pt x 708.85425pt.
 
 
 File: professor_sign.pdf Graphic file (type pdf)
 <use professor_sign.pdf, page 1>
-Package pdftex.def Info: professor_sign.pdf , page1 used on input line 180.
+Package pdftex.def Info: professor_sign.pdf , page1 used on input line 205.
 (pdftex.def)             Requested size: 501.22945pt x 708.85425pt.
 [3
 
@@ -1344,7 +1344,9 @@ l.18 ... {4}Performance evaluation}{27}{chapter.4}
  (./00_04_abbreviation.tex [8
 
 
-] [9])
+]
+
+[9])
 
 [10]
 No file 00_01_thesis.nls.
@@ -1377,7 +1379,7 @@ No file 00_01_thesis.nls.
 
 
 ]
-<figure/fig_packetloss_flso.png, id=254, 454.28922pt x 337.21182pt>
+<figure/fig_packetloss_flso.png, id=247, 454.28922pt x 337.21182pt>
 File: figure/fig_packetloss_flso.png Graphic file (type png)
 <use figure/fig_packetloss_flso.png>
 Package pdftex.def Info: figure/fig_packetloss_flso.png  used on input line 47.
@@ -1410,7 +1412,7 @@ LaTeX Font Info:    Trying to load font information for U+eus on input line 4.
 (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/ueus.fd
 File: ueus.fd 2013/01/14 v3.01 Euler Script
 )
-<figure/fig_system_model.png, id=317, 284.0211pt x 178.001pt>
+<figure/fig_system_model.png, id=310, 284.0211pt x 178.001pt>
 File: figure/fig_system_model.png Graphic file (type png)
 <use figure/fig_system_model.png>
 Package pdftex.def Info: figure/fig_system_model.png  used on input line 8.
@@ -1441,7 +1443,7 @@ Package pdftex.def Info: figure/fig_system_model.png  used on input line 8.
 [20]
 
 [21]
-<figure/dueling_dqn_archi.png, id=397, 627.01453pt x 381.87468pt>
+<figure/dueling_dqn_archi.png, id=390, 627.01453pt x 381.87468pt>
 File: figure/dueling_dqn_archi.png Graphic file (type png)
 <use figure/dueling_dqn_archi.png>
 Package pdftex.def Info: figure/dueling_dqn_archi.png  used on input line 153.
@@ -1490,7 +1492,7 @@ LaTeX Warning: Float too large for page by 36.79701pt on input line 59.
 [32]
 
 [33]
-<figure/reward.png, id=475, 853.7496pt x 740.0448pt>
+<figure/reward.png, id=468, 853.7496pt x 740.0448pt>
 File: figure/reward.png Graphic file (type png)
 <use figure/reward.png>
 Package pdftex.def Info: figure/reward.png  used on input line 113.
@@ -1498,7 +1500,7 @@ Package pdftex.def Info: figure/reward.png  used on input line 113.
 
 
 [34]
-<figure/1.flso.png, id=480, 853.7496pt x 740.0448pt>
+<figure/1.flso.png, id=473, 853.7496pt x 740.0448pt>
 File: figure/1.flso.png Graphic file (type png)
 <use figure/1.flso.png>
 Package pdftex.def Info: figure/1.flso.png  used on input line 121.
@@ -1508,117 +1510,116 @@ Package pdftex.def Info: figure/1.flso.png  used on input line 121.
 [35 <./figure/reward.png (PNG copy)>]
 
 [36 <./figure/1.flso.png (PNG copy)>]
-<figure/2.ufso.png, id=491, 853.7496pt x 740.0448pt>
+<figure/2.ufso.png, id=484, 853.7496pt x 740.0448pt>
 File: figure/2.ufso.png Graphic file (type png)
 <use figure/2.ufso.png>
 Package pdftex.def Info: figure/2.ufso.png  used on input line 131.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
 
-[37 <./figure/2.ufso.png (PNG copy)>]
-<figure/3.tos.png, id=497, 853.7496pt x 740.0448pt>
+[37]
+
+[38 <./figure/2.ufso.png (PNG copy)>]
+<figure/3.tos.png, id=494, 853.7496pt x 740.0448pt>
 File: figure/3.tos.png Graphic file (type png)
 <use figure/3.tos.png>
 Package pdftex.def Info: figure/3.tos.png  used on input line 141.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
 
-[38]
-<figure/4.rsrp.png, id=503, 853.7496pt x 740.0448pt>
+[39]
+
+[40 <./figure/3.tos.png (PNG copy)>]
+<figure/4.rsrp.png, id=504, 853.7496pt x 740.0448pt>
 File: figure/4.rsrp.png Graphic file (type png)
 <use figure/4.rsrp.png>
-Package pdftex.def Info: figure/4.rsrp.png  used on input line 150.
-(pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
-
-
-[39 <./figure/3.tos.png (PNG copy)>]
-
-[40 <./figure/4.rsrp.png (PNG copy)>]
-<figure/5.connection.png, id=513, 853.7496pt x 740.0448pt>
-File: figure/5.connection.png Graphic file (type png)
-<use figure/5.connection.png>
-Package pdftex.def Info: figure/5.connection.png  used on input line 160.
+Package pdftex.def Info: figure/4.rsrp.png  used on input line 151.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
 
 [41]
-<figure/6.traffic.png, id=519, 853.7496pt x 740.0448pt>
+
+[42 <./figure/4.rsrp.png (PNG copy)>]
+<figure/5.connection.png, id=515, 853.7496pt x 740.0448pt>
+File: figure/5.connection.png Graphic file (type png)
+<use figure/5.connection.png>
+Package pdftex.def Info: figure/5.connection.png  used on input line 161.
+(pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
+
+
+[43]
+
+[44 <./figure/5.connection.png (PNG copy)>]
+<figure/6.traffic.png, id=525, 853.7496pt x 740.0448pt>
 File: figure/6.traffic.png Graphic file (type png)
 <use figure/6.traffic.png>
-Package pdftex.def Info: figure/6.traffic.png  used on input line 170.
+Package pdftex.def Info: figure/6.traffic.png  used on input line 171.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
-
-[42 <./figure/5.connection.png (PNG copy)>]
-
-[43 <./figure/6.traffic.png (PNG copy)>]
-<figure/7.jain.png, id=530, 853.7496pt x 740.0448pt>
-File: figure/7.jain.png Graphic file (type png)
-<use figure/7.jain.png>
-Package pdftex.def Info: figure/7.jain.png  used on input line 180.
-(pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
-
-
-[44 <./figure/7.jain.png (PNG copy)>]
 
 [45]
-Overfull \hbox (140.56047pt too wide) in paragraph at lines 196--218
- [][] 
- []
 
-)
+[46 <./figure/6.traffic.png (PNG copy)>]
+<figure/7.jain.png, id=535, 853.7496pt x 740.0448pt>
+File: figure/7.jain.png Graphic file (type png)
+<use figure/7.jain.png>
+Package pdftex.def Info: figure/7.jain.png  used on input line 183.
+(pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
-[46]
+
+[47]
+
+[48 <./figure/7.jain.png (PNG copy)>])
+
+[49]
 \openout2 = `05_conclusion.aux'.
 
  (./05_conclusion.tex
  5.
+)
+
+[50
 
 
-[47
 
 
-
-
-])
-
-[48] (./00_01_thesis.bbl (./00_01_thesis.brf)
+] (./00_01_thesis.bbl (./00_01_thesis.brf)
 \tf@brf=\write9
 \openout9 = `00_01_thesis.brf'.
 
 
 
-[49
+[51
 
 
 
 ]
 
-[50])
+[52])
 
-[51] (./00_01_thesis.aux (./00_x1_MacroFile1.aux) (./00_03_abstract.aux) (./00_04_abbreviation.aux) (./01_introduction.aux) (./02_Related_works.aux) (./03_Proposed_framework.aux) (./04_RESULT.aux) (./05_conclusion.aux))
+[53] (./00_01_thesis.aux (./00_x1_MacroFile1.aux) (./00_03_abstract.aux) (./00_04_abbreviation.aux) (./01_introduction.aux) (./02_Related_works.aux) (./03_Proposed_framework.aux) (./04_RESULT.aux) (./05_conclusion.aux))
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-07-20>
  ***********
 Package rerunfilecheck Info: File `00_01_thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 09E050BD83BEEDBC8CAF02F3F57AD906;3952.
+(rerunfilecheck)             Checksum: 9251CD1AA3B20F2B70757FE158999C46;3836.
 Package rerunfilecheck Info: File `00_01_thesis.brf' has not changed.
 (rerunfilecheck)             Checksum: 5C0AC5F8D74BCBEF83D4CC31EAA5CCC4;1534.
  ) 
 Here is how much of TeX's memory you used:
- 36768 strings out of 467801
- 720511 string characters out of 5436090
- 1370303 words of memory out of 5000000
- 64535 multiletter control sequences out of 15000+600000
+ 36764 strings out of 467801
+ 720404 string characters out of 5436090
+ 1370215 words of memory out of 5000000
+ 64531 multiletter control sequences out of 15000+600000
  639855 words of font info for 88 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 125i,17n,121p,3085b,744s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 125i,17n,121p,3039b,744s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/euler/eusm10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on 00_01_thesis.pdf (64 pages, 14849487 bytes).
+Output written on 00_01_thesis.pdf (66 pages, 14866278 bytes).
 PDF statistics:
  717 PDF objects out of 1000 (max. 8388607)
- 577 compressed objects within 6 object streams
+ 575 compressed objects within 6 object streams
  146 named destinations out of 1000 (max. 500000)
- 292 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 284 words of extra memory for PDF output out of 10000 (max. 10000000)
 
