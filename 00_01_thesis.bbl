@@ -30,10 +30,10 @@ L.~Lei, E.~Lagunas, S.~Chatzinotas, and B.~Ottersten, ``Broadband {LEO} satellit
 M.~Tayyab, X.~Gelabert, and R.~J{\"a}ntti, ``A survey on handover management: From {LTE} to {NR},'' \emph{IEEE Access}, vol.~7, pp. 118\,907--118\,930, 2019.
 
 \bibitem{rel_38413}
-``{Technical Specification Group Radio Access Network; NR; NG-RAN; NG Application Protocol (NGAP); Version 19.0.0},'' 3GPP Standard TS 38.413, 2025.
+``{Technical Specification Group Radio Access Network; NR; NG-RAN; NG Application Protocol (NGAP); Version 19.0.0},'' 3GPP Standard TS 38.413, Nov. 2024.
 
 \bibitem{rel_38331}
-``{Technical Specification Group Radio Access Network; NR; Radio Resource Control (RRC); Protocol Specification; Version 18.3.0},'' 3GPP Standard TS 38.331, 2024.
+``{Technical Specification Group Radio Access Network; NR; Radio Resource Control (RRC); Protocol Specification; Version 18.3.0},'' 3GPP Standard TS 38.331, Sep. 2024.
 
 \bibitem{roth2022sdn}
 M.~M.~H. Roth, H.~Brandt, and H.~Bischl, ``Distributed {SDN}-based load-balanced routing for low earth orbit satellite constellation networks,'' \emph{arXiv preprint arXiv:2209.05984}, 2022.
@@ -61,17 +61,11 @@ Y.~Zhou, J.~Liu, R.~Zhang, M.~Ouyang, and T.~Huang, ``A novel feeder link handov
 \bibitem{ITU-R-P.676-13}
 {ITU-R}, ``{Recommendation ITU-R P.676-13}: Attenuation by atmospheric gases and related effects,'' International Telecommunication Union, Geneva, Switzerland, Tech. Rep., Aug. 2022.
 
-\bibitem{3gppl3}
-``{Technical Specification Group Radio Access Network; Radio Resource Control (RRC); UTRAN; Signalling; Version 18.0.0},'' 3GPP Standard TS 25.331, Mar. 2024.
+\bibitem{jain1984quantitative}
+R.~K. Jain, D.-M.~W. Chiu, W.~R. Hawe \emph{et~al.}, ``A quantitative measure of fairness and discrimination,'' \emph{Eastern Research Laboratory, Digital Equipment Corporation, Hudson, MA}, vol.~21, no.~1, pp. 2022--2023, 1984.
 
-\bibitem{singlemachine}
-M.~Al-Romema and M.~A.~Makarem, ``Enhancing evolutionary solver efficiency for {NP}-hard single machine scheduling problems,'' \emph{Int. J. Sci. Res. (IJSR)}, vol.~12, no.~11, pp. 2015--2025, Nov. 2023.
-
-\bibitem{intro_RL}
-V.~Mnih, K.~Kavukcuoglu, D.~Silver, A.~A. Rusu, J.~Veness, M.~G. Bellemare, A.~Graves, M.~Riedmiller, A.~K. Fidjeland, G.~Ostrovski \emph{et~al.}, ``Human-level control through deep reinforcement learning,'' \emph{Nature}, vol. 518, no. 7540, pp. 529--533, 2015.
-
-\bibitem{mnih2013playing}
-V.~Mnih, K.~Kavukcuoglu, D.~Silver, A.~Graves, I.~Antonoglou, D.~Wierstra, and M.~Riedmiller, ``Playing {Atari} with deep reinforcement learning,'' \emph{arXiv}, 2013.
+\bibitem{ju2023achieving}
+P.~Ju, A.~Ghosh, and N.~B. Shroff, ``Achieving fairness in multi-agent markov decision processes using reinforcement learning,'' \emph{arXiv preprint arXiv:2306.00324}, 2023.
 
 \bibitem{hazan2019revisiting}
 E.~Hazan and S.~Kakade, ``Revisiting the polyak step size,'' \emph{arXiv}, 2019.

@@ -1,9 +1,7 @@
-\chapter[Proposed RL-based FLSO algorithm]{Proposed RL-based FLSO algorithm}
+\chapter[Proposed MARL-based FLSO algorithm]{Proposed MARL-based FLSO algorithm}
 
 \section{System model}
-\quad This thesis considers a large-scale LEO satellite constellation deployed across $P$ orbital planes, represented by the set $\mathcal{P} = \left\{p \mid p = 1, \dots, P\right\}$. The constellation consists of $N$ LEO satellites in total, distributed across these planes, with $N_p$ satellites in plane $p$. The overall satellite index set is denoted as $\mathcal{S} = \{ s_{p,i} \mid p = 1, \dots, P;\ i = 1, \dots, N_p \}$, and its cardinality as $\lvert\mathcal{S}\rvert = \sum_{p=1}^{P} N_p$. For simplicity in the following equations, a single satellite is denoted by its global index $n \in \{1, \dots, N\}$. The LEO satellite $n$ connects to ground GWs via feeder link, where the set of GWs is denoted as $\mathcal{G} = \left\{m \mid m = 1, 2, \dots, M\right\}$. The coordinates of each LEO satellite $n$ in the Earth-centered, Earth-fixed (ECEF) coordinate system at a given time slot $t$, where $t \in \{0, 1, \dots, T\}$, are given by $l_n(t) = (x_n(t), y_n(t), z_n(t))$.
-
-The primary challenge addressed in this thesis is GW load balancing. The load of a GW \( m \) at time \( t \), denoted as $\mathcal{L}_m(t)$, is defined as the set of satellites $n \in \mathcal{S}$ currently connected to it. The instantaneous load is $\lvert \mathcal{L}_m(t) \rvert$.
+\quad As in Fig. ~\ref{figure_system_model}, this thesis considers a large-scale LEO satellite constellation deployed across $P$ orbital planes, represented by the set $\mathcal{P} = \left\{p \mid p = 1, \dots, P\right\}$. The constellation consists of $N$ LEO satellites in total, distributed across these planes, with $N_p$ satellites in plane $p$. The overall satellite index set is denoted as $\mathcal{S} = \{ s_{p,i} \mid p = 1, \dots, P;\ i = 1, \dots, N_p \}$, and its cardinality as $\lvert\mathcal{S}\rvert = \sum_{p=1}^{P} N_p$. In this proposed framework, the ground GWs are modeled as intelligent agents in a Multi-Agent Reinforcement Learning (MARL) setting. The set of agents corresponds to the set of GWs $\mathcal{G} = \{1, \dots, M\}$. Each GW agent $m$ manages its limited number of connection links, denoted as $l_{max}$, to serve multiple LEO satellites simultaneously. The GW monitors the link conditions of connected satellites and visible candidate satellites to make load balancing and FLSO decisions.
 
 \begin{sidewaysfigure}[p]
 \centering
@@ -12,7 +10,10 @@ The primary challenge addressed in this thesis is GW load balancing. The load of
 \label{figure_system_model}
 \end{sidewaysfigure}
 
-The LEO satellite \( n \) evaluates the RSRP from signals transmitted by the GW \( m \) at periodic interval \( T_m \). The RSRP \( R_{m,n} \) is calculated as follows:
+To address the primary challenge of GW load balancing, where the instantaneous load $\lvert \mathcal{L}_m(t) \rvert$ is defined by the set of connected satellites, this thesis models the dynamic UE demand of each satellite $n$ as a stochastic time-varying traffic load $\psi_n(t)$. Thereby introducing network uncertainty that necessitates GW agents to adaptively manage connections based on fluctuating aggregate traffic rather than solely on satellite visibility.
+% 로드 밸런싱 문제를 해결하기 위해, 각 위성 $n$의 동적 UE 수요를 균등 분포 $\mathcal{U}(0, f)$를 따르는 확률적 시간 가변 트래픽 부하 $\psi_n(t)$로 모델링하여 네트워크 불확실성을 도입하였다. % 이를 통해 지상 GW 에이전트는 단순한 위성 가시성에 의존하는 대신, 변화하는 총 트래픽에 기반하여 적응적으로 연결을 관리해야 한다.
+
+The GW \( m \) receives measurement reports from connected LEO satellites. The satellite \( n \) of GW \( m \) RSRP \( R_{m,n} \) is calculated as follows:
 \begin{equation}
 R_{m,n} = EIRP_{m} + G_{n} - PL_{m,n} - 10 \log_{10}(q_{RB}),
 \label{eq:rsrp}
@@ -22,54 +23,43 @@ where \( EIRP_{m} \) is the effective isotropic radiated power (EIRP) of the GW 
 &PL_{m,n} = P_{{LOS,{m,n}}} \big( FSPL_{m,n}(d_{m,n}, f_m) + SF_{m,n} \big)\notag\\
 &\quad + P_{{NLOS,{m,n}}} \big( FSPL_{m,n}(d_{m,n}, f_m) + SF_{m,n} + CL_{m,n}  \big) + AT_{m,n},
 \end{align}
-$P_{{LOS,{m,n}}}$ and $P_{{NLOS,{m,n}}}$ denote the probabilities that the LEO satellite \( n \) to GW \( m \) is in a line-of-sight (LoS) and non-line-of-sight (NLoS) condition, respectively. $FSPL_{m,n}(d_{m,n}, f_m)$ denotes the free space path loss (FSPL) as a function of the distance $d_{m,n}$ between the LEO satellite \( n \) and the GW \( m \) and the frequency $f_m$ of the GW \( m \) uplink feeder link frequency. $SF_{m,n}$ represents the shadow fading, which accounts for the signal attenuation caused by obstacles such as buildings, trees, or terrain variations in the propagation path. $CL_{m,n}$ denotes the clutter loss, reflecting additional signal degradation due to environmental clutter. $AT_{m,n}$ captures atmospheric attenuation along the feeder link slant path, including gaseous absorption due to dry air and water vapor, and it can be obtained from standard ITU-R models for the considered band~\cite{ITU-R-P.676-13}. Specifically, the $FSPL_{m,n}$ is calculated as follows:
+where $P_{{LOS,{m,n}}}$ and $P_{{NLOS,{m,n}}}$ denote the probabilities that the LEO satellite \( n \) to GW \( m \) is in a line-of-sight (LoS) and non-line-of-sight (NLoS) condition, respectively. $FSPL_{m,n}(d_{m,n}, f_m)$ denotes the free space path loss (FSPL) as a function of the distance $d_{m,n}$ between the LEO satellite \( n \) and the GW \( m \) and the frequency $f_m$ of the GW \( m \) uplink feeder link frequency. $SF_{m,n}$ represents the shadow fading, which accounts for the signal attenuation caused by obstacles such as buildings, trees, or terrain variations in the propagation path. $CL_{m,n}$ denotes the clutter loss, reflecting additional signal degradation due to environmental clutter. $AT_{m,n}$ captures atmospheric attenuation along the feeder link slant path, including gaseous absorption due to dry air and water vapor, and it can be obtained from standard ITU-R models for the considered band~\cite{ITU-R-P.676-13}. Specifically, the $FSPL_{m,n}$ is calculated as follows:
 % 한글 주석: 경로손실 식에 대기 감쇄 AT_{m,n}를 추가하여 LOS/NLOS 모두에 반영합니다. (기체 흡수 등, ITU-R 모델 기반 계산 가능)
 \begin{equation}
 FSPL_{m,n} = 32.45 + 20\log_{10}(f_m) + 20\log_{10}(d_{m,n}).
 \end{equation}
 
-At each measurement instant $t$, the LEO satellite \( n \) samples the RSRP from GW \( m \) and all neighboring GWs within instantaneous visibility region, yielding the raw RSRP $R_{m,n}(t)$. To mitigate the effects of shadow fading and measurement noise, these raw RSRP $R_{m,n}(t)$ samples are processed at the radio resource control (RRC) layer using a layer 3 (L3) infinite impulse response (IIR) filter \cite{3gppl3}. Denoting the filtered RSRP by $\widetilde{R}_{m,n}(t)$, the update equation is calculated as follows:
+At each measurement instant $t$, the LEO satellite \( n \) samples the RSRP from GW \( m \) and all neighboring GWs within instantaneous visibility region, yielding the raw RSRP $R_{m,n}(t)$. To mitigate the effects of shadow fading and measurement noise, these raw RSRP $R_{m,n}(t)$ samples are processed at the radio resource control (RRC) layer using a layer 3 (L3) infinite impulse response (IIR) filter \cite{rel_38331}. Denoting the filtered RSRP by $\widetilde{R}_{m,n}(t)$, the update equation is calculated as follows:
 \begin{equation}
   \widetilde{R}_{m,n}(t) = a{R}_{m,n}(t) + (1 - a)\widetilde{R}_{m,n}(t-1),
   \label{eq:L3filter_new}
 \end{equation}
 where $a \in (0,1)$ is the L3 forgetting factor, defined as $a = \left(\frac{1}{2}\right)^{K/4}$, and $K$ is the filter coefficient. The initial condition is set as $\widetilde{R}_{m,n}(0) = R_{m,n}(0)$. Finally, the LEO satellite compiles a measurement report containing the L3-filtered RSRP $\widetilde{R}_{m,n}(t)$ of the serving and neighboring GWs and transmits this report back to the serving GW \( m \) over the feeder link.
 
-% To quantify the link quality during the simulation, we calculate the channel capacity $C$ using the Shannon capacity formula, which is calculated as follows:
-% \begin{equation}
-% C = B_m \log_2(1+{\zeta}),
-% \label{eq:capacity}
-% \end{equation}
-% where the $B_m$ is the uplink bandwidth of GW \( m \) and $\zeta' is the SNR calculated as follows:
-% \begin{equation}
-% {\zeta} = {EIRP_{m}}+\frac{G_{n}}{T}-k-{PL_{m,n}}-B_m,
-% \label{eq:snr}
-% \end{equation}
-% where, $k$ is the Boltzmann constant, $G_n/T$ is the antenna gain-to-noise temperature ratio, is calculated as follows:
-% \begin{equation}
-% \frac{G_n}{T} = G_{n} - N_{f} - 10\log_{10}\left(T_0 + (T_a - T_0) 10^{-0.1 N_{f}} \right),
-% \end{equation}
-% where $N_{f}$ is LEO satellite noise figure, $T_0$ and $T_a$ is ambient and antenna temperature.
-
-
-
 \section{Problem formulation}
-\quad This section addresses the optimization problem for the LEO satellite constellation. The objective is to find an optimal FLSO policy $\pi$ that dynamically assigns each satellite $n \in \mathcal{S}$ to a GW $m \in \mathcal{G}$ at each time slot $t$.
+\quad This section addresses the optimization problem for the LEO satellite constellation. The objective is to find an optimal FLSO policy $\pi$ that dynamically assigns each satellite $n$ to a GW $m$ at each time slot $t$.
 
-The primary goal is to minimize the overall network load imbalance while simultaneously maximizing the collective link quality RSRP and minimizing the instability caused by frequent FLSOs. Let $m_t^{n}$ denote the GW selected by satellite $n$ at time $t$. This problem can be formulated as a multi-objective optimization problem.
+The primary goal is to maximize the network-wide utility, which involves minimizing load imbalance and switching instability while maximizing link quality and connection duration. Unlike simple connection counting, we define the instantaneous traffic load of GW $m$ at time $t$, denoted as $L_m(t)$, as the aggregate traffic demand of all connected satellites:
+\begin{equation}
+L_m(t) = \sum_{n \in \mathcal{S}_m(t)} \psi_n(t),
+\label{eq:gw_load_traffic}
+\end{equation}
+where $\mathcal{S}_m(t)$ denotes the set of connected satellites served by GW $m$ at time $t$ and $\psi_n(t)$ is the dynamic traffic demand of satellite $n$.
 
-The following cost and reward components are defined for each satellite $n$ at time $t$:
+To align with the MARL framework, we formulate the problem as a maximization of cumulative rewards. The following reward and penalty components are defined:
+
 
 \begin{itemize}
-    \item \textbf{FLSO Cost:} A cost $C_{FS}$ is incurred if the satellite switches its serving GW, penalizing instability.
+    \item \textbf{FLSO Penalty:} A penalty component $C_{FS}$ is incurred if the satellite switches its serving GW, penalizing instability.
     \begin{equation}
-    FS_{m,n}(t) = \begin{cases} C_{FS} & \text{if } m_t^{n} \neq m_{t-1}^{n}, \\ 0 & \text{otherwise}. \end{cases}
+    FS_{m,n}(t) = \begin{cases} C_{FS} & \text{if } m_n(t) \neq m_{n}(t-1), \\ 0 & \text{otherwise}, \end{cases}
     \label{eq:flso_cost}
     \end{equation}
+    where $m_n(t)$ denotes the index of the serving GW connected to satellite $n$ at time $t$.
 
-    \item \textbf{UFLSO Cost:} A cost $C_{UFS}$ is incurred for an unnecessary FLSO (UFLSO), which occurs if the satellite switches to another GW within a minimum time-of-stay (MTS), denoted $\tau_{min}$. Let $\tau_{stay}(t)$ is the time elapsed since the last FLSO.
+    \item \textbf{UFLSO Penalty:} A penalty component $C_{UFS}$ is incurred for an unnecessary FLSO (UFLSO), which occurs if the satellite switches to another GW within a minimum time-of-stay (MTS), denoted $\tau_{min}$. Let $\tau_{stay}(t)$ be the time elapsed since the last FLSO.
     \begin{equation}
-    UFS_{m,n}(t) = \begin{cases} C_{UFS} & \text{if } m_t^{n} \neq m_{t-1}^{n} \text{ and } \tau_{stay}(t) < \tau_{min}, \\ 0 & \text{otherwise}. \end{cases}
+    UFS_{m,n}(t) = \begin{cases} C_{UFS} & \text{if } m_n(t) \neq m_{n}(t-1) \text{ and } \tau_{stay}(t) < \tau_{min}, \\ 0 & \text{otherwise}. \end{cases}
     \label{eq:uflso_cost}
     \end{equation}
     
@@ -79,76 +69,76 @@ The following cost and reward components are defined for each satellite $n$ at t
     \label{eq:tos_reward}
     \end{equation}
 
-    \item \textbf{Load Imbalance Cost:} A cost $\lvert \mathcal{L}_m(t) \rvert$ is incurred for connecting to a congested GW, proportional to the number of satellites already connected.
-    
-    \item \textbf{Link Quality Reward:} A reward is gained based on the L3-filtered RSRP from the selected GW.
+    \item \textbf{Fairness Reward:} To ensure load balancing based on the stochastic traffic $\psi_n(t)$, a reward is derived from Jain's Fairness Index \cite{jain1984quantitative} applied to the GW traffic loads $L_m(t)$.
     \begin{equation}
-    R_{m,n}(t) = \widetilde{R}_{m,n}(t).
-    \label{eq:rsrp_reward}
+    J(t) = \frac{(\sum_{m=1}^{M} L_m(t))^2}{M \cdot \sum_{m=1}^{M} (L_m(t))^2}.
+    \label{eq:jain_index_term}
     \end{equation}
+    
+    \item \textbf{Link Quality Reward:} A reward is gained based on the L3-filtered RSRP from the connected GW to ensure high-quality connectivity.
+
 \end{itemize}
 
-The global optimization problem \textbf{P1} is to find the policy $\pi$ that minimizes the total expected cumulative cost and maximizes rewards for all $N$ satellites over the time horizon $T$.
+The global optimization problem \textbf{P1} is to find the policy $\boldsymbol{\pi}$ that maximizes the weighted sum of these components over the time horizon $T$:
 
 \begin{align}
-& \textbf{P1:}\quad \operatorname*{\min}_{\pi} \mathbb{E} \sum_{t=0}^{T} \sum_{n=1}^{N} \sum_{m=1}^{M} \Big( FS_{m,n}(t) + UFS_{m,n}(t) - ToS_{m,n}(t)\notag \\
-& \hspace{15em} - R_{m,n}(t) + \lvert \mathcal{L}_m(t) \rvert \Big),\\
+& \textbf{P1:}\quad \operatorname*{\max}_{\boldsymbol{\pi}} \mathbb{E} \sum_{t=0}^{T} \Big[ J(t) + \sum_{m=1}^{M} \sum_{n \in \mathcal{S}_m(t)} \Big( \widetilde{R}_{m,n}(t) + ToS_{m,n}(t) - \xi_{m,n}(t) \Big) \Big],\\
 & \quad \text{s.t.} \nonumber \\
-& \quad \textbf{C1 :}\quad \theta_{m,n}(t) \geq \theta_{\text {min}}, \quad \forall{n}, \forall{m} \in \mathcal{G}_t^{n}, \forall{t},\\
-& \quad \textbf{C2 :}\quad \widetilde R_{m,n}(t) \geq R_{\text {min}}, \quad \forall{n}, \forall{m} \in \mathcal{G}_t^{n}, \forall{t},\\
-& \quad \textbf{C3 :}\quad m_t^{n} \in \mathcal{G}_t^{n}, \quad \forall{n}, \forall{t}.
+& \quad \textbf{C1 :}\quad \theta_{m,n}(t) \geq \theta_{\text {min}}, \quad \forall m, \forall n \in \mathcal{S}_m(t), \forall t,\\
+& \quad \textbf{C2 :}\quad \widetilde R_{m,n}(t) \geq R_{\text {min}}, \quad \forall m, \forall n \in \mathcal{S}_m(t), \forall t,\\
+& \quad \textbf{C3 :}\quad |\mathcal{S}_m(t)| \le l_{\text{max}}, \quad \forall m, \forall t.
 \end{align}
 
-% In \textbf{P1}, $w_{S}$, $w_{L}$, and $w_{R}$ are the weighting factors that balance the trade-off between switching stability, load balancing, and link quality. $\gamma \in [0, 1]$ is the discount factor for future costs.
-In \textbf{P1}, the objective function jointly considers switching stability, connection duration, link quality, and GW load to achieve balanced and robust network operation.
+In \textbf{P1}, $\xi_{m,n}(t) = FS_{m,n}(t) + UFS_{m,n}(t)$ represents the combined switching penalties. The positive signs for $J(t)$, $\widetilde{R}_{m,n}(t)$, and $ToS_{m,n}(t)$ indicate maximization of fairness, link quality, and stability, respectively, while the negative sign for $\xi_{m,n}(t)$ enforces the minimization of switching overheads. Constraint \textbf{C3} ensures that the number of connected satellites does not exceed the GW capacity limit $l_{\text{max}}$.
 
-The constraints define the set of available GWs, $\mathcal{G}_t^{n}$, for satellite $n$ at time $t$.
-Constraint \textbf{C1} ensures the elevation angle $\theta_{m,n}(t)$ to an available GW $m$ exceeds the minimum threshold $\theta_{\min}$, guaranteeing a reliable LoS.
-Constraint \textbf{C2} ensures the filtered RSRP $\widetilde{R}_{m,n}(t)$ from an available GW exceeds the minimum required signal quality $R_{\min}$.
-Constraint \textbf{C3} mandates that each satellite $n$ must select a GW $m_t^{n}$ from the set of currently available GWs $\mathcal{G}_t^{n}$ that satisfy C1 and C2.
+The constraints define the feasibility conditions for the active connections $\mathcal{S}_m(t)$.
+Constraint \textbf{C1} ensures that the elevation angle $\theta_{m,n}(t)$ for every connected link exceeds the minimum threshold $\theta_{\min}$, guaranteeing a reliable LoS.
+Constraint \textbf{C2} requires that the L3-filtered RSRP $\widetilde{R}_{m,n}(t)$ of any active connection maintains a minimum signal quality level $R_{\min}$.
+Constraint \textbf{C3} imposes a hard capacity limit on the ground segment, ensuring that the number of satellites served by a single GW $m$ does not exceed the maximum link capacity $l_{\text{max}}$.
 
-This problem is characterized by high-dimensional state spaces and complex, time-varying dynamics, making it non-deterministic polynomial-time hard (NP-hard)~\cite{singlemachine}. This thesis therefore models the problem as a Markov decision process (MDP) to find an optimal FLSO policy using RL techniques.
+The FLSO optimization problem involves simultaneous decision-making by multiple satellites, characterized by high-dimensional state spaces and complex, time-varying network topology. This combinatorial nature renders the problem non-deterministic polynomial-time hard (NP-hard).
 
 \section{Proposed method}
-\quad To address the problem \textbf{P1}, the problem is transformed into a dynamic programming framework to derive an optimal FLSO policy. The FLSO optimization problem is modeled as an MDP due to its ability to handle sequential decision-making in dynamic environments.
+\quad To address the problem \textbf{P1}, the optimization problem is formulated as a multi-agent Markov decision process (MMDP)~\cite{ju2023achieving}. This framework allows each GW agent to learn an optimal policy for managing satellite connections through sequential interaction with the dynamic LEO environment.
 
+\subsection{MMDP modeling}
+\quad In the proposed framework, each GW $m$ acts as an independent agent. The agent observes its local state $s_{m,t}$, executes an action $a_{m,t}$, and receives a reward $r_{m,t}$. The detailed definitions are as follows:
 
-\subsection{MDP modeling}
-\quad The LEO satellite's state $s_t$ evolves over time and actions $a_t$ impact the future reward $r_t$ with discount factor $\gamma$~\cite{intro_RL}. This MDP formulation enables the agent to jointly account for geometric visibility, link quality, and GW load. At each step $t$, the state of satellite $n$ is defined as
+The state $s_{m,t}$ is designed to provide the agent with comprehensive information about its current utilization and potential handover targets. It consists of two feature vectors:
 \begin{align}
-    s_t = \big\{ l_n(t),\, m_{t},\, \widetilde{R}_{m,n}(t),\, c_{m}(t) \big\},
+    s_{m,t} = \big\{ \mathbf{H}_{m,t}^{links}, \mathbf{H}_{m,t}^{cands} \big\},
 \end{align}
-where $l_n(t)$ denotes the ECEF position of satellite $n$, $m_{t}$ is the index of the serving GW selected at the current step, $\widetilde{R}_{m,n}(t)$ is the L3-filtered RSRP from that serving GW, and $c_{m}(t) \in [0,1]$ is the normalized backhaul complexity of the serving GW. The complexity term $c_m(t)$ is obtained by mapping the instantaneous or pre-estimated number of attached satellites at GW $m$ to a dimensionless score in $[0,1]$ via min-max normalization across all GWs, so that higher values indicate more congested GWs. This compact representation provides the DRL agent with a load-aware yet scale-invariant signal, allowing it to avoid persistently overloaded GWs while optimizing FLSO decisions.
+where, $\mathbf{H}_{m,t}^{links}$ denotes the status of the agent's $l_{max}$ connection links. For each link $l$, the feature vector contains a binary active feeder link indicator, the normalized RSRP of the connected satellite, the normalized ToS of the current connection, and the satellite's traffic demand. $\mathbf{H}_{m,t}^{cands}$ encodes the top-$K$ visible candidate satellites sorted by signal strength, where each candidate is represented by its normalized RSRP and traffic demand. This compact, unified representation allows the agent to evaluate and compare its current connections against potential alternatives when making connection and FLSO decisions.
 
-The action space \( {a_t} \) involves the LEO satellite $n$ selecting the optimal GW $m \in \mathcal{G}$ at each step. In line with constraints \textbf{C1-C3}, the action space is the set of available GWs that meet the minimum elevation and RSRP thresholds:
+The action space $a_{m,t}$ is discrete and defined as the selection of a candidate satellite to serve. At each step $t$, the agent selects an index $p$ from the candidate list:
 \begin{align}
-{a_t} &= \{ m_{t} | m_{t} \in \mathcal{G}_{t}^{n} \}.
+    a_{m,t} \in \{0, 1, \dots, p_{cand}\},
 \end{align}
+where $p_{cand}$ is the number of considered candidates. Selecting a candidate index implies attempting to establish a connection with that satellite. If the candidate is already connected, the action is treated as maintaining the connection. If the candidate is new and the GW has available links, a new connection is formed. If the GW is full, the agent may replace an existing connection based on the policy.
 
-The action \(a_t\) is the selection of the next GW, $m_t$, from the set of available GWs \( \mathcal{G}_{t}^{n} \).
-
-The immediate reward \(r_{t}\) is formulated to directly optimize the objective function defined in \textbf{P1}. It penalizes FLSO costs and high load connections while rewarding high quality RSRP links and connection stability. It is calculated as follows:
+The reward function $r_{m,t}$ is engineered to guide the agent towards maximizing network utility while balancing load and minimizing instability. Based on the objective function in \textbf{P1}, the immediate reward is calculated as:
 \begin{align}
-r_t &= w_{R} R_{m,n}(t) - w_{S} \Big( FS_{m,n}(t) + UFS_{m,n}(t) \Big) - w_{T} ToS_{m,n}(t) - w_{L} c_{m}(t),
+    r_{m,t} = & w_r {R}_{m,t} + w_t {T}_{m,t} + w_{c} {C}_{m,t} + w_F J(t) - w_s \mathbb{I}(FLSO_{m,t}) - w_l (L_{m,t})^2,
 \end{align}
-where the cost and reward components are defined in Eq. \eqref{eq:flso_cost} through \eqref{eq:rsrp_reward}, and the weights are the corresponding weights from \textbf{P1}.
 
-Discount factor $\gamma$ is a value between 0 and 1, which represents the rate at which future rewards are discounted when considering them at the current step.
+where, $R_{m,t}$ denotes the average normalized RSRP of satellites connected to GW $m$. $T_{m,t}$ is the average normalized ToS promoting connection stability. $C_{m,t}$ denotes the average traffic throughput served by GW $m$. $J(t)$ is Jain's fairness index defined above. $\mathbb{I}(FLSO_{m,t})$ is an indicator function equal to 1 when an FLSO occurs at GW $m$ at time $t$. $L_{m,t}$ denotes the total traffic load of GW $m$ the squared term imposes a quadratic penalty on load concentration. The weights $w_r, w_t, w_c, w_F, w_s, w_l$ control the relative importance of these objectives, and the discount factor $\gamma\in[0,1]$ determines the emphasis placed on future rewards.
 
-\subsection{Proposed dueling DDQN algorithm}
+\subsection{Proposed Multi Agent dueling DDQN algorithm}
 %복잡도 측면에서 얼마나 걸리는지 설명, GeForce RTX 3080 Ti GPU에서 수 밀리초 내에 행동을 출력할 수 있다.
-\label{Proposed Dueling DDQN Algorithm}
-\quad This thesis employs a RL algorithm to enable LEO satellites to operate in an dynamic environment. As depicted in Fig.\ref{Fig:system_model2}, the architecture of the proposed dueling DDQN algorithm, incorporating a \(\epsilon\)-greedy policy, is designed to optimize FLSO in LEO satellite networks. The LEO satellite receives feedback to execute actions that sustain both a prolonged ToS and an elevated RSRP, while minimizing the frequency of FLSO and, critically, GW congestion. This thesis enhancs the traditional DQN framework by incorporating DDQN, prioritized experience replay (PER), and dueling DQN to improve stability, learning efficiency, and robustness against noise in LEO satellite communication systems.
+\label{Proposed Multi Agent Dueling DDQN Algorithm}
+\quad To solve the formulated MMDP, this thesis proposes a multi agent dueling DDQN algorithm. Unlike traditional single-agent approaches where satellites make independent FLSO decisions, our framework employs ground GWs as intelligent agents that learn to cooperatively manage traffic loads.
 
-The DQN algorithm \cite{mnih2013playing} approximates the Q-function \( Q(s_t, a_t; \theta) \), which maps a state \( s_t \) and action \( a_t \) to an expected cumulative reward, using a deep neural network (DNN) parameterized by \( \theta \). Two DNNs are utilized: an online network for action selection and a target network for value estimation. The Q-function is trained to minimize the following loss function and loss function is calculated as follows:
+We utilize a parameter sharing strategy where all homogeneous GW agents share a single Q-network parameterized by $\theta$. This approach significantly reduces the number of trainable parameters, accelerates convergence by aggregating experiences from all agents, and ensures scalability regardless of the number of GWs.
+
+As depicted in Fig.\ref{Fig:system_model2}, the architecture incorporates a dueling network structure to separate state-value and advantage estimation, and a DDQN mechanism to mitigate overestimation bias. The shared Q-function $Q(s_{m,t}, a_{m,t}; \theta)$ takes the local state of GW $m$ and its action as input. The loss function is defined as the expectation over experiences sampled from a shared replay buffer:
 
 \begin{equation}
-L(\theta) = \mathbb{E} \left[ \left( y^{DDQN}_t - Q(s_t, a_t; \theta) \right)^2 \right],
+L(\theta) = \mathbb{E}_{(s,a,r,s') \sim \mathcal{R}} \left[ \left( y_t - Q(s, a; \theta) \right)^2 \right],
 \label{eq:loss}
 \end{equation}
-where the \(y^{DDQN}_t\) is the target and calculated as follows:
+where the target value $y_t$ is calculated using the target network $\theta^{-}$:
 \begin{equation}
-y^{DDQN}_t = r_t + \gamma \max_a Q(s_{t+1}, \arg\max_{a'} Q(s_{t+1}, a'; \theta); \theta^-),
+y_t = r + \gamma Q(s', \arg\max_{a'} Q(s', a'; \theta); \theta^{-}).
 \label{eq:ddqn_target}
 \end{equation}
 where \( \theta^- \) represents the parameter of the target network. The target network parameter are updated as \( \theta^- \leftarrow \tau \cdot \theta + (1 - \tau) \cdot \theta^- \), ensuring slow and stable updates to mitigate the moving target problem in the dynamic LEO satellite environment \cite{hazan2019revisiting}.
@@ -161,7 +151,7 @@ where \( \theta^- \) represents the parameter of the target network. The target 
       }{%
           \fbox{dueling\_dqn\_archi.png not found}%
       }
-      \caption{The architecture of the proposed dueling DDQN for FLSO optimization in LEO satellite networks.}
+      \caption{The architecture of the proposed multi agent dueling DDQN for FLSO optimization in LEO satellite networks.}
       \label{Fig:system_model2}
  \end{sidewaysfigure}
 
@@ -179,95 +169,58 @@ p_i = |\delta_i| + \epsilon_p,
 \end{equation}
 where \( \delta_i = r_i + \gamma Q(s_{i+1}, a_{i+1}; \theta^-) - Q(s_i, a_i; \theta) \) is the TD error, and \( \epsilon_p \) ensures non-zero priorities. PER uses \( \alpha \in [0, 1] \) to control sampling probability \(p_i^\alpha \) and \( \beta \in [0, 1] \) to adjust importance sampling weights \((\mathcal D \cdot P(i))^{-\beta} \), where \( \mathcal D \) is replay buffer limit and \(P(i)\) is the probability of sampling transition \(i\). This approach accelerates learning by focusing on significant transitions, which is beneficial in LEO satellite networks with dynamic and noisy conditions.
 
-By combining dueling DQN with DDQN and PER, this approach effectively addresses overestimation bias, accelerates learning, and mitigates the effects of random noise, leading to improved network performance with effective GW load balancing, elevated RSRP, and reduced FLSO frequency. The detailed process of the training is described in Algorithm \ref{alg:2}.
-
-% \begin{algorithm}[p]
-% \caption{Dueling DDQN-based Algorithm for \textbf{FLSO Load Balancing}}\label{alg:2}
-% \begin{algorithmic}[1]
-%     \State \textbf{Initialization:} Random weights $\theta$, replay memory $\mathcal R$ with capacity $\mathcal D$, minibatch size $\mathcal Z$, total episodes $\mathcal E$, prioritization parameter $\alpha$, importance sampling parameter $\beta$, exploration rate $\epsilon$, Polyak averaging parameter $\tau$
-%     \State \textbf{Input:} State, action, discount factor
-%     \State \textbf{Output:} Optimal FLSO decision
-%     \For{$Episode = 1$ to $\mathcal E$}
-%         \State Initialize the integrated environment
-%         \For{$t=0$ to $T$}
-%             \State $a_t = \begin{cases}
-%             \arg\max_{a'} Q(s_t, a'; \theta) & \text{with } 1 - \epsilon \\
-%             \text{random action} & \text{with } \epsilon
-%             \end{cases}$
-%             \State Execute action $a_t$, observe reward $r_t$ and next state $s_{t+1}$
-%             \State Store sample $(s_t, a_t, r_t, s_{t+1})$ into $\mathcal R$
-%             \If{$|\mathcal R| > \mathcal Z$} Start training after buffer fills to batch size
-%                 \For{$i=1$ to $\mathcal Z$}
-%                     \State Sample $(s_i, a_i, r_i, s_{i+1})$ from $\mathcal R$ with probability $P(i) = p_i^\alpha / \sum_k p_k^\alpha$
-%                     \State $y_i \leftarrow r_i + \gamma Q(s_{i+1}, \arg \max_{a'} Q(s_{i+1}, a'; \theta); \theta^{-})$ : Calculate DDQN target
-%                     \State $\delta_i \leftarrow y_i - Q(s_i, a_i; \theta)$ : Calculate TD-error
-%                     \State $p_i \leftarrow |\delta_i| + \epsilon_p$ : Update sample priority in $\mathcal R$
-%                     \State $w_i \leftarrow ((\mathcal D \cdot P(i))^{-\beta}) / \max_j(w_j)$ \Comment{Normalize weight} : Calculate importance sample weight
-%                 \EndFor
-%                 \State Calculate weighted loss: $L \leftarrow \frac{1}{\mathcal Z} \sum_{i=1}^{\mathcal Z} w_i \cdot \mathcal{L}(\delta_i)$ 
-%                 \State Update online network $\theta$ via gradient descent: $\theta \leftarrow \theta - \eta \nabla_\theta L$
-%                 \State Update target network $\theta^-$ (Polyak averaging): $\theta^- \leftarrow \tau \cdot \theta + (1 - \tau) \cdot \theta^-$
-%             \EndIf
-%         \EndFor
-%     \EndFor
-% \end{algorithmic}
-% \end{algorithm}
+By combining dueling DQN with DDQN and PER, this approach effectively addresses overestimation bias, accelerates learning, and mitigates the effects of random noise, leading to improved network performance with effective GW load balancing, elevated RSRP, and reduced FLSO frequency. The detailed process of the training is described in Algorithm \ref{alg:dueling-ddqn-flso}.
 
 \begin{algorithm}[t]
-\caption{Dueling DDQN-based FLSO Load Balancing}
+\caption{Multi-Agent Dueling DDQN-based FLSO}
 \label{alg:dueling-ddqn-flso}
 \begin{algorithmic}[1]
 
 \Require
-Replay buffer capacity $\mathcal{D}$, batch size $\mathcal{Z}$, episodes $\mathcal{E}$, discount $\gamma$,
-PER parameters $(\alpha,\beta,\epsilon_p)$, exploration $\epsilon$, Polyak coefficient $\tau$, learning rate $\eta$
+Replay buffer $\mathcal{D}$, batch size $\mathcal{Z}$, episodes $\mathcal{E}$, discount $\gamma$,
+PER parameters $(\alpha,\beta,\epsilon_p)$, exploration $\epsilon$, Polyak $\tau$, learning rate $\eta$
 
 \Ensure
-Optimal FLSO policy $\pi$ (GW selection)
+Optimal decentralized policy $\pi$ for GW agents
 
 \State \textbf{Initialize:}
-online network parameters $\theta$ (random),
-target network $\theta^{-}\leftarrow \theta$,
-replay buffer $\mathcal{R}$ with capacity $\mathcal{D}$
+Shared online network $\theta$, target network $\theta^{-}\leftarrow \theta$,
+Replay buffer $\mathcal{R}$
 
 \For{$Episode = 1$ to $\mathcal{E}$}
-    \State Reset integrated LEO--GW environment
+    \State Reset environment, observe initial states $s_{m,0}$ for all $m \in \mathcal{G}$
     \For{$t = 0$ to $T$}
-        \State Observe state $s_t$
+        
+        \State \textbf{Decentralized Action Selection:}
+        \For{each agent $m$}
+            \State $a_{m,t} = \begin{cases}
+            \arg\max_{a'} Q(s_{m,t}, a'; \theta) & \text{w.p. } 1 - \epsilon \\
+            \text{random action} & \text{w.p. } \epsilon
+            \end{cases}$
+        \EndFor
 
-        \State \textbf{Action selection (\,$\epsilon$\textbf{-greedy}):}
-        \State $a_t = \begin{cases}
-        \arg\max_{a'} Q(s_t, a'; \theta) & \text{with } 1 - \epsilon \\
-        \text{random action} & \text{with } \epsilon
-        \end{cases}$
-
-        \State Execute $a_t$, get reward $r_t$ and next state $s_{t+1}$
-        \State Store transition $(s_t,a_t,r_t,s_{t+1})$ into $\mathcal{R}$
+        \State Execute joint actions $\mathbf{a}_t$, get rewards $r_{m,t}$ and next states $s_{m,t+1}$
+        
+        \State \textbf{Store Transitions:}
+        \For{each agent $m$}
+            \State Store $(s_{m,t}, a_{m,t}, r_{m,t}, s_{m,t+1})$ into $\mathcal{R}$
+        \EndFor
 
         \If{$|\mathcal{R}| \ge \mathcal{Z}$} 
             \State \textbf{Sample minibatch using PER:}
             \For{$i=1$ to $\mathcal{Z}$}
-                \State Sample $(s_i,a_i,r_i,s_{i+1}) \sim \mathcal{R}$ with
-                $P(i)=\dfrac{p_i^\alpha}{\sum_k p_k^\alpha}$
-
-                \State \textbf{DDQN target:}
-                \State $y_i \leftarrow r_i + \gamma\, Q(s_{i+1}, \arg\max_{a'} Q(s_{i+1},a';\theta);\theta^{-})$
-
-                \State \textbf{TD error and priority update:}
-                \State $\delta_i \leftarrow y_i - Q(s_i,a_i;\theta)$, $p_i \leftarrow |\delta_i| + \epsilon_p$
-
-                \State \textbf{Importance sampling weight:}
-                \State $w_i \leftarrow (\mathcal{D}\cdot P(i))^{-\beta}$
+                \State Sample $(s_i,a_i,r_i,s'_{i}) \sim \mathcal{R}$ with $P(i) \propto p_i^\alpha$
+                \State $w_i \leftarrow (\mathcal{D}\cdot P(i))^{-\beta}$, normalize $w_i$
+                
+                \State \textbf{Compute Target \& TD Error:}
+                \State $y_i \leftarrow r_i + \gamma\, Q(s'_{i}, \arg\max_{a'} Q(s'_{i},a';\theta);\theta^{-})$
+                \State $\delta_i \leftarrow y_i - Q(s_i,a_i;\theta)$
+                \State Update priority $p_i \leftarrow |\delta_i| + \epsilon_p$
             \EndFor
-            \State Normalize $\{w_i\}$ by $w_i \leftarrow w_i/\max_j w_j$
 
-            \State \textbf{Weighted Huber loss:}
+            \State \textbf{Update Network:}
             \State $L \leftarrow \dfrac{1}{\mathcal{Z}}\sum_{i=1}^{\mathcal{Z}} w_i\,\mathcal{L}_{\text{Huber}}(\delta_i)$
-
-            \State \textbf{Update online network:}
             \State $\theta \leftarrow \theta - \eta \nabla_\theta L$
-
-            \State \textbf{Polyak update of target network:}
             \State $\theta^{-} \leftarrow \tau\,\theta + (1-\tau)\,\theta^{-}$
         \EndIf
     \EndFor

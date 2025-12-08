@@ -9,15 +9,16 @@
 \contentsline {section}{\numberline {2.1}LEO satellite FLSO schemes}{4}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Load Balancing in LEO Satellite Networks}{9}{section.2.2}%
 \contentsline {section}{\numberline {2.3}RL for LEO Mobility Management}{10}{section.2.3}%
-\contentsline {chapter}{\numberline {3}Proposed RL-based FLSO algorithm}{12}{chapter.3}%
+\contentsline {chapter}{\numberline {3}Proposed MARL-based FLSO algorithm}{12}{chapter.3}%
 \contentsline {section}{\numberline {3.1}System model}{12}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Problem formulation}{16}{section.3.2}%
 \contentsline {section}{\numberline {3.3}Proposed method}{19}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}MDP modeling}{19}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Proposed dueling DDQN algorithm}{21}{subsection.3.3.2}%
-\contentsline {chapter}{\numberline {4}Performance evaluation}{26}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Simulation setup}{26}{section.4.1}%
+\contentsline {subsection}{\numberline {3.3.1}MMDP modeling}{19}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Proposed Multi Agent dueling DDQN algorithm}{21}{subsection.3.3.2}%
+\contentsline {chapter}{\numberline {4}Performance evaluation}{27}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Simulation setup}{27}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Key Performance Indicators}{31}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Results and Discussion}{32}{section.4.3}%
-\contentsline {chapter}{\numberline {5}Conclusion}{43}{chapter.5}%
-\contentsline {chapter}{References}{45}{chapter*.18}%
+\contentsline {section}{\numberline {4.3}Results and Discussion}{34}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Summary}{45}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Conclusion}{47}{chapter.5}%
+\contentsline {chapter}{References}{49}{chapter*.19}%
