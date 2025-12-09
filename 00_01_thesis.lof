@@ -3,15 +3,15 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Packet loss during FLSO process}}{6}{figure.caption.5}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Network scenario of a LEO satellite performing FLSO while across Starlink GWs in the United States.}}{13}{figure.caption.7}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces The architecture of the proposed multi agent dueling DDQN for FLSO optimization in LEO satellite networks.}}{23}{figure.caption.8}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Network scenario of LEO satellites performing FLSO while across Starlink GWs in the United States.}}{13}{figure.caption.7}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces The architecture of the proposed multi-agent dueling DDQN for FLSO optimization in LEO satellite networks.}}{23}{figure.caption.8}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Normalized reward with 50 moving average comparison over episodes for the proposed algorithm and ablation baselines (Set~5--8).}}{35}{figure.caption.10}%
 \contentsline {figure}{\numberline {4.2}{\ignorespaces Average FLSO per each GW link for the proposed algorithm and baselines across different simulation steps.}}{36}{figure.caption.11}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Average UFLSO per each GW link for the proposed algorithm and baselines across different simulation steps.}}{38}{figure.caption.12}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Average ToS per each GW link for the proposed algorithm and baselines across different simulation steps.}}{40}{figure.caption.13}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Average RSRP per GW for the proposed algorithm and baselines across different simulation steps.}}{42}{figure.caption.14}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Average number of connections per GW for the proposed algorithm and baselines across different simulation steps.}}{44}{figure.caption.15}%
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Average total traffic load processed per GW for the proposed algorithm and baselines across different simulation steps.}}{46}{figure.caption.16}%
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Average Jain's Fairness Index for the proposed algorithm and baselines across different simulation steps.}}{48}{figure.caption.17}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Average UFLSO per each GW link for the proposed algorithm and baselines across different simulation steps.}}{37}{figure.caption.12}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Average ToS per each GW link for the proposed algorithm and baselines across different simulation steps.}}{39}{figure.caption.13}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Average RSRP per GW for the proposed algorithm and baselines across different simulation steps.}}{41}{figure.caption.14}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Average number of connections per GW for the proposed algorithm and baselines across different simulation steps.}}{42}{figure.caption.15}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Average total traffic load processed per GW for the proposed algorithm and baselines across different simulation steps.}}{44}{figure.caption.16}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Average Jain's Fairness Index for the proposed algorithm and baselines across different simulation steps.}}{46}{figure.caption.17}%
 \addvspace {10\p@ }

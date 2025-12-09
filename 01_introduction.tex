@@ -1,6 +1,6 @@
 \chapter{Introduction}
 
-\section{Background and motivation} 
+\section{Background and Motivation} 
 \quad Low Earth orbit (LEO) satellite networks have gained significant attention in recent years due to their potential to provide global broadband coverage with low latency. Operating at altitudes between 160 km and 2,000 km above the Earth's surface, LEO satellites offer several advantages over geostationary Earth orbit (GEO) satellites, including reduced signal propagation delay and lower power requirements for communication \cite{lei2019broadband}. % LEO 위성 네트워크는 지연이 짧은 글로벌 광대역 커버리지를 제공할 수 있다는 잠재력 때문에 최근 큰 관심을 받고 있다. % 지표면에서 160~2{,}000 km 고도에서 운용되는 LEO 위성은 GEO 위성 대비 신호 전파 지연이 짧고 통신에 필요한 전력이 낮다는 여러 이점을 제공한다.
 
 However, LEO satellites traveling at approximately 7--8 km/s make it difficult to maintain stable feeder and service links. In transparent-type satellites where the next generation NodeB (gNB) is at the gateway (GW), the satellite performs frequent feeder link switchovers (FLSOs) while passing multiple GWs; when the gNB differs across GWs, each FLSO triggers a simultaneous user equipment (UE) handover (HO) \cite{3gppfeeder}. Such large-scale HOs, especially under 6G massive machine type communications (mMTC), cause signaling bursts that lead to HO failures and degraded service continuity \cite{ho_latency}.

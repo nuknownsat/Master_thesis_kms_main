@@ -1,16 +1,16 @@
-\chapter[Proposed MARL-based FLSO algorithm]{Proposed MARL-based FLSO algorithm}
+\chapter[Proposed MARL-based FLSO Algorithm]{Proposed MARL-based FLSO Algorithm}
 
-\section{System model}
-\quad As in Fig. ~\ref{figure_system_model}, this thesis considers a large-scale LEO satellite constellation deployed across $P$ orbital planes, represented by the set $\mathcal{P} = \left\{p \mid p = 1, \dots, P\right\}$. The constellation consists of $N$ LEO satellites in total, distributed across these planes, with $N_p$ satellites in plane $p$. The overall satellite index set is denoted as $\mathcal{S} = \{ s_{p,i} \mid p = 1, \dots, P;\ i = 1, \dots, N_p \}$, and its cardinality as $\lvert\mathcal{S}\rvert = \sum_{p=1}^{P} N_p$. In this proposed framework, the ground GWs are modeled as intelligent agents in a Multi-Agent Reinforcement Learning (MARL) setting. The set of agents corresponds to the set of GWs $\mathcal{G} = \{1, \dots, M\}$. Each GW agent $m$ manages its limited number of connection links, denoted as $l_{max}$, to serve multiple LEO satellites simultaneously. The GW monitors the link conditions of connected satellites and visible candidate satellites to make load balancing and FLSO decisions.
+\section{System Model}
+\quad As in Fig. ~\ref{figure_system_model}, this thesis considers a large-scale LEO satellite constellation deployed across $P$ orbital planes, represented by the set $\mathcal{P} = \left\{p \mid p = 1, \dots, P\right\}$. The constellation consists of $N$ LEO satellites in total, distributed across these planes, with $N_p$ satellites in plane $p$. The overall satellite index set is denoted as $\mathcal{S} = \{ s_{p,i} \mid p = 1, \dots, P;\ i = 1, \dots, N_p \}$, and its cardinality as $\lvert\mathcal{S}\rvert = \sum_{p=1}^{P} N_p$. In this proposed framework, the ground GWs are modeled as intelligent agents in a multi-agent reinforcement learning (MARL) setting. The set of agents corresponds to the set of GWs $\mathcal{G} = \{1, \dots, M\}$. Each GW agent $m$ manages its limited number of connection links, denoted as $l_{max}$, to serve multiple LEO satellites simultaneously. The GW monitors the link conditions of connected satellites and visible candidate satellites to make load balancing and FLSO decisions.
 
 \begin{sidewaysfigure}[p]
 \centering
 \includegraphics[width=1.0\columnwidth]{figure/fig_system_model.png}
-\caption{Network scenario of a LEO satellite performing FLSO while across Starlink GWs in the United States.}
+\caption{Network scenario of LEO satellites performing FLSO while across Starlink GWs in the United States.}
 \label{figure_system_model}
 \end{sidewaysfigure}
 
-To address the primary challenge of GW load balancing, where the instantaneous load $\lvert \mathcal{L}_m(t) \rvert$ is defined by the set of connected satellites, this thesis models the dynamic UE demand of each satellite $n$ as a stochastic time-varying traffic load $\psi_n(t)$. Thereby introducing network uncertainty that necessitates GW agents to adaptively manage connections based on fluctuating aggregate traffic rather than solely on satellite visibility.
+To address the primary challenge of GW load balancing, where the instantaneous load $|\mathcal{L}_m(t)|$ is defined by the set of connected satellites, this thesis models the dynamic UE demand of each satellite $n$ as a stochastic time-varying traffic load $\psi_n(t)$. Thereby introducing network uncertainty that necessitates GW agents to adaptively manage connections based on fluctuating aggregate traffic rather than solely on satellite visibility.
 % 로드 밸런싱 문제를 해결하기 위해, 각 위성 $n$의 동적 UE 수요를 균등 분포 $\mathcal{U}(0, f)$를 따르는 확률적 시간 가변 트래픽 부하 $\psi_n(t)$로 모델링하여 네트워크 불확실성을 도입하였다. % 이를 통해 지상 GW 에이전트는 단순한 위성 가시성에 의존하는 대신, 변화하는 총 트래픽에 기반하여 적응적으로 연결을 관리해야 한다.
 
 The GW \( m \) receives measurement reports from connected LEO satellites. The satellite \( n \) of GW \( m \) RSRP \( R_{m,n} \) is calculated as follows:
@@ -23,7 +23,7 @@ where \( EIRP_{m} \) is the effective isotropic radiated power (EIRP) of the GW 
 &PL_{m,n} = P_{{LOS,{m,n}}} \big( FSPL_{m,n}(d_{m,n}, f_m) + SF_{m,n} \big)\notag\\
 &\quad + P_{{NLOS,{m,n}}} \big( FSPL_{m,n}(d_{m,n}, f_m) + SF_{m,n} + CL_{m,n}  \big) + AT_{m,n},
 \end{align}
-where $P_{{LOS,{m,n}}}$ and $P_{{NLOS,{m,n}}}$ denote the probabilities that the LEO satellite \( n \) to GW \( m \) is in a line-of-sight (LoS) and non-line-of-sight (NLoS) condition, respectively. $FSPL_{m,n}(d_{m,n}, f_m)$ denotes the free space path loss (FSPL) as a function of the distance $d_{m,n}$ between the LEO satellite \( n \) and the GW \( m \) and the frequency $f_m$ of the GW \( m \) uplink feeder link frequency. $SF_{m,n}$ represents the shadow fading, which accounts for the signal attenuation caused by obstacles such as buildings, trees, or terrain variations in the propagation path. $CL_{m,n}$ denotes the clutter loss, reflecting additional signal degradation due to environmental clutter. $AT_{m,n}$ captures atmospheric attenuation along the feeder link slant path, including gaseous absorption due to dry air and water vapor, and it can be obtained from standard ITU-R models for the considered band~\cite{ITU-R-P.676-13}. Specifically, the $FSPL_{m,n}$ is calculated as follows:
+where $P_{{LOS,{m,n}}}$ and $P_{{NLOS,{m,n}}}$ denote the probabilities that the LEO satellite \( n \) to GW \( m \) is in a line-of-sight (LoS) and non-line-of-sight (NLoS) condition, respectively. $FSPL_{m,n}(d_{m,n}, f_m)$ denotes the free space path loss (FSPL) as a function of the distance $d_{m,n}$ between the LEO satellite \( n \) and the GW \( m \) and the frequency $f_m$ of the GW \( m \) uplink feeder link frequency. $SF_{m,n}$ represents the shadow fading, which accounts for the signal attenuation caused by obstacles such as buildings, trees, or terrain variations in the propagation path. $CL_{m,n}$ denotes the clutter loss, reflecting additional signal degradation due to environmental clutter. $AT_{m,n}$ captures atmospheric attenuation along the feeder link slant path, including gaseous absorption due to dry air and water vapor, and it can be obtained from standard international telecommunication union (ITU)-R models for the considered band~\cite{ITU-R-P.676-13}. Specifically, the $FSPL_{m,n}$ is calculated as follows:
 % 한글 주석: 경로손실 식에 대기 감쇄 AT_{m,n}를 추가하여 LOS/NLOS 모두에 반영합니다. (기체 흡수 등, ITU-R 모델 기반 계산 가능)
 \begin{equation}
 FSPL_{m,n} = 32.45 + 20\log_{10}(f_m) + 20\log_{10}(d_{m,n}).
@@ -36,15 +36,15 @@ At each measurement instant $t$, the LEO satellite \( n \) samples the RSRP from
 \end{equation}
 where $a \in (0,1)$ is the L3 forgetting factor, defined as $a = \left(\frac{1}{2}\right)^{K/4}$, and $K$ is the filter coefficient. The initial condition is set as $\widetilde{R}_{m,n}(0) = R_{m,n}(0)$. Finally, the LEO satellite compiles a measurement report containing the L3-filtered RSRP $\widetilde{R}_{m,n}(t)$ of the serving and neighboring GWs and transmits this report back to the serving GW \( m \) over the feeder link.
 
-\section{Problem formulation}
+\section{Problem Formulation}
 \quad This section addresses the optimization problem for the LEO satellite constellation. The objective is to find an optimal FLSO policy $\pi$ that dynamically assigns each satellite $n$ to a GW $m$ at each time slot $t$.
 
-The primary goal is to maximize the network-wide utility, which involves minimizing load imbalance and switching instability while maximizing link quality and connection duration. Unlike simple connection counting, this thesis defines the instantaneous traffic load of GW $m$ at time $t$, denoted as $L_m(t)$, as the aggregate traffic demand of all connected satellites:
+The primary goal is to maximize the network-wide utility, which involves minimizing load imbalance and switching instability while maximizing link quality and connection duration. Unlike simple connection counting, this thesis defines the instantaneous traffic load of GW $m$ at time $t$, denoted as $|\mathcal{L}_m(t)|$, as the aggregate traffic demand of all connected satellites:
 \begin{equation}
-L_m(t) = \sum_{n \in \mathcal{S}_m(t)} \psi_n(t),
+|\mathcal{L}_m(t)| = \sum_{n \in \mathcal{S}_m(t)} |\psi_n(t)|,
 \label{eq:gw_load_traffic}
 \end{equation}
-where $\mathcal{S}_m(t)$ denotes the set of connected satellites served by GW $m$ at time $t$ and $\psi_n(t)$ is the dynamic traffic demand of satellite $n$.
+where $\mathcal{S}_m(t)$ denotes the set of connected satellites served by GW $m$ at time $t$ and $|\psi_n(t)|$ is the dynamic traffic demand of satellite $n$.
 
 To align with the MARL framework, this thesis formulates the problem as a maximization of cumulative rewards. The following reward and penalty components are defined:
 
@@ -69,9 +69,9 @@ To align with the MARL framework, this thesis formulates the problem as a maximi
     \label{eq:tos_reward}
     \end{equation}
 
-    \item \textbf{Fairness Reward:} To ensure load balancing based on the stochastic traffic $\psi_n(t)$, a reward is derived from Jain's Fairness Index \cite{jain1984quantitative} applied to the GW traffic loads $L_m(t)$.
+    \item \textbf{Fairness Reward:} To ensure load balancing based on the stochastic traffic $\psi_n(t)$, a reward is derived from Jain's Fairness Index \cite{jain1984quantitative} applied to the GW traffic loads $|\mathcal{L}_m(t)|$.
     \begin{equation}
-    J(t) = \frac{(\sum_{m=1}^{M} L_m(t))^2}{M \cdot \sum_{m=1}^{M} (L_m(t))^2}.
+    J(t) = \frac{(\sum_{m=1}^{M} |\mathcal{L}_m(t)|)^2}{M \cdot \sum_{m=1}^{M} (|\mathcal{L}_m(t)|)^2}.
     \label{eq:jain_index_term}
     \end{equation}
     
@@ -96,12 +96,12 @@ Constraint \textbf{C1} ensures that the elevation angle $\theta_{m,n}(t)$ for ev
 Constraint \textbf{C2} requires that the L3-filtered RSRP $\widetilde{R}_{m,n}(t)$ of any active connection maintains a minimum signal quality level $R_{\min}$.
 Constraint \textbf{C3} imposes a hard capacity limit on the ground segment, ensuring that the number of satellites served by a single GW $m$ does not exceed the maximum link capacity $l_{\text{max}}$.
 
-The FLSO optimization problem involves simultaneous decision-making by multiple satellites, characterized by high-dimensional state spaces and complex, time-varying network topology. This combinatorial nature renders the problem non-deterministic polynomial-time hard (NP-hard).
+The FLSO optimization problem involves simultaneous decision-making by multiple satellites, characterized by high-dimensional state spaces and complex, time-varying network topology. This combinatorial nature renders the problem non-deterministic polynomial-time (NP) hard.
 
-\section{Proposed method}
+\section{Proposed Method}
 \quad To address the problem \textbf{P1}, the optimization problem is formulated as a multi-agent Markov decision process (MMDP)~\cite{ju2023achieving}. This framework allows each GW agent to learn an optimal policy for managing satellite connections through sequential interaction with the dynamic LEO environment.
 
-\subsection{MMDP modeling}
+\subsection{MMDP Modeling}
 \quad In the proposed framework, each GW $m$ acts as an independent agent. The agent observes its local state $s_{m,t}$, executes an action $a_{m,t}$, and receives a reward $r_{m,t}$. The detailed definitions are as follows:
 
 The state $s_{m,t}$ is designed to provide the agent with comprehensive information about its current utilization and potential handover targets. It consists of two feature vectors:
@@ -118,12 +118,12 @@ where $p_{cand}$ is the number of considered candidates. Selecting a candidate i
 
 The reward function $r_{m,t}$ is engineered to guide the agent towards maximizing network utility while balancing load and minimizing instability. Based on the objective function in \textbf{P1}, the immediate reward is calculated as:
 \begin{align}
-    r_{m,t} = & w_r {R}_{m,t} + w_t {T}_{m,t} + w_{c} {C}_{m,t} + w_F J(t) - w_s \mathbb{I}(FLSO_{m,t}) - w_l (L_{m,t})^2,
+    r_{m,t} = & w_r {R}_{m,t} + w_t {T}_{m,t} + w_{c} {C}_{m,t} + w_F J(t) - w_s \mathbb{I}(FLSO_{m,t}) - w_l (|\mathcal{L}_{m,t}|)^2,
 \end{align}
 
-where, $R_{m,t}$ denotes the average normalized RSRP of satellites connected to GW $m$. $T_{m,t}$ is the average normalized ToS promoting connection stability. $C_{m,t}$ denotes the average traffic throughput served by GW $m$. $J(t)$ is Jain's fairness index defined above. $\mathbb{I}(FLSO_{m,t})$ is an indicator function equal to 1 when an FLSO occurs at GW $m$ at time $t$. $L_{m,t}$ denotes the total traffic load of GW $m$ the squared term imposes a quadratic penalty on load concentration. The weights $w_r, w_t, w_c, w_F, w_s, w_l$ control the relative importance of these objectives, and the discount factor $\gamma\in[0,1]$ determines the emphasis placed on future rewards.
+where, $R_{m,t}$ denotes the average normalized RSRP of satellites connected to GW $m$. $T_{m,t}$ is the average normalized ToS promoting connection stability. $C_{m,t}$ denotes the average traffic throughput served by GW $m$. $J(t)$ is Jain's fairness index defined above. $\mathbb{I}(FLSO_{m,t})$ is an indicator function equal to 1 when an FLSO occurs at GW $m$ at time $t$. $|\mathcal{L}_{m,t}|$ denotes the total traffic load of GW $m$ the squared term imposes a quadratic penalty on load concentration. The weights $w_r, w_t, w_c, w_F, w_s, w_l$ control the relative importance of these objectives, and the discount factor $\gamma\in[0,1]$ determines the emphasis placed on future rewards.
 
-\subsection{Proposed Multi-Agent dueling DDQN algorithm}
+\subsection{Proposed Multi-Agent Dueling DDQN Algorithm}
 %복잡도 측면에서 얼마나 걸리는지 설명, GeForce RTX 3080 Ti GPU에서 수 밀리초 내에 행동을 출력할 수 있다.
 \label{Proposed Multi-Agent Dueling DDQN Algorithm}
 \quad To solve the formulated MMDP, this thesis proposes a multi-agent dueling DDQN algorithm. Unlike traditional single-agent approaches where satellites make independent FLSO decisions, this thesis framework employs ground GWs as intelligent agents that learn to cooperatively manage traffic loads.
@@ -151,7 +151,7 @@ where \( \theta^- \) represents the parameter of the target network. The target 
       }{%
           \fbox{dueling\_dqn\_archi.png not found}%
       }
-      \caption{The architecture of the proposed multi agent dueling DDQN for FLSO optimization in LEO satellite networks.}
+      \caption{The architecture of the proposed multi-agent dueling DDQN for FLSO optimization in LEO satellite networks.}
       \label{Fig:system_model2}
  \end{sidewaysfigure}
 
@@ -162,14 +162,14 @@ To improve robustness against random noise, such as channel shadow fading, this 
 \end{align}
 where \( V(s; \theta) \) represents the value of the state \( s \), \( A(s, a; \theta) \) represents the advantage of taking action \( a \) in state \( s \), and \( |A| \) is the number of possible actions. This decomposition allows the network to better distinguish the value of a state from the advantage of each action, improving robustness against noise and enhancing learning efficiency in complex LEO satellite environments.
 
-To further enhance the learning efficiency, this thesis incorporates PER as proposed in \cite{schaul2015prioritized}. PER prioritizes experiences with higher TD errors, where the TD error \(\delta_i\) for transition \(i\) is defined as the difference between the target and current Q-values. The priority is calculated as follows:
+To further enhance the learning efficiency, this thesis incorporates prioritized experience replay (PER) as proposed in \cite{schaul2015prioritized}. PER prioritizes experiences with higher TD errors, where the TD error \(\delta_i\) for transition \(i\) is defined as the difference between the target and current Q-values. The priority is calculated as follows:
 \begin{equation}
 p_i = |\delta_i| + \epsilon_p,
 \label{eq:priority}
 \end{equation}
 where \( \delta_i = r_i + \gamma Q(s_{i+1}, a_{i+1}; \theta^-) - Q(s_i, a_i; \theta) \) is the TD error, and \( \epsilon_p \) ensures non-zero priorities. PER uses \( \alpha \in [0, 1] \) to control sampling probability \(p_i^\alpha \) and \( \beta \in [0, 1] \) to adjust importance sampling weights \((\mathcal D \cdot P(i))^{-\beta} \), where \( \mathcal D \) is replay buffer limit and \(P(i)\) is the probability of sampling transition \(i\). This approach accelerates learning by focusing on significant transitions, which is beneficial in LEO satellite networks with dynamic and noisy conditions.
 
-By combining dueling DQN with DDQN and PER, this approach effectively addresses overestimation bias, accelerates learning, and mitigates the effects of random noise, leading to improved network performance with effective GW load balancing, elevated RSRP, and reduced FLSO frequency. The detailed process of the training is described in Algorithm \ref{alg:dueling-ddqn-flso}.
+By combining dueling network with DDQN and PER, this approach effectively addresses overestimation bias, accelerates learning, and mitigates the effects of random noise, leading to improved network performance with effective GW load balancing, elevated RSRP, and reduced FLSO frequency. The detailed process of the training is described in Algorithm \ref{alg:dueling-ddqn-flso}.
 
 \begin{algorithm}[t]
 \caption{Multi-Agent Dueling DDQN-based FLSO}

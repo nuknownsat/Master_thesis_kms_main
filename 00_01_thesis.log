@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  8 DEC 2025 21:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  9 DEC 2025 20:31
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1284,8 +1284,8 @@ Package pdftex.def Info: professor_sign.pdf , page1 used on input line 205.
 pdfTeX warning (ext4): destination with the same identifier (name{page.i}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.10 
-      [1
+l.9 
+     [1
 
 
 ]
@@ -1294,7 +1294,7 @@ l.10
 pdfTeX warning (ext4): destination with the same identifier (name{page.ii}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.17 \end{abstracts}
+l.13 \end{abstracts}
                      [2]) (./00_01_thesis.toc
 LaTeX Font Info:    Trying to load font information for U+msa on input line 5.
  (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -1309,7 +1309,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 pdfTeX warning (ext4): destination with the same identifier (name{page.iii}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.18 ... {4}Performance evaluation}{27}{chapter.4}
+l.18 ... {4}Performance Evaluation}{27}{chapter.4}
                                                   % [3
 
 
@@ -1344,11 +1344,9 @@ l.18 ... {4}Performance evaluation}{27}{chapter.4}
  (./00_04_abbreviation.tex [8
 
 
-]
+])
 
-[9])
-
-[10]
+[9]
 No file 00_01_thesis.nls.
 \openout2 = `01_introduction.aux'.
 
@@ -1379,7 +1377,7 @@ No file 00_01_thesis.nls.
 
 
 ]
-<figure/fig_packetloss_flso.png, id=247, 454.28922pt x 337.21182pt>
+<figure/fig_packetloss_flso.png, id=243, 454.28922pt x 337.21182pt>
 File: figure/fig_packetloss_flso.png Graphic file (type png)
 <use figure/fig_packetloss_flso.png>
 Package pdftex.def Info: figure/fig_packetloss_flso.png  used on input line 47.
@@ -1412,7 +1410,7 @@ LaTeX Font Info:    Trying to load font information for U+eus on input line 4.
 (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/ueus.fd
 File: ueus.fd 2013/01/14 v3.01 Euler Script
 )
-<figure/fig_system_model.png, id=310, 284.0211pt x 178.001pt>
+<figure/fig_system_model.png, id=306, 284.0211pt x 178.001pt>
 File: figure/fig_system_model.png Graphic file (type png)
 <use figure/fig_system_model.png>
 Package pdftex.def Info: figure/fig_system_model.png  used on input line 8.
@@ -1443,7 +1441,7 @@ Package pdftex.def Info: figure/fig_system_model.png  used on input line 8.
 [20]
 
 [21]
-<figure/dueling_dqn_archi.png, id=390, 627.01453pt x 381.87468pt>
+<figure/dueling_dqn_archi.png, id=386, 627.01453pt x 381.87468pt>
 File: figure/dueling_dqn_archi.png Graphic file (type png)
 <use figure/dueling_dqn_archi.png>
 Package pdftex.def Info: figure/dueling_dqn_archi.png  used on input line 153.
@@ -1492,93 +1490,88 @@ LaTeX Warning: Float too large for page by 36.79701pt on input line 59.
 [32]
 
 [33]
-<figure/reward.png, id=468, 853.7496pt x 740.0448pt>
+<figure/reward.png, id=464, 853.7496pt x 740.0448pt>
 File: figure/reward.png Graphic file (type png)
 <use figure/reward.png>
 Package pdftex.def Info: figure/reward.png  used on input line 113.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
-
-
-[34]
-<figure/1.flso.png, id=473, 853.7496pt x 740.0448pt>
+<figure/1.flso.png, id=465, 853.7496pt x 740.0448pt>
 File: figure/1.flso.png Graphic file (type png)
 <use figure/1.flso.png>
 Package pdftex.def Info: figure/1.flso.png  used on input line 121.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
 
+[34]
+
 [35 <./figure/reward.png (PNG copy)>]
 
 [36 <./figure/1.flso.png (PNG copy)>]
-<figure/2.ufso.png, id=484, 853.7496pt x 740.0448pt>
+<figure/2.ufso.png, id=479, 853.7496pt x 740.0448pt>
 File: figure/2.ufso.png Graphic file (type png)
 <use figure/2.ufso.png>
 Package pdftex.def Info: figure/2.ufso.png  used on input line 131.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
 
-[37]
-
-[38 <./figure/2.ufso.png (PNG copy)>]
-<figure/3.tos.png, id=494, 853.7496pt x 740.0448pt>
+[37 <./figure/2.ufso.png (PNG copy)>]
+<figure/3.tos.png, id=486, 853.7496pt x 740.0448pt>
 File: figure/3.tos.png Graphic file (type png)
 <use figure/3.tos.png>
 Package pdftex.def Info: figure/3.tos.png  used on input line 141.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
 
-[39]
+[38]
 
-[40 <./figure/3.tos.png (PNG copy)>]
-<figure/4.rsrp.png, id=504, 853.7496pt x 740.0448pt>
+[39 <./figure/3.tos.png (PNG copy)>]
+<figure/4.rsrp.png, id=496, 853.7496pt x 740.0448pt>
 File: figure/4.rsrp.png Graphic file (type png)
 <use figure/4.rsrp.png>
-Package pdftex.def Info: figure/4.rsrp.png  used on input line 151.
+Package pdftex.def Info: figure/4.rsrp.png  used on input line 150.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
 
-[41]
+[40]
 
-[42 <./figure/4.rsrp.png (PNG copy)>]
-<figure/5.connection.png, id=515, 853.7496pt x 740.0448pt>
+[41 <./figure/4.rsrp.png (PNG copy)>]
+<figure/5.connection.png, id=506, 853.7496pt x 740.0448pt>
 File: figure/5.connection.png Graphic file (type png)
 <use figure/5.connection.png>
-Package pdftex.def Info: figure/5.connection.png  used on input line 161.
+Package pdftex.def Info: figure/5.connection.png  used on input line 159.
+(pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
+
+
+[42 <./figure/5.connection.png (PNG copy)>]
+<figure/6.traffic.png, id=512, 853.7496pt x 740.0448pt>
+File: figure/6.traffic.png Graphic file (type png)
+<use figure/6.traffic.png>
+Package pdftex.def Info: figure/6.traffic.png  used on input line 168.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
 
 [43]
 
-[44 <./figure/5.connection.png (PNG copy)>]
-<figure/6.traffic.png, id=525, 853.7496pt x 740.0448pt>
-File: figure/6.traffic.png Graphic file (type png)
-<use figure/6.traffic.png>
-Package pdftex.def Info: figure/6.traffic.png  used on input line 171.
+[44 <./figure/6.traffic.png (PNG copy)>]
+<figure/7.jain.png, id=523, 853.7496pt x 740.0448pt>
+File: figure/7.jain.png Graphic file (type png)
+<use figure/7.jain.png>
+Package pdftex.def Info: figure/7.jain.png  used on input line 177.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
 
 [45]
 
-[46 <./figure/6.traffic.png (PNG copy)>]
-<figure/7.jain.png, id=535, 853.7496pt x 740.0448pt>
-File: figure/7.jain.png Graphic file (type png)
-<use figure/7.jain.png>
-Package pdftex.def Info: figure/7.jain.png  used on input line 183.
-(pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
-
+[46 <./figure/7.jain.png (PNG copy)>])
 
 [47]
-
-[48 <./figure/7.jain.png (PNG copy)>])
-
-[49]
 \openout2 = `05_conclusion.aux'.
 
  (./05_conclusion.tex
  5.
 )
 
-[50
+[48
 
 
 
@@ -1589,37 +1582,37 @@ Package pdftex.def Info: figure/7.jain.png  used on input line 183.
 
 
 
-[51
+[49
 
 
 
 ]
 
-[52])
+[50])
 
-[53] (./00_01_thesis.aux (./00_x1_MacroFile1.aux) (./00_03_abstract.aux) (./00_04_abbreviation.aux) (./01_introduction.aux) (./02_Related_works.aux) (./03_Proposed_framework.aux) (./04_RESULT.aux) (./05_conclusion.aux))
+[51] (./00_01_thesis.aux (./00_x1_MacroFile1.aux) (./00_03_abstract.aux) (./00_04_abbreviation.aux) (./01_introduction.aux) (./02_Related_works.aux) (./03_Proposed_framework.aux) (./04_RESULT.aux) (./05_conclusion.aux))
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-07-20>
  ***********
 Package rerunfilecheck Info: File `00_01_thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 9251CD1AA3B20F2B70757FE158999C46;3836.
+(rerunfilecheck)             Checksum: C295D6053564682BB0AE6A0C88B5B26E;3836.
 Package rerunfilecheck Info: File `00_01_thesis.brf' has not changed.
 (rerunfilecheck)             Checksum: 5C0AC5F8D74BCBEF83D4CC31EAA5CCC4;1534.
  ) 
 Here is how much of TeX's memory you used:
- 36764 strings out of 467801
- 720404 string characters out of 5436090
- 1370215 words of memory out of 5000000
+ 36761 strings out of 467801
+ 720384 string characters out of 5436090
+ 1370214 words of memory out of 5000000
  64531 multiletter control sequences out of 15000+600000
  639855 words of font info for 88 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 125i,17n,121p,3039b,744s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 125i,17n,121p,2272b,744s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/euler/eusm10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on 00_01_thesis.pdf (66 pages, 14866278 bytes).
+Output written on 00_01_thesis.pdf (63 pages, 14863284 bytes).
 PDF statistics:
- 717 PDF objects out of 1000 (max. 8388607)
- 575 compressed objects within 6 object streams
- 146 named destinations out of 1000 (max. 500000)
+ 703 PDF objects out of 1000 (max. 8388607)
+ 564 compressed objects within 6 object streams
+ 143 named destinations out of 1000 (max. 500000)
  284 words of extra memory for PDF output out of 10000 (max. 10000000)
 

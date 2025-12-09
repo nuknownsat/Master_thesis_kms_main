@@ -1,7 +1,7 @@
-\chapter[Related works]{Related works}
-\label{chapter:related_works}
+\chapter[Related Works]{Related Works}
+\label{chapter:related_Works}
 % 다른 사람들의 관련 연구 소개
-\section[LEO satellite FLSO schemes]{LEO satellite FLSO schemes}
+\section[LEO Satellite FLSO Schemes]{LEO Satellite FLSO Schemes}
 
 \quad In NTN, LEO satellites are utilized to provide wide-area coverage while maintaining low end-to-end latency. Since LEO satellites move continuously along their orbits, global service is achieved through multi-satellite, multi-orbit constellations. Mobility management for LEO satellite networks is actively being standardized within 3rd generation partnership project (3GPP). Traditionally, 3GPP specifications focused on UE HO procedures between geographically fixed gNBs, where the next generation (NG) interface toward the core network remained essentially static and did not require dedicated mobility handling. 
 However with LEO satellites, the satellite GW association itself becomes time varying, and the NG interface must track the movement of the satellite. 
@@ -158,7 +158,7 @@ As reviewed in Section 2.1, conventional FLSO strategies tend to rely solely on 
 %     \label{fig:drl_mdp}
 % \end{figure}
 
-Value-based approaches approximate the action--value function \(Q(s,a)\). A deep Q-network (DQN) predicts \(Q(s,a)\) and selects the action with the highest predicted value. To improve stability and accuracy, common enhancements include DDQN, which decouples action selection and evaluation, dueling architecture, which separates value and advantage streams, prioritized replay, which samples transitions with large temporal difference (TD) errors more often, and Polyak averaging for smooth target updates. Function approximators are kept lightweight yet expressive, typically multi-layer perceptrons with normalization and nonlinear activations. Feasibility is enforced by action masking, so that invalid actions are eliminated before scoring. Parameters are updated via backpropagation using Adam or AdamW. Exploration in value-based agents follows an \(\epsilon\)-greedy schedule, whereas policy-based methods rely on entropy regularization that is gradually annealed.
+Value-based approaches approximate the action--value function \(Q(s,a)\). A deep Q-network (DQN) predicts \(Q(s,a)\) and selects the action with the highest predicted value. To improve stability and accuracy, common enhancements include double DQN (DDQN), which decouples action selection and evaluation, dueling architecture, which separates value and advantage streams, prioritized replay, which samples transitions with large temporal difference (TD) errors more often, and Polyak averaging for smooth target updates. Function approximators are kept lightweight yet expressive, typically multi-layer perceptrons with normalization and nonlinear activations. Feasibility is enforced by action masking, so that invalid actions are eliminated before scoring. Parameters are updated via backpropagation using Adam or AdamW. Exploration in value-based agents follows an \(\epsilon\)-greedy schedule, whereas policy-based methods rely on entropy regularization that is gradually annealed.
 Experience replay breaks temporal correlations and increases sample reuse, and the Huber (smooth-\(L_1\)) loss is preferred for TD regression due to its robustness to outliers and non-stationary targets.
 % 가치 기반 방법은 행동-가치 함수 $Q(s,a)$를 근사합니다. DQN은 $Q(s,a)$를 예측하고 가장 큰 값을 주는 행동을 선택합니다.
 % 안정성과 정확도를 위해 더블/듀얼링 DQN, 우선순위 리플레이, 타깃 네트워크, 폴리악 평균 등을 사용합니다.
