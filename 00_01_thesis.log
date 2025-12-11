@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  9 DEC 2025 20:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.8.5)  11 DEC 2025 13:55
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1110,7 +1110,7 @@ Package: kolabels-utf 2015/03/20 v1.5 UTF-8 Hangul item labels
 )))
 \c@theorem=\count475
 \c@definition=\count476
- (./00_01_thesis.aux (./00_x1_MacroFile1.aux) (./00_03_abstract.aux) (./00_04_abbreviation.aux) (./01_introduction.aux) (./02_Related_works.aux) (./03_Proposed_framework.aux) (./04_RESULT.aux) (./05_conclusion.aux))
+ (./00_01_thesis.aux (./00_x1_MacroFile1.aux) (./0_frontmatter/acknowledgement.aux) (./00_03_abstract.aux) (./00_04_abbreviation.aux) (./01_introduction.aux) (./02_Related_works.aux) (./03_Proposed_framework.aux) (./04_RESULT.aux) (./05_conclusion.aux))
 \openout1 = `00_01_thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 179.
@@ -1276,6 +1276,17 @@ Package pdftex.def Info: professor_sign.pdf , page1 used on input line 205.
 [3
 
  <./professor_sign.pdf>]
+\openout2 = `0_frontmatter/acknowledgement.aux'.
+
+ (./0_frontmatter/acknowledgement.tex
+LaTeX Font Info:    Trying to load font information for LUC+uhcmj on input line 10.
+ (c:/texlive/2025/texmf-dist/tex/latex/kotex-utf/lucuhcmj.fd
+File: lucuhcmj.fd 2013/09/26 UHC Myeongjo font definitions
+))
+
+[4
+
+]
 \openout2 = `00_03_abstract.aux'.
 
  (./00_03_abstract.tex
@@ -1286,6 +1297,8 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.i}) has b
                    \relax 
 l.9 
      [1
+
+
 
 
 ]
@@ -1320,7 +1333,12 @@ l.18 ... {4}Performance Evaluation}{27}{chapter.4}
 
 
 
-[4] (./00_01_thesis.lof
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.iv}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.254 \listoffigures
+                      % print list of figures [4] (./00_01_thesis.lof
 
 [5
 
@@ -1377,7 +1395,7 @@ No file 00_01_thesis.nls.
 
 
 ]
-<figure/fig_packetloss_flso.png, id=243, 454.28922pt x 337.21182pt>
+<figure/fig_packetloss_flso.png, id=284, 454.28922pt x 337.21182pt>
 File: figure/fig_packetloss_flso.png Graphic file (type png)
 <use figure/fig_packetloss_flso.png>
 Package pdftex.def Info: figure/fig_packetloss_flso.png  used on input line 47.
@@ -1410,7 +1428,7 @@ LaTeX Font Info:    Trying to load font information for U+eus on input line 4.
 (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/ueus.fd
 File: ueus.fd 2013/01/14 v3.01 Euler Script
 )
-<figure/fig_system_model.png, id=306, 284.0211pt x 178.001pt>
+<figure/fig_system_model.png, id=347, 284.0211pt x 178.001pt>
 File: figure/fig_system_model.png Graphic file (type png)
 <use figure/fig_system_model.png>
 Package pdftex.def Info: figure/fig_system_model.png  used on input line 8.
@@ -1441,10 +1459,10 @@ Package pdftex.def Info: figure/fig_system_model.png  used on input line 8.
 [20]
 
 [21]
-<figure/dueling_dqn_archi.png, id=386, 627.01453pt x 381.87468pt>
+<figure/dueling_dqn_archi.png, id=425, 627.01453pt x 381.87468pt>
 File: figure/dueling_dqn_archi.png Graphic file (type png)
 <use figure/dueling_dqn_archi.png>
-Package pdftex.def Info: figure/dueling_dqn_archi.png  used on input line 153.
+Package pdftex.def Info: figure/dueling_dqn_archi.png  used on input line 137.
 (pdftex.def)             Requested size: 540.60236pt x 329.25072pt.
 
 
@@ -1453,10 +1471,10 @@ Package pdftex.def Info: figure/dueling_dqn_archi.png  used on input line 153.
 [23 <./figure/dueling_dqn_archi.png>]
 
 [24]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 175.
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 181.
 
 
-LaTeX Warning: Float too large for page by 13.20706pt on input line 230.
+LaTeX Warning: Float too large for page by 13.20706pt on input line 236.
 
 )
 
@@ -1490,12 +1508,12 @@ LaTeX Warning: Float too large for page by 36.79701pt on input line 59.
 [32]
 
 [33]
-<figure/reward.png, id=464, 853.7496pt x 740.0448pt>
+<figure/reward.png, id=506, 853.7496pt x 740.0448pt>
 File: figure/reward.png Graphic file (type png)
 <use figure/reward.png>
 Package pdftex.def Info: figure/reward.png  used on input line 113.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
-<figure/1.flso.png, id=465, 853.7496pt x 740.0448pt>
+<figure/1.flso.png, id=507, 853.7496pt x 740.0448pt>
 File: figure/1.flso.png Graphic file (type png)
 <use figure/1.flso.png>
 Package pdftex.def Info: figure/1.flso.png  used on input line 121.
@@ -1505,17 +1523,17 @@ Package pdftex.def Info: figure/1.flso.png  used on input line 121.
 [34]
 
 [35 <./figure/reward.png (PNG copy)>]
-
-[36 <./figure/1.flso.png (PNG copy)>]
-<figure/2.ufso.png, id=479, 853.7496pt x 740.0448pt>
+<figure/2.ufso.png, id=517, 853.7496pt x 740.0448pt>
 File: figure/2.ufso.png Graphic file (type png)
 <use figure/2.ufso.png>
 Package pdftex.def Info: figure/2.ufso.png  used on input line 131.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
 
+[36 <./figure/1.flso.png (PNG copy)>]
+
 [37 <./figure/2.ufso.png (PNG copy)>]
-<figure/3.tos.png, id=486, 853.7496pt x 740.0448pt>
+<figure/3.tos.png, id=528, 853.7496pt x 740.0448pt>
 File: figure/3.tos.png Graphic file (type png)
 <use figure/3.tos.png>
 Package pdftex.def Info: figure/3.tos.png  used on input line 141.
@@ -1525,7 +1543,7 @@ Package pdftex.def Info: figure/3.tos.png  used on input line 141.
 [38]
 
 [39 <./figure/3.tos.png (PNG copy)>]
-<figure/4.rsrp.png, id=496, 853.7496pt x 740.0448pt>
+<figure/4.rsrp.png, id=538, 853.7496pt x 740.0448pt>
 File: figure/4.rsrp.png Graphic file (type png)
 <use figure/4.rsrp.png>
 Package pdftex.def Info: figure/4.rsrp.png  used on input line 150.
@@ -1533,17 +1551,17 @@ Package pdftex.def Info: figure/4.rsrp.png  used on input line 150.
 
 
 [40]
-
-[41 <./figure/4.rsrp.png (PNG copy)>]
-<figure/5.connection.png, id=506, 853.7496pt x 740.0448pt>
+<figure/5.connection.png, id=544, 853.7496pt x 740.0448pt>
 File: figure/5.connection.png Graphic file (type png)
 <use figure/5.connection.png>
 Package pdftex.def Info: figure/5.connection.png  used on input line 159.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
 
+[41 <./figure/4.rsrp.png (PNG copy)>]
+
 [42 <./figure/5.connection.png (PNG copy)>]
-<figure/6.traffic.png, id=512, 853.7496pt x 740.0448pt>
+<figure/6.traffic.png, id=555, 853.7496pt x 740.0448pt>
 File: figure/6.traffic.png Graphic file (type png)
 <use figure/6.traffic.png>
 Package pdftex.def Info: figure/6.traffic.png  used on input line 168.
@@ -1553,16 +1571,16 @@ Package pdftex.def Info: figure/6.traffic.png  used on input line 168.
 [43]
 
 [44 <./figure/6.traffic.png (PNG copy)>]
-<figure/7.jain.png, id=523, 853.7496pt x 740.0448pt>
+<figure/7.jain.png, id=565, 853.7496pt x 740.0448pt>
 File: figure/7.jain.png Graphic file (type png)
 <use figure/7.jain.png>
 Package pdftex.def Info: figure/7.jain.png  used on input line 177.
 (pdftex.def)             Requested size: 369.88582pt x 320.62958pt.
 
 
-[45]
+[45 <./figure/7.jain.png (PNG copy)>]
 
-[46 <./figure/7.jain.png (PNG copy)>])
+[46])
 
 [47]
 \openout2 = `05_conclusion.aux'.
@@ -1590,7 +1608,7 @@ Package pdftex.def Info: figure/7.jain.png  used on input line 177.
 
 [50])
 
-[51] (./00_01_thesis.aux (./00_x1_MacroFile1.aux) (./00_03_abstract.aux) (./00_04_abbreviation.aux) (./01_introduction.aux) (./02_Related_works.aux) (./03_Proposed_framework.aux) (./04_RESULT.aux) (./05_conclusion.aux))
+[51] (./00_01_thesis.aux (./00_x1_MacroFile1.aux) (./0_frontmatter/acknowledgement.aux) (./00_03_abstract.aux) (./00_04_abbreviation.aux) (./01_introduction.aux) (./02_Related_works.aux) (./03_Proposed_framework.aux) (./04_RESULT.aux) (./05_conclusion.aux))
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-07-20>
@@ -1598,21 +1616,21 @@ L3 programming layer <2025-07-20>
 Package rerunfilecheck Info: File `00_01_thesis.out' has not changed.
 (rerunfilecheck)             Checksum: C295D6053564682BB0AE6A0C88B5B26E;3836.
 Package rerunfilecheck Info: File `00_01_thesis.brf' has not changed.
-(rerunfilecheck)             Checksum: 5C0AC5F8D74BCBEF83D4CC31EAA5CCC4;1534.
+(rerunfilecheck)             Checksum: 22A3B4B9BA97193DA69C5B9A5200C496;1531.
  ) 
 Here is how much of TeX's memory you used:
- 36761 strings out of 467801
- 720384 string characters out of 5436090
- 1370214 words of memory out of 5000000
- 64531 multiletter control sequences out of 15000+600000
- 639855 words of font info for 88 fonts, out of 8000000 for 9000
+ 36889 strings out of 467801
+ 723159 string characters out of 5436090
+ 1371503 words of memory out of 5000000
+ 64605 multiletter control sequences out of 15000+600000
+ 652525 words of font info for 131 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  125i,17n,121p,2272b,744s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/euler/eusm10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on 00_01_thesis.pdf (63 pages, 14863284 bytes).
+<c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/euler/eusm10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbac.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbae.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbb1.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbb9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbbb.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc0.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc2.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjbc7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmac.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmad.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmae.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb0.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb1.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb2.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb3.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb4.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmba.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmbb.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmbc.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmbd.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc0.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc1.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc2.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc5.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc9.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmcc.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmd0.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmd5.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmd6.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/nanumtype1/nanummjmd7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2025/texmf-dist/fonts/type1/uhc/umj/umj02.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
+Output written on 00_01_thesis.pdf (64 pages, 16356904 bytes).
 PDF statistics:
- 703 PDF objects out of 1000 (max. 8388607)
- 564 compressed objects within 6 object streams
- 143 named destinations out of 1000 (max. 500000)
+ 898 PDF objects out of 1000 (max. 8388607)
+ 681 compressed objects within 7 object streams
+ 144 named destinations out of 1000 (max. 500000)
  284 words of extra memory for PDF output out of 10000 (max. 10000000)
 

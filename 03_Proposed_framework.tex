@@ -82,15 +82,14 @@ To align with the MARL framework, this thesis formulates the problem as a maximi
 The global optimization problem \textbf{P1} is to find the policy $\boldsymbol{\pi}$ that maximizes the weighted sum of these components over the time horizon $T$:
 
 \begin{align}
-& \textbf{P1:}\quad \operatorname*{\max}_{\boldsymbol{\pi}} \mathbb{E} \sum_{t=0}^{T} \Big[ J(t) + \sum_{m=1}^{M} \sum_{n \in \mathcal{S}_m(t)} \Big( \widetilde{R}_{m,n}(t) + ToS_{m,n}(t) - \xi_{m,n}(t) \Big) \Big],\\
+& \textbf{P1:}\quad \operatorname*{\max}_{\boldsymbol{\pi}} \sum_{t=0}^{T} \Big[ J(t) + \sum_{m=1}^{M} \sum_{n \in \mathcal{S}_m(t)} \Big( \widetilde{R}_{m,n}(t) + ToS_{m,n}(t) - \xi_{m,n}(t) \Big) \Big],\\
 & \quad \text{s.t.} \nonumber \\
 & \quad \textbf{C1 :}\quad \theta_{m,n}(t) \geq \theta_{\text {min}}, \quad \forall m, \forall n \in \mathcal{S}_m(t), \forall t,\\
 & \quad \textbf{C2 :}\quad \widetilde R_{m,n}(t) \geq R_{\text {min}}, \quad \forall m, \forall n \in \mathcal{S}_m(t), \forall t,\\
 & \quad \textbf{C3 :}\quad |\mathcal{S}_m(t)| \le l_{\text{max}}, \quad \forall m, \forall t.
 \end{align}
 
-In \textbf{P1}, $\xi_{m,n}(t) = FS_{m,n}(t) + UFS_{m,n}(t)$ represents the combined switching penalties. The positive signs for $J(t)$, $\widetilde{R}_{m,n}(t)$, and $ToS_{m,n}(t)$ indicate maximization of fairness, link quality, and stability, respectively, while the negative sign for $\xi_{m,n}(t)$ enforces the minimization of switching overheads. Constraint \textbf{C3} ensures that the number of connected satellites does not exceed the GW capacity limit $l_{\text{max}}$.
-
+In \textbf{P1}, $\xi_{m,n}(t) = FS_{m,n}(t) + UFS_{m,n}(t)$ represents the combined switching penalties. The positive signs for $J(t)$, $\widetilde{R}_{m,n}(t)$, and $ToS_{m,n}(t)$ indicate maximization of fairness, link quality, and stability, respectively, while the negative sign for $\xi_{m,n}(t)$ enforces the minimization of switching overheads.
 The constraints define the feasibility conditions for the active connections $\mathcal{S}_m(t)$.
 Constraint \textbf{C1} ensures that the elevation angle $\theta_{m,n}(t)$ for every connected link exceeds the minimum threshold $\theta_{\min}$, guaranteeing a reliable LoS.
 Constraint \textbf{C2} requires that the L3-filtered RSRP $\widetilde{R}_{m,n}(t)$ of any active connection maintains a minimum signal quality level $R_{\min}$.
@@ -118,30 +117,15 @@ where $p_{cand}$ is the number of considered candidates. Selecting a candidate i
 
 The reward function $r_{m,t}$ is engineered to guide the agent towards maximizing network utility while balancing load and minimizing instability. Based on the objective function in \textbf{P1}, the immediate reward is calculated as:
 \begin{align}
-    r_{m,t} = & w_r {R}_{m,t} + w_t {T}_{m,t} + w_{c} {C}_{m,t} + w_F J(t) - w_s \mathbb{I}(FLSO_{m,t}) - w_l (|\mathcal{L}_{m,t}|)^2,
+    r_{m,t} = & w_r {R}_{m}(t) + w_t {T}_{m}(t) + w_{c} {C}_{m}(t) + w_F J(t) \notag \\
+              & - w_s \mathbb{I}(FLSO_{m}(t)) - w_l (|\mathcal{L}_{m}(t)|)^2,
 \end{align}
-
-where, $R_{m,t}$ denotes the average normalized RSRP of satellites connected to GW $m$. $T_{m,t}$ is the average normalized ToS promoting connection stability. $C_{m,t}$ denotes the average traffic throughput served by GW $m$. $J(t)$ is Jain's fairness index defined above. $\mathbb{I}(FLSO_{m,t})$ is an indicator function equal to 1 when an FLSO occurs at GW $m$ at time $t$. $|\mathcal{L}_{m,t}|$ denotes the total traffic load of GW $m$ the squared term imposes a quadratic penalty on load concentration. The weights $w_r, w_t, w_c, w_F, w_s, w_l$ control the relative importance of these objectives, and the discount factor $\gamma\in[0,1]$ determines the emphasis placed on future rewards.
+where, $R_{m}(t)$ denotes the average normalized RSRP of satellites connected to GW $m$. $T_{m}(t)$ is the average normalized ToS promoting connection stability. $C_{m}(t)$ denotes the average traffic throughput served by GW $m$. $J(t)$ is Jain's fairness index defined above. $\mathbb{I}(FLSO_{m}(t))$ is an indicator function equal to 1 when an FLSO occurs at GW $m$ at time $t$. $|\mathcal{L}_{m}(t)|$ denotes the total traffic load of GW $m$ the squared term imposes a quadratic penalty on load concentration. The weights $w_r, w_t, w_c, w_F, w_s, w_l$ control the relative importance of these objectives, and the discount factor $\gamma\in[0,1]$ determines the emphasis placed on future rewards.
 
 \subsection{Proposed Multi-Agent Dueling DDQN Algorithm}
 %복잡도 측면에서 얼마나 걸리는지 설명, GeForce RTX 3080 Ti GPU에서 수 밀리초 내에 행동을 출력할 수 있다.
 \label{Proposed Multi-Agent Dueling DDQN Algorithm}
-\quad To solve the formulated MMDP, this thesis proposes a multi-agent dueling DDQN algorithm. Unlike traditional single-agent approaches where satellites make independent FLSO decisions, this thesis framework employs ground GWs as intelligent agents that learn to cooperatively manage traffic loads.
-
-We utilize a parameter sharing strategy where all homogeneous GW agents share a single Q-network parameterized by $\theta$. This approach significantly reduces the number of trainable parameters, accelerates convergence by aggregating experiences from all agents, and ensures scalability regardless of the number of GWs.
-
-As depicted in Fig.\ref{Fig:system_model2}, the architecture incorporates a dueling network structure to separate state-value and advantage estimation, and a DDQN mechanism to mitigate overestimation bias. The shared Q-function $Q(s_{m,t}, a_{m,t}; \theta)$ takes the local state of GW $m$ and its action as input. The loss function is defined as the expectation over experiences sampled from a shared replay buffer:
-
-\begin{equation}
-L(\theta) = \mathbb{E}_{(s,a,r,s') \sim \mathcal{R}} \left[ \left( y_t - Q(s, a; \theta) \right)^2 \right],
-\label{eq:loss}
-\end{equation}
-where the target value $y_t$ is calculated using the target network $\theta^{-}$:
-\begin{equation}
-y_t = r + \gamma Q(s', \arg\max_{a'} Q(s', a'; \theta); \theta^{-}).
-\label{eq:ddqn_target}
-\end{equation}
-where \( \theta^- \) represents the parameter of the target network. The target network parameter are updated as \( \theta^- \leftarrow \tau \cdot \theta + (1 - \tau) \cdot \theta^- \), ensuring slow and stable updates to mitigate the moving target problem in the dynamic LEO satellite environment \cite{hazan2019revisiting}.
+\quad To solve the formulated MMDP, this thesis proposes a multi-agent dueling DDQN algorithm. Unlike traditional single-agent approaches where satellites make independent FLSO decisions, the proposed framework employs ground GWs as intelligent agents that learn to cooperatively manage traffic loads.
 
 \begin{sidewaysfigure}[p]
       \centering
@@ -154,6 +138,28 @@ where \( \theta^- \) represents the parameter of the target network. The target 
       \caption{The architecture of the proposed multi-agent dueling DDQN for FLSO optimization in LEO satellite networks.}
       \label{Fig:system_model2}
  \end{sidewaysfigure}
+
+This thesis utilizes a parameter sharing strategy where all homogeneous GW agents share a single Q-network parameterized by $\theta$. This approach significantly reduces the number of trainable parameters, accelerates convergence by aggregating experiences from all agents, and ensures scalability regardless of the number of GWs.
+
+As depicted in Fig.\ref{Fig:system_model2}, the architecture incorporates a dueling network structure to separate state-value and advantage estimation, and a DDQN mechanism to mitigate overestimation bias. The shared Q-function $Q(s_{m,t}, a_{m,t}; \theta)$ takes the local state of GW $m$ and its action as input. The loss function is defined as the expectation over experiences sampled from a shared replay buffer:
+
+\begin{equation}
+L(\theta) = \mathbb{E}_{(s,a,r,s') \sim \mathcal{R}} \left[ L_{\text{Huber}}(y_t - Q(s, a; \theta)) \right],
+\label{eq:loss}
+\end{equation}
+where the Huber loss is given by:
+\begin{equation}
+L_{\text{Huber}}(x) = \begin{cases} 
+\frac{1}{2} x^2 & \text{if } |x| \leq 1 \\
+|x| - \frac{1}{2} & \text{otherwise}
+\end{cases},
+\end{equation}
+and the target value $y_t$ is calculated using the target network $\theta^{-}$:
+\begin{equation}
+y_t = r + \gamma Q(s', \arg\max_{a'} Q(s', a'; \theta); \theta^{-}).
+\label{eq:ddqn_target}
+\end{equation}
+where \( \theta^- \) represents the parameter of the target network. The target network parameter are updated as \( \theta^- \leftarrow \tau \cdot \theta + (1 - \tau) \cdot \theta^- \), ensuring slow and stable updates to mitigate the moving target problem in the dynamic LEO satellite environment \cite{hazan2019revisiting}.
 
 To improve robustness against random noise, such as channel shadow fading, this thesis utilizes a dueling DQN \cite{wang2016dueling}. The dueling DQN architecture enhances the traditional DQN by splitting the Q-function into two separate streams: the state-value function \( V(s; \theta) \) and the advantage function \( A(s, a; \theta) \). The Q-function is then calculated as follows:
 \begin{align}
@@ -219,7 +225,7 @@ Replay buffer $\mathcal{R}$
             \EndFor
 
             \State \textbf{Update Network:}
-            \State $L \leftarrow \dfrac{1}{\mathcal{Z}}\sum_{i=1}^{\mathcal{Z}} w_i\,\mathcal{L}_{\text{Huber}}(\delta_i)$
+            \State $L \leftarrow \dfrac{1}{\mathcal{Z}}\sum_{i=1}^{\mathcal{Z}} w_i\,L_{\text{Huber}}(\delta_i)$
             \State $\theta \leftarrow \theta - \eta \nabla_\theta L$
             \State $\theta^{-} \leftarrow \tau\,\theta + (1-\tau)\,\theta^{-}$
         \EndIf
